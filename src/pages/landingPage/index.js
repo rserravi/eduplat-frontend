@@ -33,14 +33,14 @@ export const LandingPage = () =>{
                                 <ExternalHeading />
                         </Grid> 
                         <Grid container 
-                            component="text"
+  
                             direction="column"
                             justifyContent="center"
                             alignItems="flex-end"
                             sx = {{pt:20, pb:10, pr:5, pl:20}}
                             >
                             <Grid item>
-                                <Typography variant='h3' component='h3' color='primary.contrastText'>
+                                <Typography variant='h2' component='h3' color='primary.contrastText'>
                                     Connect players, parents, coaches <br/> and clubs.
                                 </Typography>
                             </Grid>
@@ -51,7 +51,7 @@ export const LandingPage = () =>{
                             </Grid>
                             <BrowserView>
                                 <Grid item sx={{mt:5}}>
-                                    <Typography variant='h3' component='h3' color='primary.contrastText'>
+                                    <Typography variant='h2' component='h3' color='primary.contrastText'>
                                     Record stats and allow individual <br/> and team improvement.
                                     </Typography>
                                 </Grid>

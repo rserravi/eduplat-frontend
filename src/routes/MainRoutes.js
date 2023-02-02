@@ -1,11 +1,12 @@
 import { lazy } from 'react';
 
 // project imports
-import MainLayout from '../layout/MinimalLayout';
+import MainLayout from '../layout/MainLayout';
 import Loadable from '../ui-component/Loadable';
 
 // dashboard routing
 const Landing = Loadable(lazy(() => import('src/pages/landingPage')));
+const Dashboard = Loadable(lazy(() => import('src/pages/dashboard')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -14,15 +15,15 @@ const MainRoutes = {
     element: <MainLayout />,
     children: [
         {
-            path: '/',
-            element: <Landing />
+            path: 'dashboard',
+            element: <Dashboard />
         }, 
         {
-            path: 'dashboard',
+            path: '/dashboard',
             children: [
                 {
                     path: 'default',
-                    element: <Landing />
+                    element: <Dashboard />
                 }
             ]
         }

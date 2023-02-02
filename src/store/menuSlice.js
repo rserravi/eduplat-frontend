@@ -3,12 +3,18 @@ import { createSlice } from '@reduxjs/toolkit';
 const menuSlice = createSlice({
     name: 'menu',
     initialState: {
-        isOpen: [], // for active default menu
+        isOpen: {
+            id: ""
+        }, // for active default menu
+        previous:{
+            id:""
+        },
         opened: true
     },
     reducers: {
         MENU_OPEN(state, action) {
-            state.isOpen = [action.id];
+            console.log(action)
+            state.isOpen = action.payload;
         },
         SET_MENU(state, action) {
             state.opened = action.payload;
