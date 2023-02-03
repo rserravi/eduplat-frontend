@@ -2,14 +2,13 @@ import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { ButtonGroup, Paper, Typography } from "@mui/material";
 import { useFormik } from 'formik';
-import * as yup from 'yup';
 import {TextField} from '@mui/material';
 import {Grid} from '@mui/material';
-import {Avatar} from '@mui/material';
 import { AddressForm } from './address-comp';
 import { SocialForm } from './social-comp';
 import { PhoneForm } from './phone-comp';
 import { EmailForm } from './email-comp';
+import { ImageComponent } from './image-comp';
 import {Card} from '@mui/material';
 import {IconButton} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
@@ -20,7 +19,6 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { BrowserView, MobileView } from 'react-device-detect';
-import moment from 'moment';
 
   
 export const GeneralUserForm = (props)=> {
@@ -147,10 +145,20 @@ export const GeneralUserForm = (props)=> {
         console.log("UPDATEEMAILS");
     }
 
+    const updateImage = (props) =>{
+        console.log("UPDATING IMAGE",props);
+    }
+
+    const updateAddress = (props) =>{
+        const oldAd = user.address;
+        oldAd[0] = props.data;
+        setUser({...user, "address":oldAd})
+       
+    }
+
     useEffect(() =>{
        
         console.log("EN USE EFFECT DE GENERAL USER FORM")
-        //console.log(user);
         updateUser(user);
        
         
@@ -162,8 +170,6 @@ export const GeneralUserForm = (props)=> {
                 Main Data
             </Typography>
             
-            
-          
                 <Grid 
                     container
                     direction="row"
@@ -172,13 +178,7 @@ export const GeneralUserForm = (props)=> {
                     spacing={2}
                 >
                     <Grid item xs={1} sm={1}>
-                        <Avatar
-                            alt={user.firstname + " "+ user.lastname}
-                            src={user.picture.fileName}
-                            sx={{ width: 56, height: 56 }}
-                        >
-
-                        </Avatar>
+                        <ImageComponent data={user.picture.fileName} updateParent={updateImage}/>
                     </Grid>
                     <Grid item xs={11} sm={2}>
                         <TextField
@@ -292,7 +292,7 @@ export const GeneralUserForm = (props)=> {
                    
                     <Grid item xs={12} sm={12}>
                     <Typography variant="h4" component="h3" color="text.secondary" >Address</Typography>
-                        <AddressForm />
+                        <AddressForm data={user.address} updateParent={updateAddress}/>
                     </Grid>
 
                     <Grid item xs={12} sm={12}>

@@ -36,7 +36,9 @@ const theme = createTheme(themeOptions);
 export const LoginPage = ({ ...others }) =>{
     const [showPassword, setShowPassword] = useState(false);
     const [checked, setChecked] = useState(true);
+    // eslint-disable-next-line 
     const [strength, setStrength] = useState(0);
+    // eslint-disable-next-line 
     const [level, setLevel] = useState();
     const [googleError, setGoogleError]= useState('');
     const [errorMsg, setErrorMsg] = useState('');

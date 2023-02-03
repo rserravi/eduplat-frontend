@@ -14,7 +14,7 @@ import { useDispatch } from 'react-redux';
 import { fetchUser } from 'src/api/userApi';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { SET_AUTH_USER, ADD_SOCIAL } from 'src/store/userSlice';
+import { SET_AUTH_USER } from 'src/store/userSlice';
 import { useNavigate } from 'react-router-dom';
 
 

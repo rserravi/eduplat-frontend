@@ -2,69 +2,82 @@ import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Card from '@mui/material/Card';
 import { Autocomplete, Box, Grid } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
 import { countries } from 'src/utils/countries';
 
 export const AddressForm = (props) =>{
-    const user =  useSelector(state => state.user);
+    const data = props.data;
+    const updateP = props.updateParent;
    
-
-    const InitData = {
-        streetaddress: user.streetaddress,
-        city: user.city,
-        state: user.state,
-        postalCode: user.postalCode,
-        country: user.country,
-    }
-    const dispatch = useDispatch();
-    const [addressFrmDta, setAddressFrmData] = React.useState(InitData);
-    React.useEffect (()=>{
-        //console.log(props)
-        if (props.editUser){
-            const InitData2 = {
-                streetaddress: user.streetaddress,
-                city: user.city,
-                state: user.state,
-                postalCode: user.postalCode,
-                country: user.country,
-            }
-            setAddressFrmData(InitData2)
-        }
-    
-      },[props,user.streetaddress,user.city,user.state, user.postalCode,user.country])
+    const [addressFrmDta, setAddressFrmData] = React.useState(data);
 
     const handleChangeStreetAddress = (event) => {
+        event.preventDefault();
         setAddressFrmData({...addressFrmDta, "streetaddress": event.target.value})
-        //dispatch(nc_streetaddress_Commit(event.target.value))
-    
+        updateP({"data":{
+            "streetaddress":event.target.value, 
+            "city":addressFrmDta.city,
+            "state":addressFrmDta.state,
+            "postalCode":addressFrmDta.postalCode,
+            "country":addressFrmDta.country,
+            }, 
+        });
       };
 
     const handleChangeCity = (event) => {
+        event.preventDefault();
         setAddressFrmData({...addressFrmDta, "city": event.target.value})
-        //dispatch(nc_city_Commit(event.target.value))
+        updateP({"data":{
+            "streetaddress":addressFrmDta.streetaddress,
+            "city":event.target.value,
+            "state":addressFrmDta.state,
+            "postalCode":addressFrmDta.postalCode,
+            "country":addressFrmDta.country,
+            }, 
+        });
 
     };
 
     const handleChangeState= (event) => {
+        event.preventDefault();
         setAddressFrmData({...addressFrmDta, "state": event.target.value})
-        //dispatch(nc_state_Commit(event.target.value))
+        updateP({"data":{
+            "streetaddress":addressFrmDta.streetaddress,
+            "city":addressFrmDta.city,
+            "state":event.target.value,
+            "postalCode":addressFrmDta.postalCode,
+            "country":addressFrmDta.country,
+            }, 
+        });
 
     };
 
     const handleChangePostalCode= (event) => {
+        event.preventDefault();
         setAddressFrmData({...addressFrmDta, "postalCode": event.target.value})
-        //dispatch(nc_postalCode_Commit(event.target.value))
-
+        updateP({"data":{
+            "streetaddress":addressFrmDta.streetaddress,
+            "city":addressFrmDta.city,
+            "state":addressFrmDta.state,
+            "postalCode":event.target.value,
+            "country":addressFrmDta.country,
+            }, 
+        });
     };
 
     const handleChangeCountry= (event) => {
+        event.preventDefault();
         console.log(event.target.childNodes)
         if (event.target.childNodes[1]){
             setAddressFrmData({...addressFrmDta, "country": event.target.childNodes[1].data})
-            //dispatch(nc_country_Commit(event.target.childNodes[1].data))
+            updateP({"data":{
+                "streetaddress":addressFrmDta.streetaddress,
+                "city":addressFrmDta.city,
+                "state":addressFrmDta.state,
+                "postalCode":addressFrmDta.postalCode,
+                "country":event.target.childNodes[1].data,
+                }, 
+            });
         }
-         // dispatch(nc_countryPhoneCode_Commit(event.target.childNodes[5].data))
-
     };
 
     return (

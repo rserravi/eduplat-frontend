@@ -1,6 +1,3 @@
-// material-ui
-import { useTheme } from '@mui/material/styles';
-import { themeOptions } from 'src/theme/theme';
 import { Typography } from '@mui/material';
 import React from 'react';
 
@@ -8,7 +5,7 @@ import React from 'react';
 // ==============================|| LOGO SVG ||============================== //
 
 const Logo = () => {
-    const theme = useTheme(themeOptions);
+   
 
     return (
         <React.Fragment>

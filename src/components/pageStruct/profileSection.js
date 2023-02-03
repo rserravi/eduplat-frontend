@@ -56,9 +56,11 @@ const ProfileSection = () => {
     const navigate = useNavigate();
     const matchesXs = useMediaQuery(theme.breakpoints.down('md'));
     const user = useSelector(state => state.user)
+    // eslint-disable-next-line 
     const [alertsOpen, setAlertsOpen]= useState(false);
     const [anchorElUser, setAnchorElUser] = useState(null);
     const userOpen = Boolean(anchorElUser);
+    // eslint-disable-next-line 
     const [setupOpen, setSetupOpen]= useState(false);
     const [value, setValue] = useState('');
     const [sdm, setSdm] = useState(true);
