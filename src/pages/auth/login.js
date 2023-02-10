@@ -79,14 +79,14 @@ export const LoginPage = ({ ...others }) =>{
 
     // eslint-disable-next-line
     const handleGoogle = async (response) => {
-        console.log("HANDLEGOOGLE1");
+        //console.log("HANDLEGOOGLE1");
         dispatch(SET_LOADING, true);
         await userGoogleLogin(response).then(async result=>{
             if (result.status==='error'){
                 setErrorMsg(result.message);
                 
             } else {
-                console.log(result);
+                //console.log(result);
                 navigate("/dashboard");
             
             }

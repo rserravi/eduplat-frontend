@@ -1,47 +1,29 @@
-import { Typography } from '@mui/material';
 import React from 'react';
-
+import {Image} from 'mui-image';
+import logoWhite from 'src/assets/images/Statos_Logo_Hor_WhiteOnTransp_SM.png';
+import logoBlack from 'src/assets/images/Statos_Logo_Hor_BlackOnTransp_SM.png';
 
 // ==============================|| LOGO SVG ||============================== //
 
-const Logo = () => {
+const Logo = (props) => {
+
+    var logoImg = null;
+    const color = props.color;
+    const size = props.size;
+
+
+    if (color === "white" || color=== "White"){
+        logoImg = logoWhite
+    }
+    else{
+        logoImg = logoBlack
+    }
    
 
     return (
         <React.Fragment>
-        <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-            display: { xs: 'flex', md: 'none' },
-            flexGrow: 1,
-            fontFamily: 'monospace',
-            fontWeight: 700,
-            letterSpacing: '.2rem',
-            color: 'inherit',
-            textDecoration: 'none',
-            }}
-        >
-            FUTSTATS
-        </Typography>
-        <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-            display: { xs: 'none', md: 'flex' },
-            fontFamily: 'monospace',
-            fontWeight: 700,
-            letterSpacing: '.3rem',
-            color: 'inherit',
-            textDecoration: 'none',
-            }}
-        >
-            FUTSTATS
-        </Typography>
+            <Image src={logoImg} width={150
+            }  />
         </React.Fragment>
     );
 };

@@ -8,6 +8,8 @@ const userSlice = createSlice({
         firstname:'',
         lastname:'',
         type:[],
+        gender:'',
+        dni:'',
         picture:{
             fileName:'',
             uploadTime:'',
@@ -33,12 +35,14 @@ const userSlice = createSlice({
     },
     reducers: {
         SET_AUTH_USER(state, action) {
-            console.log("EN SETAUTHUSER", action.payload);
+            //console.log("EN SETAUTHUSER", action.payload);
             state._id = action.payload._id;
             state.username = action.payload.username;
             state.firstname = action.payload.firstname;
             state.lastname = action.payload.lastname;
             state.type = action.payload.type;
+            state.gender = action.payload.gender;
+            state.dni = action.payload.dni;
             state.picture = action.payload.picture;
             state.refreshJWT = action.payload.refreshJWT;
             state.isVerified = action.payload.isVerified;

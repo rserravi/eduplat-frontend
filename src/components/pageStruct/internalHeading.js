@@ -64,7 +64,7 @@ const InternalHeader = (props) => {
               >
                 <MenuIcon />
               </IconButton>
-              {!open && <Logo />}
+              {!open && <Logo size={80}/>}
               <Typography
                 component="h1"
                 variant="h6"

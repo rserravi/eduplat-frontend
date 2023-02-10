@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-//import { useNavigate } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -17,7 +16,7 @@ import { Copyright } from 'src/components/pageStruct/copyright';
 import Logo from 'src/ui-component/Logo';
 import { Button } from '@mui/material';
 import { GeneralUserForm } from 'src/components/form-components/generalUserForm';
-import { TypeUserForm } from 'src/components/typeUserForm';
+import { TypeUserForm } from 'src/components/form-components/edit-type';
 import { userUpdate } from 'src/api/userApi';
 import { SET_AUTH_USER } from 'src/store/userSlice';
 
@@ -30,7 +29,6 @@ export const EditProfile = ({ ...others }) =>{
     const storedUser = useSelector(state => state.user)
     const [user, setUser] = useState(JSON.parse(JSON.stringify(storedUser)));
     const dispatch = useDispatch();
-    //const navigate = useNavigate();
     const [activeStep, setActiveStep] = React.useState(0);
     const [skipped, setSkipped] = React.useState(new Set());
   
@@ -73,8 +71,6 @@ export const EditProfile = ({ ...others }) =>{
   
     const handleSkip = () => {
       if (!isStepOptional(activeStep)) {
-        // You probably want to guard against something like this,
-        // it should never occur unless someone's actively trying to break something.
         throw new Error("You can't skip a step that isn't optional.");
       }
   
@@ -91,7 +87,7 @@ export const EditProfile = ({ ...others }) =>{
     };
   
     const updateUser= (data)=>{
-      console.log(data);
+      //console.log(data);
       setUser(data);
     }
        
@@ -158,17 +154,17 @@ export const EditProfile = ({ ...others }) =>{
                             onClick={handleBack}
                             sx={{ mr: 1 }}
                             >
-                            Back
+                              Back
                             </Button>
                             <Box sx={{ flex: '1 1 auto' }} />
-                            {isStepOptional(activeStep) && (
+                              {isStepOptional(activeStep) && (
                             <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
                                 Skip
                             </Button>
                             )}
 
                             <Button onClick={handleNext}>
-                            {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                              {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                             </Button>
                         </Box>
                     </React.Fragment>

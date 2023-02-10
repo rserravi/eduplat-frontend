@@ -34,7 +34,7 @@ export const userFormRegistrationApi = (frmData)=>{
 }
 
 export const userLogin = (frmData) =>{
-    console.log("USER LOGIN", frmData)
+    //console.log("USER LOGIN", frmData)
     return new Promise( async(resolve, reject)=>{
         try {
             const res = await axios.post(loginUrl, frmData);
@@ -53,7 +53,7 @@ export const userLogin = (frmData) =>{
 }
 
 export const userGoogleLogin = (frmData) =>{
-    console.log("USER Google LOGIN", frmData)
+    //console.log("USER Google LOGIN", frmData)
     return new Promise( async(resolve, reject)=>{
         try {
             const res = await axios.post(googleLoginUrl, frmData);
@@ -64,7 +64,7 @@ export const userGoogleLogin = (frmData) =>{
                   JSON.stringify({ refreshJWT: res.data.refreshJWT })
                 );
             }
-            console.log("DATA EN USERGOOGLELOGIN",res.data);
+            //console.log("DATA EN USERGOOGLELOGIN",res.data);
             resolve(res.data);
         } catch (error) {
             reject(error);
@@ -140,7 +140,7 @@ export const fetchUser = () =>{
         try {
 
             const accessJWT = sessionStorage.getItem("accessJWT");
-            console.log("ACCESSJWT iN FETCHUSER",accessJWT);
+            //console.log("ACCESSJWT iN FETCHUSER",accessJWT);
             if (!accessJWT){
                 reject("Token not found!");
             }

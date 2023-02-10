@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
-import { ButtonGroup, Paper, Typography } from "@mui/material";
+import { ButtonGroup, MenuItem, Paper, Typography } from "@mui/material";
 import { useFormik } from 'formik';
 import {TextField} from '@mui/material';
 import {Grid} from '@mui/material';
@@ -19,6 +19,7 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { BrowserView, MobileView } from 'react-device-detect';
+import { genderTypes } from 'src/utils/gender';
 
   
 export const GeneralUserForm = (props)=> {
@@ -32,6 +33,8 @@ export const GeneralUserForm = (props)=> {
           picture: user.picture.fileName,
           firstname: user.firstname,
           lastname: user.lastname,
+          gender: user.gender,
+          dni: user.dni,
           emails: user.emails,
           address: user.address,
           phones: user.phones,
@@ -57,6 +60,16 @@ export const GeneralUserForm = (props)=> {
     const handleLastnameChange = (event)=>{
         event.preventDefault();
         setUser({...user, "lastname": event.target.value})
+    }
+
+    const handleDniChange = (event)=>{
+        event.preventDefault();
+        setUser({...user, "dni": event.target.value})
+    }
+
+    const handleGenderChange = (event)=>{
+        event.preventDefault();
+        setUser({...user, "gender": event.target.value})
     }
 
     const handleBirthdateChange = (event)=>{
@@ -158,7 +171,7 @@ export const GeneralUserForm = (props)=> {
 
     useEffect(() =>{
        
-        console.log("EN USE EFFECT DE GENERAL USER FORM")
+        //console.log("EN USE EFFECT DE GENERAL USER FORM")
         updateUser(user);
        
         
@@ -180,7 +193,7 @@ export const GeneralUserForm = (props)=> {
                     <Grid item xs={1} sm={1}>
                         <ImageComponent data={user.picture.fileName} updateParent={updateImage}/>
                     </Grid>
-                    <Grid item xs={11} sm={2}>
+                    <Grid item xs={12} sm={3}>
                         <TextField
                             fullWidth
                             variant='standard'
@@ -193,7 +206,7 @@ export const GeneralUserForm = (props)=> {
                             helperText={formik.touched.username && formik.errors.username}
                         />
                     </Grid>
-                    <Grid item xs={12} sm={2}>
+                    <Grid item xs={12} sm={4}>
                         <TextField
                             fullWidth
                             required
@@ -207,7 +220,7 @@ export const GeneralUserForm = (props)=> {
                             helperText={formik.touched.firstname && formik.errors.firstname}
                         />
                     </Grid>
-                    <Grid item xs={12} sm={3}>
+                    <Grid item xs={12} sm={4}>
                         <TextField
                             fullWidth
                             required
@@ -221,7 +234,7 @@ export const GeneralUserForm = (props)=> {
                             helperText={formik.touched.lastname && formik.errors.lastname}
                         />
                     </Grid>
-                    <Grid item xs={12} sm={2}>
+                    <Grid item xs={12} sm={4}>
                         <LocalizationProvider dateAdapter={AdapterMoment}>
                             <BrowserView>
                                 <DesktopDatePicker
@@ -242,6 +255,38 @@ export const GeneralUserForm = (props)=> {
                                     />
                             </MobileView>
                         </LocalizationProvider>
+                    </Grid>
+
+                    <Grid item xs={12} sm={4}>
+                        <TextField
+                            fullWidth
+                            select
+                            variant='standard'
+                            id="Gender"
+                            name="gender"
+                            label="Gender"
+                            value={user.gender}
+                            onChange={handleGenderChange}
+
+                        >{genderTypes.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                              {option.label}
+                            </MenuItem>
+                          ))}
+
+                        </TextField>
+                    </Grid>
+
+                    <Grid item xs={12} sm={4}>
+                        <TextField
+                            fullWidth
+                            variant='standard'
+                            id="dni"
+                            name="dni"
+                            label="DNI"
+                            value={user.dni}
+                            onChange={handleDniChange}
+                        />
                     </Grid>
 
                     <Grid item xs={12} sm={12}>

@@ -59,13 +59,13 @@ export const RegisterPage = ({ ...others }) =>{
     };
 
     const handleSubmit = async (event) => {
-        console.log("EN HANDLE SUBMINT", event);
+       // console.log("EN HANDLE SUBMINT", event);
         dispatch(SET_LOADING, true);
         await userFormRegistrationApi(event).then(result=>{
             if (result.status==='error'){
                 setErrorMsg(result.message);
             } else {
-                console.log(result.result);
+               // console.log(result.result);
                 dispatch(SET_AUTH_USER(result.result));
                 navigate("/dashboard");
             }
@@ -85,7 +85,7 @@ export const RegisterPage = ({ ...others }) =>{
                 setErrorMsg(result.message);
                 
             } else {
-                console.log(result.result);
+                //console.log(result.result);
                 dispatch(SET_AUTH_USER(result.result));
                 navigate("/dashboard");
             }

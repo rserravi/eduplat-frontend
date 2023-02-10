@@ -39,7 +39,7 @@ const MainLayout = () => {
         const loadUser = async () =>{
             try {
                 await fetchUser().then((response)=>{
-                    console.log(response)
+                    //console.log(response)
                     if (response.user){
                         dispatch (SET_AUTH_USER(response.user));
                     }
@@ -59,7 +59,7 @@ const MainLayout = () => {
         async function fetchData(){
             if(!user ||user._id===""){
                 const loadedUser =  loadUser()
-                console.log(loadedUser)
+                //console.log(loadedUser)
             }
         }
         fetchData()

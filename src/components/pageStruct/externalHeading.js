@@ -89,7 +89,7 @@ export const ExternalHeading = () =>{
                     ))}
                     </Menu>
                 </Box>
-                <Logo />
+                <Logo color="white"/>
                 <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', }, ml:4 }}>
                     {pages.map((page) => (
                     <Button
