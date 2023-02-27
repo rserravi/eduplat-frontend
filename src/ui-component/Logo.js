@@ -1,7 +1,7 @@
 import React from 'react';
 import {Image} from 'mui-image';
-import logoWhite from 'src/assets/images/Statos_Logo_Hor_WhiteOnTransp_SM.png';
-import logoBlack from 'src/assets/images/Statos_Logo_Hor_BlackOnTransp_SM.png';
+import logoWhite from 'src/assets/images/LOGO-Eduplat-W.png';
+import logoBlack from 'src/assets/images/LOGO-Eduplat-W.png';
 
 // ==============================|| LOGO SVG ||============================== //
 

@@ -15,8 +15,9 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Logo from 'src/ui-component/Logo';
+import { SearchInBar } from '../extendedMui/searchInBar';
 
-const pages = ['how it works', 'prices', 'blog', 'downloads'];
+const pages = ['platform', 'events', 'about us', 'volunteers'];
 
 export const ExternalHeading = () =>{
     const user = useSelector(state => state.user)
@@ -91,6 +92,10 @@ export const ExternalHeading = () =>{
                 </Box>
                 <Logo color="white"/>
                 <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', }, ml:4 }}>
+                    <SearchInBar/>
+                </Box>
+                
+                <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', }, ml:4 }}>
                     {pages.map((page) => (
                     <Button
                         key={page}
@@ -101,16 +106,19 @@ export const ExternalHeading = () =>{
                     </Button>
                     ))}
                 </Box>
+               
+
                 {user.loaded?<>
                     <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Enter to Futstats">
+                        <Tooltip title="Enter to EduPlat">
                         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                             <Avatar alt={user.name + user.lastname} src={user.picture} />
                         </IconButton>
                         </Tooltip>
                     </Box>
-                </>:<>
-                <ButtonGroup variant="contained" aria-label="outlined primary button group">
+                </>:
+                <>
+                    <ButtonGroup variant="contained" aria-label="outlined primary button group">
                         <Button variant='contained' color='secondary' onClick={handleLoginClick} >
                             Login
                         </Button>
@@ -121,6 +129,9 @@ export const ExternalHeading = () =>{
                 </>}        
                 
                 </Toolbar>
+                <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, mb:2, mt:1 }}>
+                    <SearchInBar/>
+                </Box>
             </Container>
             </AppBar>
         </React.Fragment>

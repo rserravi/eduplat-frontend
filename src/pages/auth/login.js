@@ -67,7 +67,7 @@ export const LoginPage = ({ ...others }) =>{
                 setErrorMsg(result.message);
             } else {
                 console.log(result.result);
-                navigate("/dashboard");
+                navigate("/");
             }
         }
         ).catch(error =>{
@@ -87,7 +87,7 @@ export const LoginPage = ({ ...others }) =>{
                 
             } else {
                 //console.log(result);
-                navigate("/dashboard");
+                navigate("/");
             
             }
         }

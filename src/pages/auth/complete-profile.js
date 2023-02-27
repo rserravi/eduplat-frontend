@@ -19,6 +19,8 @@ import { GeneralUserForm } from 'src/components/form-components/generalUserForm'
 import { TypeUserForm } from 'src/components/form-components/edit-type';
 import { userUpdate } from 'src/api/userApi';
 import { SET_AUTH_USER } from 'src/store/userSlice';
+import { DefineRoleForm } from 'src/components/form-components/define-role-Form';
+import { RoleForm } from 'src/components/form-components/role-form';
 
 
 const theme = createTheme(themeOptions);
@@ -94,6 +96,7 @@ export const EditProfile = ({ ...others }) =>{
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" >
+              
                 <CssBaseline />
                 <Box
                     sx={{
@@ -145,7 +148,7 @@ export const EditProfile = ({ ...others }) =>{
                     <React.Fragment>
                         
                         {activeStep===0?<GeneralUserForm updateUser={updateUser} />:<></>}
-                        {activeStep===1?<TypeUserForm />:<></>}
+                        {activeStep===1?<RoleForm updateUser={updateUser} />:<></>}
                         
                         <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                             <Button

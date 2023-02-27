@@ -13,7 +13,7 @@ export const themeOptions = {
       main: '#909463',
       light:'#ffdcc4',
       dark:'#2a1708',
-      contrast:'#ffffff',
+      contrast:'#888888',
     },
     terciary:{
        main:'#909463',
@@ -21,6 +21,7 @@ export const themeOptions = {
        dark:'#1b1d00',
        contrast:'#ffffff',
     },
+
     grey: {
         50: '#fafafa',
         100: '#f5f5f5',
@@ -42,6 +43,11 @@ export const themeOptions = {
     common: {
         black: '#000000',
         white: '#ffffff'
+    },
+    inversecommon: {
+        main: '#ffffff',
+        white: '#ffffff',
+        black: '#000000',
     }
   },
   shape: {

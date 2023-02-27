@@ -8,8 +8,8 @@ export const Copyright = (props)=> {
         <React.Fragment>
             <Typography variant="body2" color="text.secondary" align="center" {...props}>
                 {'Copyright © '}
-                <Link color="inherit" href="https://rubotic.com/">
-                    Rubotic.com
+                <Link color="inherit" href="https://eduplat.org/">
+                    EduPlat.org
                 </Link>{' '}
                 {new Date().getFullYear()}
                 {'.'}

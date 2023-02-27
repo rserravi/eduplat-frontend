@@ -7,7 +7,13 @@ const userSlice = createSlice({
         username:'',
         firstname:'',
         lastname:'',
-        type:[],
+        type:{
+            typeDef:'',
+            linkId:'',
+            sensors:'',
+            parenting:'',
+            teams:''
+        },
         gender:'',
         dni:'',
         picture:{

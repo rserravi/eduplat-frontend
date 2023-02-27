@@ -6,14 +6,25 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions } from 'src/theme/theme';
 import { ExternalHeading } from 'src/components/pageStruct/externalHeading';
+import EduSourceCard from 'src/ui-component/edusource/edusourcecard';
+import { Resources } from 'src/components/resources/resources';
+import { Copyright } from 'src/components/pageStruct/copyright';
 
 const theme = createTheme(themeOptions);
+
+const getRandomImageUrl = () =>{
+    const num = Math.floor(Math.random() * 7) + 1;
+    const url = 'url(/images/background'+num.toString()+'.jpg)';
+    console.log(url);
+    return url;
+
+}
 
 export const LandingPage = () =>{
     return (
         <React.Fragment>
             <ThemeProvider theme={theme}>
-                <Grid container component="main" sx={{ height: '100vh' }}>
+                <Grid container component="main" sx={{ height: '70vh' }}>
                     <CssBaseline />
                     <Grid
                         item
@@ -21,7 +32,7 @@ export const LandingPage = () =>{
                         sm={12}
                         md={12}
                         sx={{
-                            backgroundImage: 'url(/images/background1.jpg)',
+                            backgroundImage: getRandomImageUrl(),
                             backgroundRepeat: 'no-repeat',
                             backgroundColor: (t) =>
                                 t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -39,9 +50,24 @@ export const LandingPage = () =>{
                             alignItems="flex-end"
                             sx = {{pt:20, pb:10, pr:5, pl:20}}
                             >
-                            <Grid item>
+                            <Grid item backgroundColor= 'primary.main'>
+                                <Typography variant='h2' component='h3' color='primary.contrast'>
+                                    EduPlat.org es la Plataforma Educativa
+                                </Typography>
+                            </Grid>
+                            <Grid item backgroundColor= 'primary.main'>
                                 <Typography variant='h2' component='h3' color='primary.contrastText'>
-                                    Connect players, parents, coaches <br/> and clubs.
+                                 donde estudiantes, familias, escuelas, profesores
+                                </Typography>
+                            </Grid>
+                            <Grid item backgroundColor= 'primary.main'>
+                                <Typography variant='h2' component='h3' color='primary.contrastText'>
+                                y otros profesionales de la educación
+                                </Typography>
+                            </Grid>
+                            <Grid item backgroundColor= 'primary.main'>
+                                <Typography variant='h2' component='h3' color='primary.contrastText'>
+                                pueden colaborar compartiendo recursos.
                                 </Typography>
                             </Grid>
                             <Grid item>
@@ -49,20 +75,10 @@ export const LandingPage = () =>{
                                     read more...
                                 </Typography>
                             </Grid>
-                            <BrowserView>
-                                <Grid item sx={{mt:5}}>
-                                    <Typography variant='h2' component='h3' color='primary.contrastText'>
-                                    Record stats and allow individual <br/> and team improvement.
-                                    </Typography>
-                                </Grid>
-                                <Grid item>
-                                    <Typography variant='a' component='a' color='primary.contrastText'>
-                                        read more...
-                                    </Typography>
-                                </Grid>
-                            </BrowserView>
                         </Grid>
                     </Grid>
+                    <Resources />
+                    <Copyright />
                 </Grid>
             </ThemeProvider>
 
