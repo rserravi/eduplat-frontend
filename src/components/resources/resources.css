@@ -1,0 +1,60 @@
+.row {
+  
+    height: 500px;
+    position: relative;
+  }
+
+.row_posters {
+    display: flex;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    padding-top: 20px;
+    width: 100vw;
+    color: white;
+}
+
+.row_posters::-webkit-scrollbar {
+    display: none;
+}
+
+
+.row_poster {
+    object-fit: contain;
+    width: 300px;
+    min-width: 300px;
+    transition: transform 450ms;
+    margin-right: 10px;
+    
+}
+
+
+.row_poster:hover {
+    transform: scale(1.08) !important;
+    opacity: 1;
+}
+
+.background {
+    display: flex;
+    height: 100%;
+  }
+  
+  .left {
+    background: black;
+    width: 30%;
+    position: relative;
+  }
+  
+  .left:before {
+    content: '';
+    position: absolute;
+    background-image: linear-gradient(to right,#000,transparent);
+    top: 0;
+    bottom: 0;
+    left: 100%;
+    width: 275px;
+  }
+  
+  .right {
+    background: green;
+    width: 70%;
+  }

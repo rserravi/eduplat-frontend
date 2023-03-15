@@ -9,6 +9,12 @@ import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import { Badge, Button } from '@mui/material';
+import CommentTwoToneIcon from '@mui/icons-material/CommentTwoTone';
+import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
+import LinkOffTwoToneIcon from '@mui/icons-material/LinkOffTwoTone';
+import ReportOffTwoToneIcon from '@mui/icons-material/ReportOffTwoTone';
+
 
 export const mainListItems = (
   <React.Fragment>
@@ -48,13 +54,13 @@ export const mainListItems = (
 export const secondaryListItems = (
   <React.Fragment>
     <ListSubheader component="div" inset>
-      Saved reports
+      Valorate
     </ListSubheader>
     <ListItemButton>
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="Current month" />
+      <ListItemText primary="See Comments" />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
@@ -70,3 +76,57 @@ export const secondaryListItems = (
     </ListItemButton>
   </React.Fragment>
 );
+
+export const DrawerValorations = (props) =>{
+  const {edusource} = props;
+  const valorationNumber = edusource.valorations.length;
+  const seeValorations = (e)=>{
+
+  }
+
+  const addOk = (e) =>{
+
+  }
+
+  const addNotOk = (e)=>{
+
+  }
+
+  const reportBrokenLink = (e) =>{
+
+  }
+
+  return (
+    <React.Fragment>
+    <ListSubheader component="div" inset>
+      Value the resource
+    </ListSubheader>
+    <ListItemButton>
+      <ListItemIcon> 
+        <Badge color="secondary" badgeContent={valorationNumber} showZero max={99}>
+              <CommentTwoToneIcon />
+          </Badge>
+      </ListItemIcon>
+      <ListItemText primary="See Comments" />
+    </ListItemButton>
+    <ListItemButton>
+      <ListItemIcon>
+        <FavoriteTwoToneIcon />
+      </ListItemIcon>
+      <ListItemText primary="Valorate" />
+    </ListItemButton>
+    <ListItemButton>
+      <ListItemIcon>
+        <LinkOffTwoToneIcon />
+      </ListItemIcon>
+      <ListItemText primary="Broken Link?" />
+    </ListItemButton>
+    <ListItemButton>
+      <ListItemIcon>
+        <ReportOffTwoToneIcon />
+      </ListItemIcon>
+      <ListItemText primary="Inapropiate content?" />
+    </ListItemButton>
+  </React.Fragment>
+  )
+}

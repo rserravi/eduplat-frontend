@@ -1,11 +1,13 @@
 import { lazy } from 'react';
+import { EdusourcePage } from 'src/pages/edusource/edusource';
+import { UserPage } from 'src/pages/user/userPage';
 
 // project imports
 import MainLayout from '../layout/MainLayout';
 import Loadable from '../ui-component/Loadable';
 
 // dashboard routing
-const Dashboard = Loadable(lazy(() => import('src/pages/dashboard')));
+//const Dashboard = Loadable(lazy(() => import('src/pages/dashboard')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -14,17 +16,12 @@ const MainRoutes = {
     element: <MainLayout />,
     children: [
         {
-            path: 'dashboard',
-            element: <Dashboard />
-        }, 
+            path: '/edusource/:id',
+            element: <EdusourcePage />
+        },
         {
-            path: '/dashboard',
-            children: [
-                {
-                    path: 'default',
-                    element: <Dashboard />
-                }
-            ]
+            path: 'user/:id',
+            element: <UserPage />
         }
     ]
 };

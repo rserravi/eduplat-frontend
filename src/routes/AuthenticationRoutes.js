@@ -6,7 +6,6 @@ import MinimalLayout from '../layout/MinimalLayout';
 import {LoginPage} from 'src/pages/auth/login';
 import {RegisterPage} from 'src/pages/auth/register';
 import {LandingPage} from 'src/pages/landingPage';
-import { EditProfile } from 'src/pages/auth/complete-profile';
 
 // ==============================|| AUTHENTICATION ROUTING ||============================== //
 
@@ -25,10 +24,6 @@ const AuthenticationRoutes = {
         {
             path: '/register',
             element: <RegisterPage />
-        },
-        {
-            path: '/completeProfile',
-            element: <EditProfile />
         }
     ]
 };

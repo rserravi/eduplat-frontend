@@ -5,7 +5,8 @@ const customizationSlice = createSlice({
     name: 'custom',
     initialState: {
         fontFamily: config.fontFamily,
-        borderRadius: config.borderRadius
+        borderRadius: config.borderRadius,
+        drawerWidth: 240
     },
     reducers: {
         SET_FONT_FAMILY(state, action) {
@@ -17,9 +18,14 @@ const customizationSlice = createSlice({
             state.push({
                 opened: action.payload.borderRadius
             });
+        },
+        SET_DRAWER_WIDTH(state, action){
+            state.drawerWidth = action.payload
         }
+
+
     }
 });
 
-export const { SET_FONT_FAMILY, SET_BORDER_RADIUS } = customizationSlice.actions;
+export const { SET_FONT_FAMILY, SET_BORDER_RADIUS, SET_DRAWER_WIDTH } = customizationSlice.actions;
 export default customizationSlice.reducer;

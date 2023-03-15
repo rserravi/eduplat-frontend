@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -21,8 +20,16 @@ export default function EduSourceCard(props) {
 
    const subh =   discipline + ",  " + date;
 
+  const visitPromoter = (event)=>{
+    console.log("VISITANDO PROMOTER ", autor)
+  }
+
+  const shareCard = (event)=>{
+    console.log("SHARING " + title);
+  }
+
   return (
-    <Card sx={{ maxWidth: 340 }}>
+    <Card >
       <CardHeader
         avatar={
           <Avatar 
@@ -30,6 +37,7 @@ export default function EduSourceCard(props) {
             aria-label="autorAvatar"
             alt={autor}
             src={autorAvatar}
+            onClick={visitPromoter}
             >
             {autorAvatar?<></>:<>{autor.charAt(1).toUpperCase()}</>}
           </Avatar>
@@ -57,11 +65,11 @@ export default function EduSourceCard(props) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <Button size="small"> by {autor}</Button>
+        <Button size="small" onClick={visitPromoter}> by {autor}</Button>
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
-        <IconButton aria-label="share">
+        <IconButton aria-label="share" onClick={shareCard}>
           <ShareIcon />
         </IconButton>
         

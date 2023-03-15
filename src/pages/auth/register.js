@@ -17,7 +17,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions } from 'src/theme/theme';
 import { Copyright } from 'src/components/pageStruct/copyright';
 import { strengthColor, strengthIndicator } from 'src/utils/password-strength';
-import { userGoogleRegistrationAPI, userFormRegistrationApi } from 'src/api/userApi';
+import { userGoogleRegistrationAPI, userFormRegistrationApi, checkUserNameExists } from 'src/api/userApi';
 import { SET_AUTH_USER, SET_LOADING } from 'src/store/userSlice';
 import Logo from 'src/ui-component/Logo';
 
@@ -41,6 +41,7 @@ export const RegisterPage = ({ ...others }) =>{
     const [level, setLevel] = useState();
     const [googleError, setGoogleError]= useState('');
     const [errorMsg, setErrorMsg] = useState('');
+    const [usernameExists, setUserNameExists] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -96,6 +97,14 @@ export const RegisterPage = ({ ...others }) =>{
         });
         
     };
+
+    const handleUserNameBlur = async (e) =>{
+        e.preventDefault();
+        const exists = await checkUserNameExists(e.target.value);
+        setUserNameExists(exists);
+        
+        
+    }
     
     useEffect(() => {
         /* global google */
@@ -176,12 +185,17 @@ export const RegisterPage = ({ ...others }) =>{
 
                     <Formik
                         initialValues={{
+                            username:'',
                             email:'',
                             firstname:'',
                             lastname:'',
                             password:''
                         }}
                         validationSchema={Yup.object().shape({
+                            username: Yup
+                                .string()
+                                .max(255)
+                                .required('Must provide an unique username'),
                             email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
                             password: Yup.string().max(255).required('Password is required')
                         })}
@@ -226,6 +240,35 @@ export const RegisterPage = ({ ...others }) =>{
                                             />
                                         </Grid>
                                         <Grid item xs={12}>
+                                            <FormControl fullWidth error={Boolean(touched.username && errors.username)} sx={{ ...theme.typography.customInput }}>
+                                                <InputLabel htmlFor="outlined-adornment-username-register">Username</InputLabel>
+                                                <OutlinedInput
+                                                    id="outlined-adornment-username-register"
+                                                    type="username"
+                                                    value={values.username}
+                                                    name="username"
+                                                    onBlur = {handleUserNameBlur}
+                                                    onChange={handleChange}
+                                                    inputProps={{}}
+                                                />
+                                                {touched.username && errors.username && (
+                                                    <FormHelperText error id="standard-weight-helper-username--register">
+                                                        {errors.username}
+                                                    </FormHelperText>
+                                                )}
+                                                {usernameExists && (
+                                                    <FormHelperText error id="standard-weight-helper-exists-text--register">
+                                                    Username alredy registered in database
+                                                    </FormHelperText>
+                                                )}
+                                                {values.username==="" && (
+                                                    <FormHelperText error id="standard-weight-helper-empty-text--register">
+                                                    UserName is required.
+                                                    </FormHelperText>
+                                                )}
+                                            </FormControl>
+                                        </Grid>
+                                        <Grid item xs={12}>
                                             <FormControl fullWidth error={Boolean(touched.email && errors.email)} sx={{ ...theme.typography.customInput }}>
                                                 <InputLabel htmlFor="outlined-adornment-email-register">Email Address</InputLabel>
                                                 <OutlinedInput
@@ -242,6 +285,7 @@ export const RegisterPage = ({ ...others }) =>{
                                                         {errors.email}
                                                     </FormHelperText>
                                                 )}
+                                                
                                             </FormControl>
                                         </Grid>
                                         <Grid item xs={12}>
@@ -345,6 +389,7 @@ export const RegisterPage = ({ ...others }) =>{
                                             <Button
                                                 type="submit"
                                                 fullWidth
+                                                disabled = {errors.password || errors.email || errors.username || usernameExists}
                                                 variant="contained"
                                                 sx={{ mt: 3, mb: 2 }}
                                                 >
@@ -366,7 +411,7 @@ export const RegisterPage = ({ ...others }) =>{
                         }
                     </Formik>
                 </Box>
-                <Copyright sx={{ mt: 5 }} />
+                <Copyright sx={{ mt: 5 }}  short="true"/>
             </Container>
         </ThemeProvider>
     );

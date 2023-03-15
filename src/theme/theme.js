@@ -38,7 +38,8 @@ export const themeOptions = {
     },
     background:{
         paper:  '#F3DFD2',
-        default: '#fffbff'
+        default: '#fffbff',
+        secondary: '#cccacc'
     },
     common: {
         black: '#000000',
@@ -163,12 +164,22 @@ export const themeOptions = {
         fontSize: '1.5rem'
     }
   },
+
+  components: {
+    MuiContainer: {
+      defaultProps: {
+        disableGutters: true,
+      },
+    },
+  },
+
   zIndex: {
     appBar: 1100,
     drawer: 1200,
     snacknar: 1400,
     tooltip: 1500
   },
+
   transitions: {
     duration: {
         shortest: 150,
@@ -222,7 +233,9 @@ export const themeOptions = {
     22: "0px 10px 14px -6px rgba(0,0,0,0.2),0px 22px 35px 3px rgba(0,0,0,0.14),0px 8px 42px 7px rgba(0,0,0,0.12)",
     23: "0px 11px 14px -7px rgba(0,0,0,0.2),0px 23px 36px 3px rgba(0,0,0,0.14),0px 9px 44px 8px rgba(0,0,0,0.12)",
     24: "0px 11px 15px -7px rgba(0,0,0,0.2),0px 24px 38px 3px rgba(0,0,0,0.14),0px 9px 46px 8px rgba(0,0,0,0.12)"
-  }
+  },
+
+
 };
 
    

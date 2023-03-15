@@ -62,3 +62,37 @@ export const findSocialIcon= (socialNet) =>{
 
   
 }
+
+export const getUserProfile = (network, user) =>{
+  var result = ""
+  switch (network) {
+    case "Facebook":
+      result= "https://www.facebook.com/"+user
+      break;
+    case "Twitter":
+      result= "https://twitter.com/"+user;
+      break;
+    case "Instagram":
+      result="https://www.instagram.com/"+user;
+      break;
+    case "Linkedin":
+      result="https://www.linkedin.com/in/"+user;
+      break;
+    case "Pinterest":
+      result="https://www.pinterest.com/"+user;
+      break;
+    case "Reddit":
+      result ="https://www.reddit.com/user/"+user;
+      break;
+    case "Youtube":
+      result ="https://www.youtube.com/channel/"+user;
+      break;
+    case "Twitch":
+      result ="https://www.twitch.tv/"+user;
+      break;
+    default:
+      result ="https://eduplat.org";
+      break;
+  }
+  return result;
+}

@@ -79,14 +79,14 @@ export const LoginPage = ({ ...others }) =>{
 
     // eslint-disable-next-line
     const handleGoogle = async (response) => {
-        //console.log("HANDLEGOOGLE1");
+        console.log("HANDLEGOOGLE1");
         dispatch(SET_LOADING, true);
         await userGoogleLogin(response).then(async result=>{
             if (result.status==='error'){
                 setErrorMsg(result.message);
                 
             } else {
-                //console.log(result);
+                console.log(result);
                 navigate("/");
             
             }
@@ -316,7 +316,7 @@ export const LoginPage = ({ ...others }) =>{
                                                 </Link>
                                             </Grid>
                                             <Grid item>
-                                                <Link href="#" variant="body2">
+                                                <Link href="/register" variant="body2">
                                                 {"Don't have an account? Sign Up"}
                                                 </Link>
                                             </Grid>
@@ -330,7 +330,7 @@ export const LoginPage = ({ ...others }) =>{
                         }
                     </Formik>
                 </Box>
-                <Copyright sx={{ mt: 5 }} />
+                <Copyright sx={{ mt: 5 }} short="true" />
             </Container>
         </ThemeProvider>
     );

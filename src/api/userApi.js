@@ -41,7 +41,7 @@ export const userLogin = (frmData) =>{
             if(res.data.status ==="success"){
                 sessionStorage.setItem("accessJWT", res.data.accessJWT);
                 localStorage.setItem(
-                  "futstats",
+                  "eduplat",
                   JSON.stringify({ refreshJWT: res.data.refreshJWT })
                 );
             }
@@ -60,7 +60,7 @@ export const userGoogleLogin = (frmData) =>{
             if(res.data.status ==="success"){
                 sessionStorage.setItem("accessJWT", res.data.accessJWT);
                 localStorage.setItem(
-                  "futstats",
+                  "eduplat",
                   JSON.stringify({ refreshJWT: res.data.refreshJWT })
                 );
             }
@@ -76,7 +76,7 @@ export const userGoogleLogin = (frmData) =>{
 export const fetchNewAccessJWT = () =>{
     return new Promise( async(resolve, reject)=>{
         try {
-            const {refreshJWT} = JSON.parse(localStorage.getItem("futstats"));
+            const {refreshJWT} = JSON.parse(localStorage.getItem("eduplat"));
             if (!refreshJWT){
                 reject("Token not found!");
             }
@@ -92,7 +92,7 @@ export const fetchNewAccessJWT = () =>{
             
         } catch (error) {
             if (error.message === "Request failed with status code 403"){
-                localStorage.removeItem("futstats");
+                localStorage.removeItem("eduplat");
             }
             reject(false);
         }
@@ -144,14 +144,14 @@ export const fetchUser = () =>{
             if (!accessJWT){
                 reject("Token not found!");
             }
-
-            
-            const res = await axios.get(userUrl, {
-                headers: {
-                    Authorization :accessJWT,
-                }
-            });
-            resolve(res.data);
+            else{
+                const res = await axios.get(userUrl, {
+                    headers: {
+                        Authorization :accessJWT,
+                    }
+                });
+                resolve(res.data);
+            }
             
         } catch (error) {
             console.log(error);
@@ -177,5 +177,51 @@ export const userLogout = async() =>{
     }
  }
 
+export const checkUserNameExists = (username)=>{
+    return new Promise( async(resolve, reject)=>{
+        try {
+            const res = await axios.get(userUrl+"/checkUser", {params:{
+                username
+            } 
+            });
+            if (res.data.status==="success"){
+                resolve(true);
+            }
+            else {
+                resolve(false);
+            }
+            
+        } catch (error) {
+            console.log(error);
+            reject(error.message);
+        }
+    })
+ }
+
+export const fetchUserbyId = (userId) =>{
+    return new Promise( async(resolve, reject)=>{
+        try {
+            const res = await axios.get(userUrl+"/fetchUser?userId="+userId);
+            resolve(res.data);
+            
+        } catch (error) {
+            console.log(error);
+            reject(error.message);
+        }
+    })
+}
+
+export const fetchUserByUsername = (username)=>{
+    return new Promise( async(resolve, reject)=>{
+        try {
+            const res = await axios.get(userUrl+"/fetchuserbyusername?username="+username);
+            resolve(res.data);
+            
+        } catch (error) {
+            console.log(error);
+            reject(error.message);
+        }
+    })
+}
 
 

@@ -73,9 +73,12 @@ const userSlice = createSlice({
                 media:"",
                 user:""
             })
+        },
+        SET_NULL(state){
+            state = [];
         }
     }
 });
 
-export const { SET_AUTH_USER, SET_LOADING, ADD_SOCIAL } = userSlice.actions;
+export const { SET_AUTH_USER, SET_LOADING, ADD_SOCIAL, SET_NULL } = userSlice.actions;
 export default userSlice.reducer;
