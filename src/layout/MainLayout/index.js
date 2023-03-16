@@ -15,11 +15,13 @@ import MainHeader from 'src/components/pageStruct/mainHeading';
 
 // ==============================|| MAIN LAYOUT ||============================== //
 
+var newMaxWidth  = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+
 const MainLayout = () => {
    
     return(
         <ThemeProvider theme={themeOptions} >
-            <Box sx={{ display: 'flex' }}>
+            <Box sx={{ display: 'flex', width:newMaxWidth }}>
                 <CssBaseline />
                
                 <Box

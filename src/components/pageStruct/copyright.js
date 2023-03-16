@@ -67,16 +67,24 @@ export const Copyright = (props)=> {
                         direction="column"
                         >
                         <Grid item>
-                            <Typography>Centro de Ayuda</Typography>
+                            <Link href='/legal/helpcenter' underline="hover">
+                            <Typography>Help Center</Typography>
+                            </Link>
                         </Grid>
                         <Grid item>
-                            <Typography>Términos de uso</Typography>
+                            <Link href='/legal/useterms' underline="hover">
+                            <Typography>Use Terms</Typography>
+                            </Link>
                         </Grid>
                         <Grid item>
-                            <Typography>Privacidad</Typography>
+                            <Link href='/legal/privacity' underline="hover">
+                            <Typography>Privacity</Typography>
+                            </Link>
                         </Grid>
                         <Grid item>
+                            <Link href='/legal/cookies' underline="hover">
                             <Typography>Cookies</Typography>
+                            </Link>
                         </Grid>
 
                     </Grid>
@@ -88,16 +96,24 @@ export const Copyright = (props)=> {
                         direction="column"
                         >
                         <Grid item>
+                            <Link href='https://www.bienesdar.org/' target="_blank" rel="noopener" underline="hover">
                             <Typography>Bienesdar.org</Typography>
+                            </Link>
                         </Grid>
                         <Grid item>
+                            <Link href='https://eduplat.org/' target="_blank" rel="noopener" underline="hover">
                             <Typography>Eduplat.org</Typography>
+                            </Link>
                         </Grid>
                         <Grid item>
-                            <Typography>Eventos</Typography>
+                            <Link href='/events' underline="hover">
+                            <Typography>Events</Typography>
+                            </Link>
                         </Grid>
                         <Grid item>
-                            <Typography>¿Cómo colaborar?</Typography>
+                            <Link href='https://docs.google.com/forms/d/e/1FAIpQLScCMmoGNuMGmMGQdsUGqtSqO-UhzQZrMey9UgEBjWSJd4KHHw/viewform/' target="_blank" rel="noopener" underline="hover">
+                            <Typography>How to collaborate?</Typography>
+                            </Link>
                         </Grid>
 
                     </Grid>
@@ -105,7 +121,7 @@ export const Copyright = (props)=> {
                 <Grid md={12} xs={12} sx={{my:2}}>
                     <Typography variant="body2" color="text.secondary" align="center" {...props}>
                         {'Copyright © '}
-                        <Link color="inherit" href="https://eduplat.org/">
+                        <Link color="inherit" href="https://eduplat.org/" target="_blank" rel="noopener" underline="hover">
                             EduPlat.org
                         </Link>{' '}
                         {new Date().getFullYear()}

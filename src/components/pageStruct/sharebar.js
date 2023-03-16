@@ -64,8 +64,8 @@ import linkedinIcon from 'src/assets/images/icons/linkedin32x32.png'
 import telegramIcon from 'src/assets/images/icons/telegram32x32.png'
 
 export const ShareBarBig = () =>{
-    const shareUrl = 'http://github.com';
-    const title = 'GitHub';
+    const shareUrl = 'https://eduplat.org';
+    const title = 'Eduplat';
     return (
         <>
         <div className="Demo__container">
@@ -155,20 +155,6 @@ export const ShareBarBig = () =>{
         </div>
 
         <div className="Demo__some-network">
-          <VKShareButton
-            url={shareUrl}
-            image={`${String(window.location)}/${exampleImage}`}
-            className="Demo__some-network__share-button"
-          >
-            <VKIcon size={32} round />
-          </VKShareButton>
-
-          <div>
-            <VKShareCount url={shareUrl} className="Demo__some-network__share-count" />
-          </div>
-        </div>
-
-        <div className="Demo__some-network">
           <OKShareButton
             url={shareUrl}
             image={`${String(window.location)}/${exampleImage}`}
@@ -224,16 +210,6 @@ export const ShareBarBig = () =>{
         </div>
 
         <div className="Demo__some-network">
-          <MailruShareButton
-            url={shareUrl}
-            title={title}
-            className="Demo__some-network__share-button"
-          >
-            <MailruIcon size={32} round />
-          </MailruShareButton>
-        </div>
-
-        <div className="Demo__some-network">
           <EmailShareButton
             url={shareUrl}
             subject={title}
@@ -274,17 +250,6 @@ export const ShareBarBig = () =>{
         </div>
 
         <div className="Demo__some-network">
-          <WeiboShareButton
-            url={shareUrl}
-            title={title}
-            image={`${String(window.location)}/${exampleImage}`}
-            className="Demo__some-network__share-button"
-          >
-            <WeiboIcon size={32} round />
-          </WeiboShareButton>
-        </div>
-
-        <div className="Demo__some-network">
           <PocketShareButton
             url={shareUrl}
             title={title}
@@ -304,21 +269,6 @@ export const ShareBarBig = () =>{
           </InstapaperShareButton>
         </div>
 
-        <div className="Demo__some-network">
-          <HatenaShareButton
-            url={shareUrl}
-            title={title}
-            windowWidth={660}
-            windowHeight={460}
-            className="Demo__some-network__share-button"
-          >
-            <HatenaIcon size={32} round />
-          </HatenaShareButton>
-
-          <div>
-            <HatenaShareCount url={shareUrl} className="Demo__some-network__share-count" />
-          </div>
-        </div>
       </div>
         </>
     )

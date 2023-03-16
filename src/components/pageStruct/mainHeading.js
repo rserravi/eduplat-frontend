@@ -72,14 +72,14 @@ function MainHeader() {
 
            {/* FOR MOBILE */}
 
-          <HeaderMenu device="Mobile" />
+          <HeaderMenu device="Mobile" user={user}/>
           <Box sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} >
             <Logo color="white"/>
           </Box>
 
            {/* FOR BROWSER */}
 
-            <HeaderMenu device="Browser"/>
+            <HeaderMenu device="Browser" user={user}/>
 
             {/* FOR BROWSER AND MOBLIE */}
 

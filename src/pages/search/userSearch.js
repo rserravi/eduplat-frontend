@@ -1,4 +1,4 @@
-import { Accordion, AccordionDetails, AccordionSummary, Box,  Button,  Checkbox,  CssBaseline, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Drawer, FormControlLabel, FormGroup, Grid, IconButton, Link, List, ListItem, Paper, TextField, Toolbar, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box,  Button,  Checkbox,  CssBaseline, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Drawer, FormControlLabel, FormGroup, Grid, IconButton, InputAdornment, Link, List, ListItem, Paper, Skeleton, TextField, Toolbar, Typography } from '@mui/material';
 import * as React from 'react'
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -16,18 +16,20 @@ import CloseIcon from '@mui/icons-material/Close';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { arrayFromString, findInString } from 'src/utils/stringOperations';
 import fakeTagCloud from 'src/assets/fakeLists/fakeCloudTag';
+import SearchIcon from '@mui/icons-material/Search';
+
 
 
 
 const theme = createTheme(themeOptions);
 var newMaxWidth  = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
-export const SearchByLevel = () =>{
+export const UserSearch = () =>{
 
     const {terms} = useParams();
     const navigate = useNavigate();
     const [searchValue, setSearchValue] = useState("");
-    const [serp, setSerp] = useState(fakeLastResources); //CHANGE
+    const [serp, setSerp] = useState(fakeLastResources); //CHANGE fakeLastResources
     const [newWidth, setNewWidth] = useState(newMaxWidth);
     const [categoriesDialog, setCategoriesDialog]= useState(false)
     const [categoriesFilter, setCategoriesFilter]= useState("")
@@ -163,10 +165,12 @@ export const SearchByLevel = () =>{
                             <Grid item >
                                 <Grid container direction="row">
                                     <Grid item>
-                                        <Typography variant='h2' component='h1' >Search Engine</Typography>
+                                        <Typography variant='h2' component='h1' >
+                                            User Search
+                                        </Typography>
                                     </Grid>
                                     <Grid item ml={2}>
-                                        <Button variant='contained' color={showingFilters?'primary':'secondary'} startIcon={<TuneRoundedIcon />} onClick={handleFilterClick}>
+                                        <Button variant='contained' sx={{ borderRadius:"20px"}} color={showingFilters?'primary':'secondary'} startIcon={<TuneRoundedIcon />} onClick={handleFilterClick}>
                                             Filters
                                         </Button>
                                     </Grid>
@@ -179,10 +183,18 @@ export const SearchByLevel = () =>{
                                     id="search"
                                     defaultValue={terms}
                                     type="search"
-                                    style = {{minWidth: 300}} 
+                                    style = {{minWidth: 300, width:newWidth>500?300: newWidth - 32}} 
                                     variant="outlined"
+                                    color='secondary'
                                     onChange={OnSearchChange}
                                     onKeyDown={handleKeyDown}
+                                    InputProps={{
+                                        endAdornment: (
+                                          <InputAdornment position="end">
+                                            <SearchIcon color='secondary' />
+                                          </InputAdornment>
+                                        ),
+                                      }}
                                     />
                             </Grid>
                         </Grid>   
@@ -279,10 +291,17 @@ export const SearchByLevel = () =>{
                     </Accordion>
                 </Drawer>
                 :<></>}
-                
+
+
+                {serp && serp!==null?<>
                 <Box sx={{width:newWidth}}>
-                    <ResourcesNetflixGrid edusourceList={serp} title="Search result by levels" mt={4}/>
+                    <ResourcesNetflixGrid edusourceList={serp} title="Search results" mt={4}/>
                 </Box>
+                </>:<>
+                <Skeleton variant="rectangular" width={newWidth - 32} height={640} sx={{m:2}} />
+                </>}
+                
+                {/* DIALOG FOR CATERGORIES EXPLANATION */}
                 <Dialog
                     open={categoriesDialog}
                     onClose={handleCategoriesDialogClick}

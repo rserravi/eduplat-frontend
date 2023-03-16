@@ -3,12 +3,10 @@ import { lazy } from 'react';
 // project imports
 import MainLayout from '../layout/MainLayout';
 import Loadable from '../ui-component/Loadable';
-import { SearchByLevel } from 'src/pages/search/searchByLevel';
-import { SearchByCategories } from 'src/pages/search/searchByCategories';
-import { SearchByResourceType } from 'src/pages/search/searchByResourceType';
-import { SearchByThemes } from 'src/pages/search/searchByThemes';
+
 import { OpenSearch } from 'src/pages/search/openSearch';
-import { Serp } from 'src/pages/search/serp';
+import { UserSearch } from 'src/pages/search/userSearch';
+import { CollectionsSearch } from 'src/pages/search/collectionsSearch';
 
 
 // dashboard routing
@@ -29,30 +27,21 @@ const SearchRoutes = {
             element: <OpenSearch />
         },
         {
-            path: '/search/bylevel',
-            element: <SearchByLevel />
+            path: '/search/users',
+            element: <UserSearch />
         },
         {
-            path: '/search/bylevel/:terms',
-            element: <SearchByLevel />
+            path: '/search/users/:terms',
+            element: <UserSearch />
         },
         {
-            path: '/search/bycategories/:terms',
-            element: <SearchByCategories />
+            path: '/search/collections',
+            element: <CollectionsSearch />
         },
         {
-            path: '/search/byresourcetype/:terms',
-            element: <SearchByResourceType />
-        },
-        {
-            path: '/search/bythemes/:terms',
-            element: <SearchByThemes />
-        },
-        
-        {
-            path: '/search/serp/:terms',
-            element: <Serp />
-        } 
+            path: '/search/collections/:terms',
+            element: <CollectionsSearch />
+        }, 
         
     ]
 };

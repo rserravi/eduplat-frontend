@@ -99,7 +99,8 @@ export const fetchNewAccessJWT = () =>{
     })
 }
 
-export const userUpdate = (_id, frmData) =>{
+export const userUpdate = (frmData) =>{
+    console.log("USER UPDATE",frmData);
     return new Promise( async(resolve, reject)=>{
         try {
             const res = await axios.patch(userUrl, frmData);

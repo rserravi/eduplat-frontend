@@ -1,5 +1,10 @@
 import { lazy } from 'react';
+import { CreateCollection } from 'src/collections/createCollection';
+import { CreateEdusource } from 'src/components/resources/createEdusource';
 import { EdusourcePage } from 'src/pages/edusource/edusource';
+import { Connect } from 'src/pages/miscelanea/connect';
+import { EventsPage } from 'src/pages/miscelanea/events';
+import { Volunteers } from 'src/pages/miscelanea/volunteers';
 import { UserPage } from 'src/pages/user/userPage';
 
 // project imports
@@ -20,9 +25,34 @@ const MainRoutes = {
             element: <EdusourcePage />
         },
         {
+            path: "/resources/create",
+            element: <CreateEdusource />
+        },
+        {
+            path: "/collections/create",
+            element: <CreateCollection />
+        },
+        {
             path: 'user/:id',
             element: <UserPage />
-        }
+        },
+        {
+            path: '/events',
+            element: <EventsPage />
+        },
+        {
+            path: '/aboutus',
+            element: <EventsPage />
+        },
+        {
+            path: '/volunteers',
+            element: <Volunteers />
+        },
+        {
+            path: '/connect',
+            element: <Connect />
+        },
+
     ]
 };
 

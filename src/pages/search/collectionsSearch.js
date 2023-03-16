@@ -24,7 +24,7 @@ import SearchIcon from '@mui/icons-material/Search';
 const theme = createTheme(themeOptions);
 var newMaxWidth  = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
-export const OpenSearch = () =>{
+export const CollectionsSearch = () =>{
 
     const {terms} = useParams();
     const navigate = useNavigate();
@@ -166,7 +166,7 @@ export const OpenSearch = () =>{
                                 <Grid container direction="row">
                                     <Grid item>
                                         <Typography variant='h2' component='h1' >
-                                            Search Resources
+                                            Collection Search
                                         </Typography>
                                     </Grid>
                                     <Grid item ml={2}>

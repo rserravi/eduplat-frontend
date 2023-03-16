@@ -15,23 +15,23 @@ import { UseTerms } from 'src/pages/miscelanea/useterms';
 // ==============================|| MAIN ROUTING ||============================== //
 
 const StaticRoutes = {
-    path: 'legal',
+    path: '/legal',
     element: <MainLayout />,
     children: [
         {
-            path: 'legal/cookies',
+            path: '/legal/cookies',
             element: <Cookies />
         },
         {
-            path: 'legal/helpcenter',
+            path: '/legal/helpcenter',
             element: <HelpCenter />
         },
         {
-            path: 'legal/privacity',
+            path: '/legal/privacity',
             element: <Privacity />
         },
         {
-            path: 'legal/useterms',
+            path: '/legal/useterms',
             element: <UseTerms />
         },
     ]

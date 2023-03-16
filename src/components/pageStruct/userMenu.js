@@ -1,14 +1,16 @@
 import * as React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from "react-router-dom";
-import { Avatar, Box, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip, Typography } from "@mui/material"
+import { Alert, Avatar, Box, Button, Divider, IconButton, ListItemIcon, Menu, MenuItem, Snackbar, Tooltip, Typography } from "@mui/material"
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
-import PersonAdd from '@mui/icons-material/PersonAdd';
 import { userLogout } from 'src/api/userApi';
 import { SET_NULL } from 'src/store/userSlice';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { themeOptions } from 'src/theme/theme';
 
+const theme = createTheme(themeOptions);
 
 export const UserMenu = (props) =>{
     const user = useSelector(state => state.user)
@@ -16,8 +18,20 @@ export const UserMenu = (props) =>{
     const dispatch = useDispatch();
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [anchorElLogin, setAnchorElLogin] = React.useState(null);
+    const [snackOpen, setSnackOpen] = React.useState(false);
+    const [errorMsg, setErrorMsg] = React.useState("");
     const openUser = Boolean(anchorElUser);
     const openLogin = Boolean(anchorElLogin);
+
+    const handleSnackClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setSnackOpen(false);
+      };
+    
+
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
     };
@@ -54,10 +68,30 @@ export const UserMenu = (props) =>{
         navigate('/settings');
     }
 
-    const handleLogoutClick = ()=>{
-        userLogout();
-        dispatch(SET_NULL())
-        navigate('/');
+    const handleClickCreateResource = (event)=>{
+        navigate("/resources/create")
+      }
+    
+    const handleClickCreateCollection = (event)=>{
+        navigate("/collections/create")
+    }
+
+    const handleLogoutClick = async ()=>{
+        await userLogout().then((result)=>{
+            if (result.status==="success"){
+                dispatch(SET_NULL())
+                navigate('/');
+            }
+            else{
+                setErrorMsg(result.message);
+                setSnackOpen(true);
+            }
+            
+        }).catch((error)=>{
+            setErrorMsg(error.message);
+            setSnackOpen(true);
+        })
+        
         setAnchorElUser(null);
     }
 
@@ -130,7 +164,18 @@ export const UserMenu = (props) =>{
                         My account
                     </MenuItem>
                     <Divider />
-                    
+                    <MenuItem>
+                        <Button onClick={handleClickCreateResource} variant='contained' color='secondary'>
+                            Create Resource
+                        </Button>
+                    </MenuItem>
+
+                    <MenuItem>
+                        <Button onClick={handleClickCreateCollection} variant='contained' color='primary'>
+                            Create Collection
+                        </Button>
+                    </MenuItem>
+
                     <MenuItem onClick={handleSettingsClick}>
                         <ListItemIcon>
                             <Settings fontSize="small" />
@@ -147,6 +192,11 @@ export const UserMenu = (props) =>{
             </Box>
         </>
     }
+    <Snackbar open={snackOpen} autoHideDuration={6000} onClose={handleSnackClose}>
+        <Alert onClose={handleSnackClose} severity="error" sx={{ width: '100%' }}>
+          {errorMsg}
+        </Alert>
+      </Snackbar>
     </>
     )
 }

@@ -20,7 +20,7 @@ function HeaderMenu(props) {
   const navigate = useNavigate();
   const [anchorElNavResources, setAnchorElNavResources] = React.useState(null);
   const openResourcesNav = Boolean(anchorElNavResources);
-  const {device} = props;
+  const {device, user} = props;
 
   const handleOpenNavResourcesMenu = (event) => {
     setAnchorElNavResources(event.currentTarget);
@@ -46,6 +46,39 @@ function HeaderMenu(props) {
     navigate("/search");
   }
 
+  const handelClickUsersSearch = (event) =>{
+    navigate("/search/users");
+  }
+
+  const handelClickCollectionSearch = (event) =>{
+    navigate("/search/collections");
+  }
+
+  const handelClickEvents = (event) =>{
+    navigate("/events");
+  }
+
+  const handelClickAboutUs = (event) =>{
+    navigate("/aboutus");
+  }
+
+  const handelClickVolunteers = (event) =>{
+    navigate("/volunteers");
+  }
+
+  const handelClickConnect= (event) =>{
+    navigate("/connect");
+  }
+
+  const handleClickCreateResource = (event)=>{
+    navigate("/resources/create")
+  }
+
+  const handleClickCreateCollection = (event)=>{
+    navigate("/collections/create")
+  }
+
+
 
   if (device === "Browser"){
 
@@ -63,42 +96,58 @@ function HeaderMenu(props) {
               
               
               <Button
-                onClick={handleCloseNavResourcesMenu}
+                onClick={handelClickEvents}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 Events
               </Button>
               <Button
-                onClick={handleCloseNavResourcesMenu}
+                onClick={handelClickAboutUs}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 About us
               </Button>
               <Button
-                onClick={handleCloseNavResourcesMenu}
+                onClick={handelClickVolunteers}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 Volunteers
               </Button>
 
               <Button
-                onClick={handleCloseNavResourcesMenu}
+                onClick={handelClickConnect}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 Connect
               </Button>
             </Box>   
             <div>
-            <Menu anchorEl={anchorElNavResources} open={openResourcesNav} onClose={handleCloseNavResourcesMenu}>
+              {user && user.username!==""?
+              <>
+              <Menu anchorEl={anchorElNavResources} open={openResourcesNav} onClose={handleCloseNavResourcesMenu}>
+                  <MenuList>
+                      <MenuItem onClick={handelClickResourcesSearch}>Search Resources</MenuItem>
+                      <MenuItem onClick={handelClickCollectionSearch}>Search Collections</MenuItem>
+                      <MenuItem onClick={handelClickUsersSearch}>Search Users</MenuItem> 
+                      <Divider />
+                      <MenuItem>
+                        <Button onClick={handleClickCreateResource} variant='contained' color='secondary'>Create Resource</Button>  
+                      </MenuItem>
+                      <MenuItem>
+                        <Button onClick={handleClickCreateCollection} variant='contained' color='primary'>Create Collection</Button>  
+                      </MenuItem>        
+                  </MenuList>    
+              </Menu>
+              </>:
+              <>
+              <Menu anchorEl={anchorElNavResources} open={openResourcesNav} onClose={handleCloseNavResourcesMenu}>
                 <MenuList>
-                    <MenuItem  onClick={handelClickResourcesSearch}>Search Resources</MenuItem>
-                    <MenuItem>Search Collections</MenuItem>
-                    <MenuItem>Search Users</MenuItem>
-                
+                    <MenuItem onClick={handelClickResourcesSearch}>Search Resources</MenuItem>
+                    <MenuItem onClick={handelClickCollectionSearch}>Search Collections</MenuItem>
+                    <MenuItem onClick={handelClickUsersSearch}>Search Users</MenuItem>  
                 </MenuList>    
-            </Menu>
-
-            
+              </Menu>
+              </>}
             </div>
          
     </ThemeProvider>
@@ -141,16 +190,16 @@ function HeaderMenu(props) {
                                     <Typography textAlign="center">Resources</Typography>
                                 </MenuItem>
                                
-                                <MenuItem onClick={handleCloseNavMobile}>
+                                <MenuItem onClick={handelClickEvents}>
                                     <Typography textAlign="center">Events</Typography>
                                 </MenuItem>
-                                <MenuItem onClick={handleCloseNavMobile}>
+                                <MenuItem onClick={handelClickAboutUs}>
                                     <Typography textAlign="center">About us</Typography>
                                 </MenuItem>
-                                <MenuItem onClick={handleCloseNavMobile}>
+                                <MenuItem onClick={handelClickVolunteers}>
                                     <Typography textAlign="center">Volunteers</Typography>
                                 </MenuItem>
-                                <MenuItem onClick={handleCloseNavMobile}>
+                                <MenuItem onClick={handelClickConnect}>
                                     <Typography textAlign="center">Connect</Typography>
                                 </MenuItem>
                         </Menu>
@@ -158,15 +207,33 @@ function HeaderMenu(props) {
                     </Box>
                     
                     <div>
+                    {user && user.username!==""?
+                    <>
                     <Menu anchorEl={anchorElNavResources} open={openResourcesNav} onClose={handleCloseNavResourcesMenu}>
                         <MenuList>
-                          <MenuItem onClick={handelClickResourcesSearch}>Search Resources</MenuItem>
-                          <MenuItem>Search Collections</MenuItem>
-                          <MenuItem>Search Users</MenuItem>
+                            <MenuItem onClick={handelClickResourcesSearch}>Search Resources</MenuItem>
+                            <MenuItem onClick={handelClickCollectionSearch}>Search Collections</MenuItem>
+                            <MenuItem onClick={handelClickUsersSearch}>Search Users</MenuItem> 
+                            <Divider />
+                            <MenuItem>
+                              <Button onClick={handleClickCreateResource} variant='contained' color='secondary'>Create Resource</Button>  
+                            </MenuItem>
+                            <MenuItem>
+                              <Button onClick={handleClickCreateCollection} variant='contained' color='primary'>Create Collection</Button>  
+                            </MenuItem>        
                         </MenuList>    
                     </Menu>
-        
-                    </div>
+                    </>:
+                    <>
+                    <Menu anchorEl={anchorElNavResources} open={openResourcesNav} onClose={handleCloseNavResourcesMenu}>
+                      <MenuList>
+                          <MenuItem onClick={handelClickResourcesSearch}>Search Resources</MenuItem>
+                          <MenuItem onClick={handelClickCollectionSearch}>Search Collections</MenuItem>
+                          <MenuItem onClick={handelClickUsersSearch}>Search Users</MenuItem>  
+                      </MenuList>    
+                    </Menu>
+                    </>}
+                  </div>
                  
             </ThemeProvider>
         )
