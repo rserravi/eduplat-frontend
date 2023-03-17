@@ -32,17 +32,17 @@ export const iscedList = [
     {
         key:6,
         label: "ISCED6",
-        desc: "Bachelors degree or equivalent tertiary education level",
+        desc: "Bachelors degree or equivalent tertiary education",
     },
     {
         key:7,
         label: "ISCED7",
-        desc: "Masters degree or equivalent tertiary education level",
+        desc: "Masters degree or equivalent tertiary education",
     },
     {
         key:8,
         label: "ISCED8",
-        desc: "Doctoral degree or equivalent tertiary education level",
+        desc: "Doctoral degree or equivalent tertiary education",
     },
     {
         key:9,
@@ -178,8 +178,10 @@ export const getTagsFromCategory = (label) =>{
     var result = ""
   
     if (label!==""){
+        //console.log("TAGS FROM CATEGORY", label)
         const found = categoriesList.find(( element ) => element.label === label);
         result = found.tags
+        //console.log("FOUND TAGS", found.tags)
     }
     
 

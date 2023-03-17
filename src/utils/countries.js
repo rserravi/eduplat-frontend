@@ -423,3 +423,47 @@ export const countries = [
     { code: 'ZM', label: 'Zambia', phone: '260' },
     { code: 'ZW', label: 'Zimbabwe', phone: '263' },
   ];
+
+  export const languagesCodes = [
+    {
+      code: 'ES', label: 'Spanish', flag: 'https://en.wikipedia.org/wiki/Flag_of_Spain#/media/File:Bandera_de_Espa%C3%B1a_(sin_escudo).svg'
+    },
+    {
+      code: 'EN', label: 'English', flag: 'https://commons.wikimedia.org/wiki/File:Flag_of_the_United_Kingdom_(1-2).svg#/media/File:Flag_of_the_United_Kingdom_(1-2).svg'
+    },
+    {
+      code: 'CA', label: 'Catalan', flag: "https://commons.wikimedia.org/wiki/File:Flag_of_Catalonia.svg#/media/File:Flag_of_Catalonia.svg"
+    },
+    {
+      code: 'FR', label: 'French', flag: "https://commons.wikimedia.org/wiki/File:Flag_of_France.svg"
+    },
+    {
+      code: 'IT', label: 'Italian', flag: "https://commons.wikimedia.org/wiki/File:Flag_of_Italy.svg#/media/File:Flag_of_Italy.svg"
+    },
+    {
+      code: 'GR', label: 'Griego', flag: "https://commons.wikimedia.org/wiki/File:Flag_of_Greece.svg#/media/File:Flag_of_Greece.svg"
+    },
+    
+  ]
+
+  export const findLangFromCode = (code)=>{
+    var result = ""
+    languagesCodes.forEach(element => {
+      if (element.code===code){
+        result = element.label;
+        return result;
+      }
+    })
+    return result;
+  }
+
+  export const findFlagFromCode = (code)=>{
+    var result = ""
+    languagesCodes.forEach(element => {
+      if (element.code===code){
+        result = element.flag;
+        return result;
+      }
+    })
+    return result;
+  }

@@ -17,6 +17,7 @@
 
   &:not(&--open) .item:hover {
     transform: scale(1.2) !important;
+    z-index: 4;
   }
 
   &:not(&--open):hover .item {

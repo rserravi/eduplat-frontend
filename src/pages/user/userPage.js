@@ -280,25 +280,23 @@ export const UserPage = () =>{
                             </IconButton>
                             </>:<></>}
                     </Typography>
+                    <Grid container sx={{ml:4, mt:2}} alignItems="center">
 
-                    <Typography variant='body2' sx={{
-                       mt: 2,
-                       ml: 4
-                    }}>
-                        Karma: <Chip variant="outlined"label= {loadedUser.karma}
+                        <Typography variant='body2'> Karma:  </Typography>
+                        <Chip variant="outlined"label= {loadedUser.karma}
                             sx={{
                                 color:loadedUser.secondaryColor,
                                 borderColor: loadedUser.secondaryColor,
                                 mx:1,
-                        }}
-                        />  Level : <Chip variant="outlined"label= {loadedUser.editingLevel}
-                        sx={{
-                            color:loadedUser.secondaryColor,
-                            borderColor: loadedUser.secondaryColor,
-                            mx:1,
-                    }}
-                    /> 
-                    </Typography>
+                        }} />  
+                        <Typography variant='body2' >  Level : </Typography>
+                        <Chip variant="outlined"label= {loadedUser.editingLevel}
+                            sx={{
+                                color:loadedUser.secondaryColor,
+                                borderColor: loadedUser.secondaryColor,
+                                mx:1,
+                        }} /> 
+                   </Grid>
                     
                     <Button startIcon={<SendIcon />} variant='contained' sx={{
                         backgroundColor:loadedUser.secondaryColor?loadedUser.secondaryColor:"#b3b8cd",

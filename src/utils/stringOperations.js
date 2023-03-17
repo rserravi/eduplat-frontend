@@ -1,5 +1,5 @@
 export const arrayFromString = (str, separator) =>{
-    var newArray = str.split(separator);
+    var newArray = str.split(separator)
     return newArray;
 }
 
