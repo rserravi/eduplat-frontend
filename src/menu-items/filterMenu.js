@@ -23,6 +23,8 @@ const theme = createTheme(themeOptions);
 export const FilterMenu =(props) =>{
   const {updateFilters} = props;
 
+  const delay = ms => new Promise(res => setTimeout(res, ms));
+
   //LANGUAGE FILTER
   const [languageFilter, setLanguageFilter] = React.useState('ES');
   const [anchorElNavLanguage, setAnchorElNavLanguage] = React.useState(null);
@@ -40,6 +42,8 @@ export const FilterMenu =(props) =>{
   const handleSelectLang = (event, code)=>{
     event.preventDefault();
     setLanguageFilter(code);
+    
+    handleCloseLanguageMenu()
   }
 
   //TYPEOF FILTER
@@ -56,9 +60,10 @@ export const FilterMenu =(props) =>{
     updateFilters(languageFilter, typeOfFilter, categoriesFilter, levelFilter, themesFilter)
   };
 
-  const handleSelectTypeOf = (event, code)=>{
+  const handleSelectTypeOf = async (event, code)=>{
     event.preventDefault();
     setTypeOfFilter(code);
+    
   }
 
   //CATEGORIES FILTER
@@ -178,6 +183,8 @@ const resetFilters = (event) =>{
 }
 
 
+
+
  React.useEffect(() => {
     if (categoriesDialog) {
       const { current: descriptionElement } = categoriesDescriptionElementRef;
@@ -200,15 +207,15 @@ const resetFilters = (event) =>{
                 {typeOfFilter}
             </Button>
 
-            <Button size='small' variant='contained' sx={{ borderRadius:"20px", width:119, mr:1, mb:1}} color={categoriesFilter==""?'primary':'secondary'} endIcon={<ArrowDropDownIcon />} onClick={handleOpenNavCategoriesMenu}>
+            <Button disabled={typeOfFilter==="Users"} size='small' variant='contained' sx={{ borderRadius:"20px", width:119, mr:1, mb:1}} color={categoriesFilter==""?'primary':'secondary'} endIcon={<ArrowDropDownIcon />} onClick={handleOpenNavCategoriesMenu}>
                 Categories
             </Button>
 
-            <Button size='small' variant='contained' sx={{ borderRadius:"20px", width:119, mr:1, mb:1}} color={levelFilter==""?'primary':'secondary'} endIcon={<ArrowDropDownIcon />} onClick={handleOpenNavLevelMenu}>
+            <Button disabled={typeOfFilter==="Users"} size='small' variant='contained' sx={{ borderRadius:"20px", width:119, mr:1, mb:1}} color={levelFilter==""?'primary':'secondary'} endIcon={<ArrowDropDownIcon />} onClick={handleOpenNavLevelMenu}>
                 Levels
             </Button>
 
-            <Button size='small' variant='contained' sx={{ borderRadius:"20px", width:119, mr:1, mb:1}} color={themesFilter==""?'primary':'secondary'} endIcon={<ArrowDropDownIcon />} onClick={handleOpenNavThemesMenu}>
+            <Button disabled={typeOfFilter==="Users"} size='small' variant='contained' sx={{ borderRadius:"20px", width:119, mr:1, mb:1}} color={themesFilter==""?'primary':'secondary'} endIcon={<ArrowDropDownIcon />} onClick={handleOpenNavThemesMenu}>
                 Themes
             </Button>
               

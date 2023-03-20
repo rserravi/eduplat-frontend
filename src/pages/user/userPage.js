@@ -1,4 +1,4 @@
-import { Alert, Box,  Button,  Chip,  CssBaseline, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Fab, Grid, IconButton, Link, Snackbar, SvgIcon, Typography } from '@mui/material';
+import { Alert, Button,  Chip,  CssBaseline, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Fab, Grid, IconButton,  Snackbar, Typography } from '@mui/material';
 import * as React from 'react'
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -9,17 +9,15 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions } from 'src/theme/theme';
 import { fetchUserbyId, fetchUserByUsername } from 'src/api/userApi';
 import Container from '@mui/material/Container';
-import { findSocialIcon, getUserProfile } from 'src/utils/social-networks-utils';
 import { MENU_OPEN } from 'src/store/menuSlice';
 import SendIcon from '@mui/icons-material/Send';
-import EmailIcon from '@mui/icons-material/Email';
-import PhoneForwardedIcon from '@mui/icons-material/PhoneForwarded';
 import EditIcon from '@mui/icons-material/Edit';
 import {Image} from 'mui-image';
 import { longDate } from 'src/utils/dateUtils';
 import { NameForm } from 'src/components/form-components/name-comp';
 import { AboutForm } from 'src/components/form-components/aboutme';
 import { DescriptionForm } from 'src/components/form-components/description-comp';
+import { SocialRow } from 'src/components/user/socialRow';
 
 const theme = createTheme(themeOptions);
 var newMaxWidth  = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -369,64 +367,7 @@ export const UserPage = () =>{
 
                         {/* SOCIAL */}
 
-                        <Box sx={{ display: 'inline-flex', ml:1, mt:2 }}>
-                        {loadedUser.social.map((snet, index)=>{
-                            return(
-                            <React.Fragment key={index}>
-                                
-                                <IconButton 
-                                    size='small'
-                                    onClick={(e)=>{e.preventDefault(); {navigation(getUserProfile(snet.media,snet.user))}}}
-                                    sx={{color:loadedUser.secondaryColor}}
-                                    >
-                                    {findSocialIcon(snet.media)}
-                                </IconButton>
-                               
-                            </React.Fragment>
-                            )
-                        })}
-                        
-                        {/* EMAILS */}
-
-                        {loadedUser.publicData.emails?
-                        <>
-                            {loadedUser.emails.map((email, index)=>{
-                                return(
-                                 <React.Fragment key={index}>
-                                
-                                 <IconButton 
-                                     size='small'
-                                     onClick={(e)=>{e.preventDefault(); {navigation("mailto:"+email.emailUrl)}}}
-                                     sx={{color:loadedUser.secondaryColor}}
-                                     >
-                                     <EmailIcon />
-                                 </IconButton>
-                                
-                             </React.Fragment>
-                                )
-                            })}
-                        </>:<></>}
-
-                        {loadedUser.publicData.phones?
-                        <>
-                            {loadedUser.phones.map((phone, index)=>{
-                                return(
-                                 <React.Fragment key={index}>
-                                
-                                 <IconButton 
-                                     size='small'
-                                     onClick={(e)=>{e.preventDefault(); {navigation("tel:"+phone.phoneNumber)}}}
-                                     sx={{color:loadedUser.secondaryColor}}
-                                     >
-                                     <PhoneForwardedIcon />
-                                 </IconButton>
-                                
-                             </React.Fragment>
-                                )
-                            })}
-                        </>:<></>}
-                        
-                        </Box>
+                        <SocialRow user={loadedUser} type="own" sx={{ml:1}}/>
 
                 </Container>
   

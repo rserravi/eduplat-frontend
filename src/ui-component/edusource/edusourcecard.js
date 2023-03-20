@@ -14,9 +14,9 @@ import { Button } from '@mui/material';
 
 export default function EduSourceCard(props) {
 
-   const {title, autor, autorAvatar, date, discipline, image, extract, labels} = props;
+  const {title, autor, autorAvatar, date, discipline, image, extract, labels} = props;
   const [hovering, setHovering] = React.useState(false);
-   const subh =   discipline + ",  " + date;
+  const subh =   discipline + ",  " + date;
 
   const visitPromoter = (event)=>{
     console.log("VISITANDO PROMOTER ", autor)
@@ -30,10 +30,18 @@ export default function EduSourceCard(props) {
     <Card 
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
-        
+        sx={{
+          position:"relative",
+          '&:hover': {
+          
+            zIndex: 10,
+        },
+          
+        }}
     >
       {hovering?<>
       <CardHeader
+      sx={{height:80}}
 
         action={
           <IconButton aria-label="settings">
@@ -46,6 +54,7 @@ export default function EduSourceCard(props) {
       />
       </>:<>
       <CardHeader
+        sx={{height:80}}
         titleTypographyProps={{variant:'body1' }}
         title={title}
         subheader= {subh}

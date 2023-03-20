@@ -225,4 +225,21 @@ export const fetchUserByUsername = (username)=>{
     })
 }
 
+export const searchInUser = (terms, languageFilter)=>{
+    var newUrl = userUrl+"/search?terms="+terms;
+    if (!languageFilter || languageFilter!==""){
+        newUrl = newUrl + "&lang="+ languageFilter;
+    }
+    return new Promise( async(resolve, reject)=>{
+        try {
+            const res = await axios.get(newUrl);
+            resolve(res.data);
+            
+        } catch (error) {
+            console.log(error);
+            reject(error.message);
+        }
+    })
+}
+
 

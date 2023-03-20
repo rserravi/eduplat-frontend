@@ -10,6 +10,8 @@ import { ResourcesNetflixGrid } from 'src/components/resources/resources';
 import SearchIcon from '@mui/icons-material/Search';
 
 import { FilterMenu } from 'src/menu-items/filterMenu';
+import { searchInUser } from 'src/api/userApi';
+import { UserCard } from 'src/components/user/userCard';
 
 
 
@@ -27,6 +29,7 @@ export const OpenSearch = () =>{
     const [categoriesFilter, setCategoriesFilter]= useState("")
     const [levelFilter, setLevelFilter]= useState("")
     const [themesFilter, setThemesFilter]= useState("")
+    const [searching, setSearching] = useState(false);
 
  
     const updateFilters = (lang, type, cat, level, themes) =>{
@@ -35,6 +38,7 @@ export const OpenSearch = () =>{
         setCategoriesFilter(cat);
         setLevelFilter(level);
         setThemesFilter(themes);
+        setSerp(null);
         console.log(lang, type, cat, level, themes);
     }
 
@@ -53,7 +57,7 @@ export const OpenSearch = () =>{
     const OnSearchClick = (event) =>{
         event.preventDefault();
         if (searchValue!==""){
-          console.log (searchValue);
+          console.log (searchValue, typeOfFilter);
         }
 
         // PERFORM SEARCH
@@ -83,8 +87,19 @@ export const OpenSearch = () =>{
         //BUSCAR COLECCIONES
     }
 
-    const searchUsers = () =>{
+    const searchUsers = async () =>{
         // BUSCAR USUARIOS
+        setSearching(true);
+        await searchInUser(searchValue, languageFilter).then((result)=>{
+            console.log(result);
+            setSerp(result.result)
+        }).catch((error)=>{
+            console.log(error);
+        })
+
+        // GUARDAR LA BUSQUEDA RECIENTE
+        setSearching(false);
+
     }
 
     React.useEffect(() => {
@@ -96,7 +111,7 @@ export const OpenSearch = () =>{
 
     window.addEventListener('resize', handleResize)
 
-    })
+    },[])
 
     return (
         <React.Fragment>
@@ -149,6 +164,16 @@ export const OpenSearch = () =>{
                     {typeOfFilter==="Resources"?
                     <ResourcesNetflixGrid edusourceList={serp} title="Search results" mt={2}/>
                     :<></>}
+                    {typeOfFilter==="Users"?
+                    <>
+                        {serp.map((user, index)=>{
+                            return(
+                            <React.Fragment key={index}>
+                                <UserCard user={user} />
+                            </React.Fragment>
+                            )
+                        })}
+                    </>:<></>}
                 </Box>
                 </>:<>
                 <Skeleton variant="rectangular" width={newWidth - 32} height={640} sx={{m:2}} />
