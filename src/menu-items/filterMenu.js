@@ -43,7 +43,6 @@ export const FilterMenu =(props) =>{
     event.preventDefault();
     setLanguageFilter(code);
     
-    handleCloseLanguageMenu()
   }
 
   //TYPEOF FILTER
@@ -242,6 +241,8 @@ const resetFilters = (event) =>{
                         <MenuItem onClick={(e)=>{handleSelectLang(e, option.code)}}  key={option.code}>{option.label}</MenuItem>
                         )
                     })} 
+                    <Divider />
+                    <MenuItem onClick={(e)=>{handleSelectLang(e, "any")}}  key="any">Any</MenuItem>
                 </MenuList>    
               </Menu>
             </div>

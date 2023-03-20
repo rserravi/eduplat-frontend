@@ -100,13 +100,13 @@ export const UserCard =(props) =>{
                     </Grid>
 
                         <Grid item sx={{ml:-1}}>
-                            <StyledBadge color="secondary" badgeContent={10} sx={{mr:1}}>
+                            <StyledBadge color="secondary" badgeContent={user.resourcesCount} sx={{mr:1}}>
                             <Button >Resources</Button>
                             </StyledBadge>
-                            <StyledBadge color="secondary" badgeContent={1} sx={{mr:1}}>
+                            <StyledBadge color="secondary" badgeContent={user.collectionsCount} sx={{mr:1}}>
                             <Button>Collections</Button>
                             </StyledBadge>
-                            <StyledBadge color="secondary" badgeContent={1} sx={{mr:1}}>
+                            <StyledBadge color="secondary" badgeContent={user.valorationsCount} sx={{mr:1}}>
                             <Button>Valorations</Button>
                             </StyledBadge>
                         </Grid>

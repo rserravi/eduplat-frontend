@@ -454,6 +454,7 @@ export const countries = [
         return result;
       }
     })
+    if (code === "any") return "Any Lang."
     return result;
   }
 
