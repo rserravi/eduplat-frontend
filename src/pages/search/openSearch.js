@@ -11,7 +11,7 @@ import SearchIcon from '@mui/icons-material/Search';
 
 import { FilterMenu } from 'src/menu-items/filterMenu';
 import { searchInUser } from 'src/api/userApi';
-import { UserCard } from 'src/components/user/userCard';
+import { UserCard } from 'src/ui-component/cards/user/userCard';
 import { LocalBrowserHistory } from 'src/utils/searchHistory';
 
 
@@ -20,12 +20,13 @@ var newMaxWidth  = window.innerWidth || document.documentElement.clientWidth || 
 
 export const OpenSearch = () =>{
 
-    const {terms} = useParams();
+    const {type, terms} = useParams();
+    console.log (terms, type);
     const [searchValue, setSearchValue] = useState(terms);
     const [serp, setSerp] = useState(); //CHANGE fakeLastResources
     const [newWidth, setNewWidth] = useState(newMaxWidth);
     const [languageFilter, setLanguageFilter] = useState('ES')
-    const [typeOfFilter, setTypeOfFilter] = useState("Resources");
+    const [typeOfFilter, setTypeOfFilter] = useState(type);
     const [categoriesFilter, setCategoriesFilter]= useState("")
     const [levelFilter, setLevelFilter]= useState("")
     const [themesFilter, setThemesFilter]= useState("")
@@ -78,14 +79,16 @@ export const OpenSearch = () =>{
         
         // PERFORM SEARCH
         switch (typeOfFilter) {
-            case "Users":
+            case "users":
                 // GUARDAR BUSQUEDA!!!
-               
-                userLS.add(searchValue);
-                searchUsers();
+                console.log("ESTA VACIO?",searchValue)
+                if (searchValue!=="" || searchValue===undefined){
+                    userLS.add(searchValue);
+                }
+                searchusers();
                 break;
             
-            case "Collections":
+            case "collections":
                 collectionsLS.add(searchValue);
                 searchCollections()
                 break;
@@ -109,7 +112,7 @@ export const OpenSearch = () =>{
         //BUSCAR COLECCIONES
     }
 
-    const searchUsers = async () =>{
+    const searchusers = async () =>{
         // BUSCAR USUARIOS
         setSearching(true);
         await searchInUser(searchValue, languageFilter).then((result)=>{
@@ -162,7 +165,7 @@ export const OpenSearch = () =>{
                                 </Typography>
                             </Grid>
                             <Grid item xs={12} mt={1}>
-                                <FilterMenu updateFilters={updateFilters} />
+                                <FilterMenu updateFilters={updateFilters} type={type}/>
                             </Grid>
                             <Grid item xs={12} sm={12} md={12} sx={{mt:1}} >
                                 <Grid container direction="row">
@@ -180,7 +183,7 @@ export const OpenSearch = () =>{
                                     onChange={OnSearchChange}
                                     onKeyDown={handleKeyDown}
                                     // onBlur={OnSearchClick}
-                                    placeholder={typeOfFilter==="Users"?"Who are you looking for?":"What do you want to learn today?"}
+                                    placeholder={typeOfFilter==="users"?"Who are you looking for?":"What do you want to learn today?"}
                                     InputProps={{
                                         endAdornment: (
                                           <InputAdornment position="end">
@@ -191,7 +194,7 @@ export const OpenSearch = () =>{
                                     />
                                     </Grid>
                                     <Grid item>
-                                        {typeOfFilter==="Users"?<>
+                                        {typeOfFilter==="users"?<>
                                            <userLS.HistoryBar/>
                                         </>:<></>}
                                     </Grid>
@@ -204,10 +207,10 @@ export const OpenSearch = () =>{
                   
                 {serp && serp!==null?<>
                 <Box sx={{width:newWidth}}>
-                    {typeOfFilter==="Resources"?
+                    {typeOfFilter==="resources"?
                     <ResourcesNetflixGrid edusourceList={serp} title="Search results" mt={2}/>
                     :<></>}
-                    {typeOfFilter==="Users"?
+                    {typeOfFilter==="users"?
                     <>
                         {serp.map((user, index)=>{
                             return(

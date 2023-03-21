@@ -31,7 +31,7 @@ export const SearchInBar = (props)=>{
       if (searchValue!==""){
         console.log (searchValue);
         setAnchorEl(null);
-        navigate('/search/'+searchValue)
+        navigate('/search/resources/'+searchValue)
       }
     }
 

@@ -30,7 +30,7 @@ export default function EduSourceCard(props) {
     <Card 
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
-        sx={{
+        sx={{ minWidth:260,
           position:"relative",
           '&:hover': {
           

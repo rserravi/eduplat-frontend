@@ -3,11 +3,11 @@ import * as React from 'react'
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchEdusourceByLink, fetchEdusourceByPromoter } from 'src/api/edusourceApi';
+import { fetchEdusourceByPromoter } from 'src/api/edusourceApi';
 import Loader from 'src/ui-component/Loader';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions } from 'src/theme/theme';
-import { fetchUserbyId, fetchUserByUsername } from 'src/api/userApi';
+import { fetchUserByUsername } from 'src/api/userApi';
 import Container from '@mui/material/Container';
 import { MENU_OPEN } from 'src/store/menuSlice';
 import SendIcon from '@mui/icons-material/Send';
@@ -17,7 +17,7 @@ import { longDate } from 'src/utils/dateUtils';
 import { NameForm } from 'src/components/form-components/name-comp';
 import { AboutForm } from 'src/components/form-components/aboutme';
 import { DescriptionForm } from 'src/components/form-components/description-comp';
-import { SocialRow } from 'src/components/user/socialRow';
+import { SocialRow } from 'src/ui-component/cards/user/socialRow';
 
 const theme = createTheme(themeOptions);
 var newMaxWidth  = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;

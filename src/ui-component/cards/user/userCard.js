@@ -1,7 +1,7 @@
 import * as React from 'react';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { Avatar, Badge,  Button,  Grid, Paper, styled } from '@mui/material';
+import { Avatar, Badge,  Grid, Paper, styled } from '@mui/material';
 import { SocialRow } from './socialRow';
 
 
@@ -19,7 +19,7 @@ export const UserCard =(props) =>{
   const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
       right: 0,
-      top: 10,
+      top: -3,
       border: `2px solid ${theme.palette.background.paper}`,
       padding: '0 4px',
     },
@@ -43,7 +43,7 @@ export const UserCard =(props) =>{
             <Grid item xs="auto">
                 <IconButton 
                     size='small' 
-                    onClick={(e)=>{e.preventDefault(); {navigation("/user/"+user.username)}}}
+                    onClick={(e)=>{e.preventDefault(); navigation("/user/"+user.username)}}
                 >
                 <Avatar alt={user.username} src={user.picture.fileName}/>
                 </IconButton>
@@ -53,7 +53,7 @@ export const UserCard =(props) =>{
                     <Grid item>
                         <Typography 
                             variant='body2' 
-                            onClick={(e)=>{e.preventDefault(); {navigation("/user/"+user.username)}}}
+                            onClick={(e)=>{e.preventDefault(); navigation("/user/"+user.username)}}
                             sx={{
                                 fontWeight:"bold", 
                                 fontSize:18, 
@@ -101,13 +101,13 @@ export const UserCard =(props) =>{
 
                         <Grid item sx={{ml:-1}}>
                             <StyledBadge color="secondary" badgeContent={user.resourcesCount} sx={{mr:1}}>
-                            <Button >Resources</Button>
+                            <Typography color="primary" ><b>Resources</b></Typography>
                             </StyledBadge>
                             <StyledBadge color="secondary" badgeContent={user.collectionsCount} sx={{mr:1}}>
-                            <Button>Collections</Button>
+                            <Typography sx={{ml:2}} color="primary" ><b>Collections</b></Typography>
                             </StyledBadge>
                             <StyledBadge color="secondary" badgeContent={user.valorationsCount} sx={{mr:1}}>
-                            <Button>Valorations</Button>
+                            <Typography sx={{ml:2}} color="primary" ><b>Valorations</b></Typography>
                             </StyledBadge>
                         </Grid>
 

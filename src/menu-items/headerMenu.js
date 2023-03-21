@@ -43,7 +43,7 @@ function HeaderMenu(props) {
 
   const handelClickResourcesSearch = (event) =>{
     console.log("SEARCH");
-    navigate("/search");
+    navigate("/search/resources");
   }
 
   const handelClickUsersSearch = (event) =>{
@@ -129,6 +129,8 @@ function HeaderMenu(props) {
                       <MenuItem onClick={handelClickResourcesSearch}>Search Resources</MenuItem>
                       <MenuItem onClick={handelClickCollectionSearch}>Search Collections</MenuItem>
                       <MenuItem onClick={handelClickUsersSearch}>Search Users</MenuItem> 
+                    
+                    
                       <Divider />
                       <MenuItem>
                         <Button onClick={handleClickCreateResource} variant='contained' color='secondary'>Create Resource</Button>  
@@ -145,6 +147,7 @@ function HeaderMenu(props) {
                     <MenuItem onClick={handelClickResourcesSearch}>Search Resources</MenuItem>
                     <MenuItem onClick={handelClickCollectionSearch}>Search Collections</MenuItem>
                     <MenuItem onClick={handelClickUsersSearch}>Search Users</MenuItem>  
+                    
                 </MenuList>    
               </Menu>
               </>}

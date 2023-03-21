@@ -37,7 +37,7 @@ export const SocialRow =(props) =>{
                 <IconButton 
                     size='small'
                    
-                    onClick={(e)=>{e.preventDefault(); {navigation(getUserProfile(snet.media,snet.user))}}}
+                    onClick={(e)=>{e.preventDefault(); navigation(getUserProfile(snet.media,snet.user))}}
                     style={{ color: type==="default"? "primary":user.secondaryColor}}
                     >
                    
@@ -59,7 +59,7 @@ export const SocialRow =(props) =>{
             
                 <IconButton 
                     size='small'
-                    onClick={(e)=>{e.preventDefault(); {navigation("mailto:"+email.emailUrl)}}}
+                    onClick={(e)=>{e.preventDefault(); navigation("mailto:"+email.emailUrl)}}
                     style={{ color: type==="default"? "primary":user.secondaryColor}}
                     
                     >
@@ -81,7 +81,7 @@ export const SocialRow =(props) =>{
             
                 <IconButton 
                     size='small'
-                    onClick={(e)=>{e.preventDefault(); {navigation("tel:"+phone.phoneNumber)}}}
+                    onClick={(e)=>{e.preventDefault(); navigation("tel:"+phone.phoneNumber)}}
                     style={{ color: type==="default"? "primary":user.secondaryColor}}
                     
                     >

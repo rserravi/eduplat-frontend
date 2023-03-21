@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions } from 'src/theme/theme';
-import { Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, FormControlLabel, FormGroup, IconButton, MenuList, Typography } from '@mui/material';
+import { Checkbox, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, FormControlLabel, MenuList } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { findLangFromCode, languagesCodes } from 'src/utils/countries';
 import { categoriesList } from 'src/utils/isced';
@@ -21,9 +21,8 @@ import fakeTagCloud from 'src/assets/fakeLists/fakeCloudTag';
 const theme = createTheme(themeOptions);
 
 export const FilterMenu =(props) =>{
-  const {updateFilters} = props;
+  const {updateFilters, type} = props;
 
-  const delay = ms => new Promise(res => setTimeout(res, ms));
 
   //LANGUAGE FILTER
   const [languageFilter, setLanguageFilter] = React.useState('ES');
@@ -46,7 +45,7 @@ export const FilterMenu =(props) =>{
   }
 
   //TYPEOF FILTER
-  const [typeOfFilter, setTypeOfFilter] = React.useState('Resources');
+  const [typeOfFilter, setTypeOfFilter] = React.useState(type);
   const [anchorElNavTypeOf, setAnchorElNavTypeOf] = React.useState(null);
   const openTypeOfNav = Boolean(anchorElNavTypeOf);
 
@@ -147,16 +146,17 @@ export const FilterMenu =(props) =>{
   }
 
   const proposedTagsFinder = ()=>{
+    var themesString="";
     if (categoriesFilter!==""){
         const categoFilter = arrayFromString(categoriesFilter,",");
         //console.log("CATEGO FILTER",categoFilter)
-        var themesString="";
+        themesString="";
         for (let i = 0; i < categoFilter.length; i++) {
             themesString = themesString + getTagsFromCategory(categoFilter[i])  
         }
         }
     else{
-        var themesString="";
+        themesString="";
         for (let i = 0; i < fakeTagCloud.length; i++) {
             
             if (fakeTagCloud[i].value){
@@ -170,12 +170,12 @@ export const FilterMenu =(props) =>{
     return themesArray;
 }
 
-{/* GENERAL CONST*/}
+// GENERAL CONST
 
 const resetFilters = (event) =>{
     event.preventDefault();
     setLanguageFilter('ES');
-    setTypeOfFilter('Resources');
+    setTypeOfFilter('resources');
     setCategoriesFilter('');
     setLevelFilter('');
     setThemesFilter('');
@@ -206,15 +206,15 @@ const resetFilters = (event) =>{
                 {typeOfFilter}
             </Button>
 
-            <Button disabled={typeOfFilter==="Users"} size='small' variant='contained' sx={{ borderRadius:"20px", width:119, mr:1, mb:1}} color={categoriesFilter==""?'primary':'secondary'} endIcon={<ArrowDropDownIcon />} onClick={handleOpenNavCategoriesMenu}>
+            <Button disabled={typeOfFilter==="users"} size='small' variant='contained' sx={{ borderRadius:"20px", width:119, mr:1, mb:1}} color={categoriesFilter===""?'primary':'secondary'} endIcon={<ArrowDropDownIcon />} onClick={handleOpenNavCategoriesMenu}>
                 Categories
             </Button>
 
-            <Button disabled={typeOfFilter==="Users"} size='small' variant='contained' sx={{ borderRadius:"20px", width:119, mr:1, mb:1}} color={levelFilter==""?'primary':'secondary'} endIcon={<ArrowDropDownIcon />} onClick={handleOpenNavLevelMenu}>
+            <Button disabled={typeOfFilter==="users"} size='small' variant='contained' sx={{ borderRadius:"20px", width:119, mr:1, mb:1}} color={levelFilter===""?'primary':'secondary'} endIcon={<ArrowDropDownIcon />} onClick={handleOpenNavLevelMenu}>
                 Levels
             </Button>
 
-            <Button disabled={typeOfFilter==="Users"} size='small' variant='contained' sx={{ borderRadius:"20px", width:119, mr:1, mb:1}} color={themesFilter==""?'primary':'secondary'} endIcon={<ArrowDropDownIcon />} onClick={handleOpenNavThemesMenu}>
+            <Button disabled={typeOfFilter==="users"} size='small' variant='contained' sx={{ borderRadius:"20px", width:119, mr:1, mb:1}} color={themesFilter===""?'primary':'secondary'} endIcon={<ArrowDropDownIcon />} onClick={handleOpenNavThemesMenu}>
                 Themes
             </Button>
               
@@ -257,9 +257,9 @@ const resetFilters = (event) =>{
                 
               >
                 <MenuList dense>
-                    <MenuItem key={"resources"} onClick={(e)=>{handleSelectTypeOf(e, "Resources")}}>Resources</MenuItem>
-                    <MenuItem key={'collections'} onClick={(e)=>{handleSelectTypeOf(e, "Collections")}}>Collections</MenuItem> 
-                    <MenuItem key={'users'} onClick={(e)=>{handleSelectTypeOf(e, "Users")}}>Users</MenuItem> 
+                    <MenuItem key={"resources"} onClick={(e)=>{handleSelectTypeOf(e, "resources")}}>Resources</MenuItem>
+                    <MenuItem key={'collections'} onClick={(e)=>{handleSelectTypeOf(e, "collections")}}>Collections</MenuItem> 
+                    <MenuItem key={'users'} onClick={(e)=>{handleSelectTypeOf(e, "users")}}>Users</MenuItem> 
                 </MenuList>    
               </Menu>
             </div>
