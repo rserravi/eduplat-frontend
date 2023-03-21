@@ -60,14 +60,26 @@ export default function EduSourceCard(props) {
         subheader= {subh}
       />
       </>}
+      {hovering?<>
       <CardMedia
         component="img"
         height="194"
         image={image}
         alt={title}
+        sx= {{filter: "opacity(10%)"}}
       />
-       {hovering?<>
-      <CardContent>
+      </>:<>
+      <CardMedia
+        component="img"
+        height="194"
+        image={image}
+        alt={title}
+        sx= {{filter: "opacity(100%)"}}
+      />
+      </>
+      }
+      {hovering?<>
+      <CardContent style={{position:"absolute", marginTop:-150}}>
       <Typography sx={{fontSize:10}} variant="p" color="text.terciary">
          {labels}
        </Typography>
@@ -75,7 +87,7 @@ export default function EduSourceCard(props) {
           {extract}
         </Typography>
       </CardContent>
-      </>:<></>}
+      </>:<></>} 
       <CardActions disableSpacing>
         <Button size="small" onClick={visitPromoter}> by {autor}</Button>
         <IconButton aria-label="add to favorites">

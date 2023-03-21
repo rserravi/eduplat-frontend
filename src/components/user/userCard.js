@@ -9,7 +9,7 @@ export const UserCard =(props) =>{
 
   const {user} = props;
 
-  console.log("RECIBIDO USER EN USERCARD", user)
+  //console.log("RECIBIDO USER EN USERCARD", user)
 
   const navigation = (payload) =>{
     console.log(payload)

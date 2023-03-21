@@ -13,7 +13,7 @@ export const SocialRow =(props) =>{
 
   const {user, type, sx} = props;
 
-  console.log(user, type);
+ // console.log(user, type);
 
   const navigation = (payload) =>{
     console.log(payload)

@@ -6,3 +6,4 @@ export const arrayFromString = (str, separator) =>{
 export const findInString = (str, label)=>{
     return (str.includes(label))
 }
+
