@@ -18,6 +18,9 @@ import { NameForm } from 'src/components/form-components/name-comp';
 import { AboutForm } from 'src/components/form-components/aboutme';
 import { DescriptionForm } from 'src/components/form-components/description-comp';
 import { SocialRow } from 'src/ui-component/cards/user/socialRow';
+import { Valoration } from 'src/components/valoration';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 
 const theme = createTheme(themeOptions);
 var newMaxWidth  = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -41,6 +44,8 @@ export const UserPage = () =>{
     const [openDescriptionDialog, setOpenDescriptionDialog]= useState(false);
     const [openHeaderPicDialog, setOpenHeaderPicDialog]= useState(false);
     const [openProfilePicDialog, setOpenProfilePicDialog]= useState(false);
+    const [valOpen, setValOpen] = useState(true);
+    const [activityOpen, setActivityOpen] = useState(true);
     const [openSnack, setOpenSnack] = useState(false);
     const [severity, setSeverity] = useState("info");
     const [message, setMessage] = useState("");
@@ -117,7 +122,15 @@ export const UserPage = () =>{
         setOpenSnack(false);
       };
 
-    
+    const handleValButtonClick = (event)=>{
+        event.preventDefault();
+        setValOpen(!valOpen);
+    }
+
+    const handleActivityButtonClick = (event)=>{
+        event.preventDefault();
+        setActivityOpen(!activityOpen);
+    }
 
 
     useEffect(() =>{
@@ -392,29 +405,44 @@ export const UserPage = () =>{
                        
                        ml: 2
                     }}>
-                        Valorations
+                        Valorations {valOpen?
+                            <IconButton onClick={handleValButtonClick} style={{ color: loadedUser.secondaryColor}}><ArrowDropDownIcon /></IconButton>:
+                            <IconButton onClick={handleValButtonClick} style={{ color: loadedUser.secondaryColor}}><ArrowDropUpIcon /></IconButton>
+                            }
                  </Typography> 
-                 <Button  variant='outlined' sx={{
-                        borderColor:loadedUser.secondaryColor?loadedUser.secondaryColor:"#b3b8cd",
-                        color:loadedUser.secondaryColor?loadedUser.secondaryColor:"#b3b8cd",
-                        borderRadius:"20px",
-                        ml:2,
-                        mt:2,
-                        '&:hover': {
-                            backgroundColor: loadedUser.secondaryColor?loadedUser.secondaryColor:"#b3b8cd",
-                            borderColor: loadedUser.secondaryColor?loadedUser.secondaryColor:"#b3b8cd", 
-                            color: loadedUser.primaryColor?loadedUser.primaryColor:"#231e39", 
-                        },
-                    }}>
-                        Add User Valoration...
+
+                {valOpen?<> 
+
+                    {loadedUser.valorations && loadedUser.valorations.length >0?
+                    <>
+                        {loadedUser.valorations.map((val, index)=>{
+                            return(
+                            <React.Fragment key={index}>
+                                <Valoration valoration={val} primaryColor={loadedUser.primaryColor} secondaryColor={loadedUser.secondaryColor}/>
+                            </React.Fragment>
+                            )
+                        })}
+                    
+                    
+                    </>:<></>}
+                    
+
+                    <Button  variant='outlined' sx={{
+                            borderColor:loadedUser.secondaryColor?loadedUser.secondaryColor:"#b3b8cd",
+                            color:loadedUser.secondaryColor?loadedUser.secondaryColor:"#b3b8cd",
+                            borderRadius:"20px",
+                            ml:2,
+                            mt:2,
+                            '&:hover': {
+                                backgroundColor: loadedUser.secondaryColor?loadedUser.secondaryColor:"#b3b8cd",
+                                borderColor: loadedUser.secondaryColor?loadedUser.secondaryColor:"#b3b8cd", 
+                                color: loadedUser.primaryColor?loadedUser.primaryColor:"#231e39", 
+                            },
+                        }}>
+                            Add User Valoration...
                     </Button>
-                 {loadedUser.valorations.map((item)=>{
-                    return(
-                        <Typography ml={2} variant='body2'>
-                            {item.senderName}
-                        </Typography>
-                    )
-                 })}
+                    </>:<></>}
+                 
                  
                 </Container>   
 
@@ -439,66 +467,72 @@ export const UserPage = () =>{
                        
                        ml: 2
                     }}>
-                        Contributions
+                        Contributions {activityOpen?
+                        <IconButton onClick={handleActivityButtonClick} style={{ color: loadedUser.secondaryColor}}><ArrowDropDownIcon /></IconButton>:
+                        <IconButton onClick={handleActivityButtonClick} style={{ color: loadedUser.secondaryColor}}><ArrowDropUpIcon /></IconButton>
+                        }
                  </Typography>
-                 {edusources && edusources!==null?
-                 <>
-                 {edusources.length===0?
+
+                {activityOpen?
+                <>
+                    {edusources && edusources!==null?
                     <>
-                    <Typography variant='body1' sx={{ml:2, mt:1}}>
-                    {loadedUser.username} still has no contributions
-                    </Typography>
-                    </>:
-                    <></>}
-                 {edusources.map((edu, index)=>{
-                    if (edusources.length>0){
-                    return(
-                        <React.Fragment key={index}>
-                            <Grid
-                              container
-                              direction="row"
-                              justifyContent="flex-start"
-                              alignItems="flex-start"
-                              mt={1}
-                            >
-                                <Grid item m={1} xs={2} sm={2} md={2}>
-                                  <a href={"/edusource/"+edu.resourceURL}><Image src={edu.picture.fileName} height={85} width={150} duration={0} sx={{borderRadius:5}} /></a>
-                                </Grid>
-                                <Grid item m={1}xs={12} sm={9} md={9.5} >
-                                    <Typography sx={{
-                                        fontSize: 15,
-                                        fontWeight: "bold",
-                                    }}
-                                    >{edu.title}</Typography>
-                                     <Typography variant='body2'><i>{longDate(edu.date)}</i></Typography>
-                                     <Typography sx={{fontSize:11}}>
-                                        {edu.autors.map((autor, index)=>{
-                                            return(
-                                                <React.Fragment key={index}>
-                                                    #{autor.autorName},
-                                                </React.Fragment>
-                                            )
-                                        })}
-                                     </Typography>
-                                     <Typography variant='body2' sx={{mt:1}}>{edu.description}</Typography>
-                                </Grid>
-                            </Grid>
-                            <Divider sx={{mt:1, border:"1px solid " + loadedUser.secondaryColor}}/>
-                        </React.Fragment>
-                    )
-                    }
-                    else{
-                        return(
+                    {edusources.length===0?
                         <>
-                            RETURN EXTRAÑO
-                        </>
+                        <Typography variant='body1' sx={{ml:2, mt:1}}>
+                        {loadedUser.username} still has no contributions
+                        </Typography>
+                        </>:
+                        <></>}
+                    {edusources.map((edu, index)=>{
+                        if (edusources.length>0){
+                        return(
+                            <React.Fragment key={index}>
+                                <Grid
+                                container
+                                direction="row"
+                                justifyContent="flex-start"
+                                alignItems="flex-start"
+                                mt={1}
+                                >
+                                    <Grid item m={1} xs={2} sm={2} md={2}>
+                                    <a href={"/edusource/"+edu.resourceURL}><Image src={edu.picture.fileName} height={85} width={150} duration={0} sx={{borderRadius:5}} /></a>
+                                    </Grid>
+                                    <Grid item m={1}xs={12} sm={9} md={9.5} >
+                                        <Typography sx={{
+                                            fontSize: 15,
+                                            fontWeight: "bold",
+                                        }}
+                                        >{edu.title}</Typography>
+                                        <Typography variant='body2'><i>{longDate(edu.date)}</i></Typography>
+                                        <Typography sx={{fontSize:11}}>
+                                            {edu.autors.map((autor, index)=>{
+                                                return(
+                                                    <React.Fragment key={index}>
+                                                        #{autor.autorName},
+                                                    </React.Fragment>
+                                                )
+                                            })}
+                                        </Typography>
+                                        <Typography variant='body2' sx={{mt:1}}>{edu.description}</Typography>
+                                    </Grid>
+                                </Grid>
+                                <Divider sx={{mt:1, border:"1px solid " + loadedUser.secondaryColor}}/>
+                            </React.Fragment>
                         )
-                    }
-                 })}
-                </>:<>
-                {loadedUser.username} still has no contributions;
-                </>}
-                 
+                        }
+                        else{
+                            return(
+                            <>
+                                RETURN EXTRAÑO
+                            </>
+                            )
+                        }
+                    })}
+                    </>:<>
+                    {loadedUser.username} still has no contributions;
+                    </>}
+                </>:<></>}
                  
                 </Container>
 
