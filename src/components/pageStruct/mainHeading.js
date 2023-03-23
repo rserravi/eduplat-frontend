@@ -84,7 +84,7 @@ function MainHeader() {
             {/* FOR BROWSER AND MOBLIE */}
 
           <SearchInBar />
-          <AlertsInBar />
+          <AlertsInBar user={user} />
           <UserMenu />
         </Toolbar>
       </Container>

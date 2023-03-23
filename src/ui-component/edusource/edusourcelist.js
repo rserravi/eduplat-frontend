@@ -8,7 +8,7 @@ import { Container } from '@mui/system';
 
 export default function EduSourceList(props) {
 
-   const {title, autor, autorAvatar, date, discipline, extract, labels} = props;
+   const {title, autor, autorAvatar, date, discipline, extract, labels, valorations} = props;
 
    const subh =   discipline + ",  " + date;
    

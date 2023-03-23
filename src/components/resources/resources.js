@@ -178,6 +178,7 @@ export const ResourcesNetflixGrid = (props) =>{
                                     extract={eduSource.extract}
                                     image={eduSource.image}
                                     labels={eduSource.labels}
+                                    valorations={eduSource.valorations}
                                 />
                             </Grid>
                             </React.Fragment>

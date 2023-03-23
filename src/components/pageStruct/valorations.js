@@ -1,18 +1,17 @@
 import * as React from 'react'
-import { Avatar, Card, CardContent, CardHeader,  Grid, IconButton} from '@mui/material'
+import { Avatar, Card, CardContent, CardHeader,  Grid, IconButton, Typography} from '@mui/material'
 
-import ThumbUpOffAltTwoToneIcon from '@mui/icons-material/ThumbUpOffAltTwoTone';
-import ThumbDownOffAltTwoToneIcon from '@mui/icons-material/ThumbDownOffAltTwoTone';
 import { longDate } from 'src/utils/dateUtils';
-
+import { FavoriteIcon } from '../favorites';
 
 export const ResourceValorations= (props) =>{
     const valorations = props.edusource.valorations;
     return(
         <>
         <Grid container>
-        {valorations.map((valoration)=>{
-            console.log("VALORACIONES ", valoration)
+        {valorations.map((valoration, index)=>{
+            //console.log("VALORACIONES ", valoration)
+                if (valoration.accepted){
                 return(
                     <React.Fragment key={valoration._id}>
                         <Card sx={{ width: 240, mr:1, borderRadius:4}}>
@@ -24,19 +23,22 @@ export const ResourceValorations= (props) =>{
                             }
                             action={
                             <>
-                                {valoration.value>0?<ThumbUpOffAltTwoToneIcon />:<ThumbDownOffAltTwoToneIcon />}
+                                <FavoriteIcon value={valoration.value +1}/>
                             </>
                             }
                             title= {"@"+valoration.senderUser }
                             subheader={longDate(valoration.date)}
                         />
                          <CardContent>
-                         {valoration.comment}
+                         <Typography variant='body1'>"<i>{valoration.comment}"</i></Typography>
                          </CardContent>
                      
                     </Card>
                 </React.Fragment>
-                )
+                )}
+                else{
+                    return(<React.Fragment key={index}></React.Fragment>)
+                }
             })
         }
         </Grid>

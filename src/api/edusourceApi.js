@@ -34,6 +34,7 @@ export const fetchEdusourceByLink = (link) =>{
 export const fetchEdusourceByPromoter = (id) =>{
     //  http://localhost:3001/v1/edusource/bypromoter?promoterId=63fdb9e80daaa0ce85983c3a
     return new Promise( async(resolve, reject)=>{
+        console.log("ID EN FETCHEDUSOURCE",id)
         try {
             const axiosUrl = byPromoter + "?promoterId="+id;
             //console.log(axiosUrl);

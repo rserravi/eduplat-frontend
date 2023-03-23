@@ -27,6 +27,7 @@ const Item = ({ edusource }) => (
           extract={edusource.extract}
           image={edusource.image}
           labels={edusource.labels}
+          valorations={edusource.valorations}
         />
         </div>
           

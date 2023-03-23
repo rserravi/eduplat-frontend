@@ -6,6 +6,7 @@ import { Avatar, Grid, Paper } from '@mui/material';
 import { fetchUserbyId } from 'src/api/userApi';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions } from 'src/theme/theme';
+import { FavoriteIcon } from './favorites';
 
 const theme = createTheme(themeOptions);
 
@@ -49,7 +50,7 @@ export const Valoration =(props) =>{
 
  },[valoration])
 
-
+  if (valoration.accepted){
   return (
     <>
     {sender && sender._id!==""?<>
@@ -112,7 +113,7 @@ export const Valoration =(props) =>{
                         <Typography variant='body1' sx={{fontSize:15, fontWeight:'bold', ml:2, my:1}} ><i>"{valoration.comment}"</i></Typography>
                     </Grid>
                     <Grid>
-                        FUNCION PARA CARITA SONRIENTE DE MEDIA PUNTOS.
+                        <FavoriteIcon value={valoration.value+1} />
                     </Grid>
 
                         
@@ -127,4 +128,8 @@ export const Valoration =(props) =>{
     
     </>
   );
+                        }
+                        else{
+                            return(<></>)
+                        }
 }

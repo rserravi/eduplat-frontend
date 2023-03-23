@@ -9,7 +9,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions } from 'src/theme/theme';
 import { fetchUserbyId } from 'src/api/userApi';
 import { EdusourceBody } from 'src/components/resources/edusourceBody';
-import { EdusourceValorations } from 'src/components/resources/edusourceValorations';
 import CourseDrawer from 'src/components/pageStruct/courseDrawer';
 import EdusourceDrawer from 'src/components/pageStruct/edusourceDrawer';
 import { useDispatch } from 'react-redux';
@@ -48,9 +47,7 @@ export const EdusourcePage = () =>{
                 setError(error);
             }
         }
-        
-        //console.log(loadEdusource)
-        
+                
 
     },[edusource, id, dispatch])
 

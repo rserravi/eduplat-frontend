@@ -25,7 +25,6 @@ export const UserCard =(props) =>{
     },
   }));
 
-  
 
   return (
     <Paper sx={{m:1, p:1, borderRadius:5, '&:hover': {

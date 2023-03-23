@@ -21,6 +21,7 @@ import { SocialRow } from 'src/ui-component/cards/user/socialRow';
 import { Valoration } from 'src/components/valoration';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import { ValorationMeanIcon } from 'src/components/favorites';
 
 const theme = createTheme(themeOptions);
 var newMaxWidth  = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -130,6 +131,28 @@ export const UserPage = () =>{
     const handleActivityButtonClick = (event)=>{
         event.preventDefault();
         setActivityOpen(!activityOpen);
+    }
+
+    const acceptedValorations = ()=>{
+        var count = 0;
+
+        for (let val = 0; val < loadedUser.valorations.length; val++) {
+            if (loadedUser.valorations[val].accepted){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    const acceptedEdusourceValorations = (edu)=>{
+        var count = 0;
+
+        for (let val = 0; val < edu.valorations.length; val++) {
+            if (edu.valorations[val].accepted){
+                count++;
+            }
+        }
+        return count;
     }
 
 
@@ -409,6 +432,9 @@ export const UserPage = () =>{
                             <IconButton onClick={handleValButtonClick} style={{ color: loadedUser.secondaryColor}}><ArrowDropDownIcon /></IconButton>:
                             <IconButton onClick={handleValButtonClick} style={{ color: loadedUser.secondaryColor}}><ArrowDropUpIcon /></IconButton>
                             }
+                            {acceptedValorations>0?<>
+                            <ValorationMeanIcon valorations={loadedUser.valorations} /> from {acceptedValorations} valorations
+                            </>:<></>}
                  </Typography> 
 
                 {valOpen?<> 
@@ -499,11 +525,16 @@ export const UserPage = () =>{
                                     <a href={"/edusource/"+edu.resourceURL}><Image src={edu.picture.fileName} height={85} width={150} duration={0} sx={{borderRadius:5}} /></a>
                                     </Grid>
                                     <Grid item m={1}xs={12} sm={9} md={9.5} >
-                                        <Typography sx={{
-                                            fontSize: 15,
-                                            fontWeight: "bold",
-                                        }}
-                                        >{edu.title}</Typography>
+                                        <Grid container direction="row">
+                                            <Typography sx={{
+                                                fontSize: 15,
+                                                fontWeight: "bold",
+                                                mr:1
+                                            }}
+                                            >{edu.title}
+                                            </Typography>
+                                            {acceptedEdusourceValorations(edu)>0?<><ValorationMeanIcon valorations={edu.valorations} /> <Typography sx={{ml:1}}>from {acceptedEdusourceValorations(edu)} valoration</Typography></>:<></>}
+                                        </Grid>
                                         <Typography variant='body2'><i>{longDate(edu.date)}</i></Typography>
                                         <Typography sx={{fontSize:11}}>
                                             {edu.autors.map((autor, index)=>{

@@ -10,11 +10,12 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Button } from '@mui/material';
+import { ValorationMeanIcon } from 'src/components/favorites';
 
 
 export default function EduSourceCard(props) {
 
-  const {title, autor, autorAvatar, date, discipline, image, extract, labels} = props;
+  const {title, autor, autorAvatar, date, discipline, image, extract, labels, valorations} = props;
   const [hovering, setHovering] = React.useState(false);
   const subh =   discipline + ",  " + date;
 
@@ -91,7 +92,7 @@ export default function EduSourceCard(props) {
       <CardActions disableSpacing>
         <Button size="small" onClick={visitPromoter}> by {autor}</Button>
         <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
+          <ValorationMeanIcon valorations={valorations} />
         </IconButton>
         <IconButton aria-label="share" onClick={shareCard}>
           <ShareIcon />

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, ButtonGroup, Container,  Link, Paper } from '@mui/material'
+import { Badge, Button, ButtonGroup, Container,  Link, Paper } from '@mui/material'
 import { createTheme } from '@mui/material/styles';
 import { themeOptions } from 'src/theme/theme';
 import { useSelector } from 'react-redux';
@@ -8,6 +8,7 @@ import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import { ResourceValorations } from '../pageStruct/valorations';
 import { Box } from '@mui/system';
+import { ValorationMeanIcon } from '../favorites';
 
 
 const theme = createTheme(themeOptions);
@@ -71,6 +72,18 @@ export const EdusourceBody= (props) =>{
         height: "calc((100vw - "+custom.drawerWidth+"px - 130px ) * 0.5625)"
     }
     
+    const acceptedValorations = ()=>{
+        var count = 0;
+
+        for (let val = 0; val < edusource.valorations.length; val++) {
+            if (edusource.valorations[val].accepted){
+                count++;
+            }
+        }
+        return count;
+    }
+    
+
     console.log(videoIframe.width);
     const ResourceWeb = ()=>{
         
@@ -111,11 +124,11 @@ export const EdusourceBody= (props) =>{
     return (
         <>
         
-        <ButtonGroup sx={{mt:2}}>
-            <Button onClick={visitResource} endIcon={<ArrowCircleRightIcon />} sx={{ borderRadius:"20px"}}>Visit resource</Button>
-            <Button onClick={showEdusource} endIcon={<VisibilityIcon />} sx={{ borderRadius:"20px"}}>Show resource</Button>
-            {edusource.valorations.length>0?<Button onClick={showValorations} endIcon={<VolunteerActivismIcon /> } sx={{ borderRadius:"20px"}}>Show comments</Button>:<></>}
-        </ButtonGroup>
+        <Box sx={{mt:1}}>
+            <Button variant='outlined' onClick={visitResource} endIcon={<ArrowCircleRightIcon />} sx={{ borderRadius:"20px", mr:1}}>Visit resource</Button>
+            <Button variant={showing?'contained':'outlined'} onClick={showEdusource} endIcon={<VisibilityIcon />} sx={{ borderRadius:"20px", mr:1}}>Show resource</Button>
+            {acceptedValorations()>0?<Button variant={valorationsShow?'contained':'outlined'} onClick={showValorations} endIcon={<Badge badgeContent={acceptedValorations()} color="primary"><ValorationMeanIcon valorations={edusource.valorations} /> </Badge>} sx={{ borderRadius:"20px"}}>Show comments</Button>:<></>}
+        </Box>
         {edusource.valorations.length===0?<Link sx={{ml:2}}>Be the first to value this resource</Link>:<></>}
         {showing?<>
             <ResourceWeb />

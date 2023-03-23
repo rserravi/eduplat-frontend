@@ -7,19 +7,34 @@ const userSlice = createSlice({
         username:'',
         firstname:'',
         lastname:'',
-        type:{
-            typeDef:'',
-            linkId:'',
-            sensors:'',
-            parenting:'',
-            teams:''
+        publicData:{
+            name:false,
+            emails:false,
+            address:false,
+            phones:false,
+            social:false,
+            lastLogin:false
         },
-        gender:'',
-        dni:'',
+        tagline:'',
+        editingLevel:'',
+        karma:'',
         picture:{
             fileName:'',
+            file:'',
             uploadTime:'',
             type:''
+        },
+        pictureHeader:{
+            fileName:'',
+            file:'',
+            uploadTime:'',
+            type:''
+        },
+        primaryColor:'',
+        secondaryColor:'',
+        job:{
+            position:'',
+            workplace:''
         },
         refreshJWT:{
             token:'',
@@ -33,11 +48,18 @@ const userSlice = createSlice({
         address:[],
         phones:[],
         social:[],
-        birthdate:'',
+        lastLogin: '',
         loading: false,
         loaded: false,
-        lastLogin: '',
         isLogged: true,
+        valorations:[],
+        alerts:{
+            user: 0,
+            resource: 0,
+            message: 0,
+            promo: 0,
+            recomandation: 0,
+        }
     },
     reducers: {
         SET_AUTH_USER(state, action) {
@@ -46,10 +68,15 @@ const userSlice = createSlice({
             state.username = action.payload.username;
             state.firstname = action.payload.firstname;
             state.lastname = action.payload.lastname;
-            state.type = action.payload.type;
-            state.gender = action.payload.gender;
-            state.dni = action.payload.dni;
+            state.publicData = action.payload.publicData;
+            state.tagline = action.payload.tagline;
+            state.karma = action.payload.karma;
+            state.editingLevel = action.payload.editingLevel;
             state.picture = action.payload.picture;
+            state.pictureHeader = action.payload.pictureHeader;
+            state.primaryColor = action.payload.primaryColor;
+            state.secondaryColor = action.payload.secondaryColor;
+            state.job= action.payload.job;
             state.refreshJWT = action.payload.refreshJWT;
             state.isVerified = action.payload.isVerified;
             state.singInOrigin = action.payload.singInOrigin;
@@ -59,11 +86,12 @@ const userSlice = createSlice({
             state.address = action.payload.address;
             state.phones = action.payload.phones;
             state.social = action.payload.social;
-            state.birthdate = action.payload.birthdate;
             state.loading = false;
             state.loaded = true;
             state.lastLogin = action.payload.lastLogin;
             state.isLogged = action.payload.isLogged;
+            state.valorations = action.payload.valorations;
+            state.alerts = action.payload.alerts;
         },
         SET_LOADING(state, action) {
             state.loading = action.payload;
