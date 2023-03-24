@@ -5,7 +5,6 @@ import { themeOptions } from 'src/theme/theme';
 import { useSelector } from 'react-redux';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
-import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import { ResourceValorations } from '../pageStruct/valorations';
 import { Box } from '@mui/system';
 import { ValorationMeanIcon } from '../favorites';
@@ -14,13 +13,19 @@ import { ValorationMeanIcon } from '../favorites';
 const theme = createTheme(themeOptions);
 
 export const EdusourceBody= (props) =>{
-    const {edusource, promoter} = props;
+    const {edusource } = props;
     const [showing, setShowing] = React.useState(false);
     const [valorationsShow, setValorationShow] = React.useState(true);
     const custom = useSelector(state => state.custom)
+
+    const navigation = (payload) =>{
+        console.log(payload)
+        window.open(payload);
+      }
     
     const visitResource = (e) =>{
-        console.log("Visitando ", e.target.value);
+        e.preventDefault();
+        navigation(edusource.link);
     }
 
     const showEdusource = (e)=>{
@@ -125,11 +130,12 @@ export const EdusourceBody= (props) =>{
         <>
         
         <Box sx={{mt:1}}>
-            <Button variant='outlined' onClick={visitResource} endIcon={<ArrowCircleRightIcon />} sx={{ borderRadius:"20px", mr:1}}>Visit resource</Button>
-            <Button variant={showing?'contained':'outlined'} onClick={showEdusource} endIcon={<VisibilityIcon />} sx={{ borderRadius:"20px", mr:1}}>Show resource</Button>
-            {acceptedValorations()>0?<Button variant={valorationsShow?'contained':'outlined'} onClick={showValorations} endIcon={<Badge badgeContent={acceptedValorations()} color="primary"><ValorationMeanIcon valorations={edusource.valorations} /> </Badge>} sx={{ borderRadius:"20px"}}>Show comments</Button>:<></>}
+            <Button variant='outlined' onClick={visitResource} endIcon={<ArrowCircleRightIcon />} sx={{ borderRadius:"20px", mr:1, mt:1}}>Visit</Button>
+            <Button variant={showing?'contained':'outlined'} onClick={showEdusource} endIcon={<VisibilityIcon />} sx={{ borderRadius:"20px", mr:1, mr:1, mt:1}}>Show</Button>
+            {acceptedValorations()>0?<Button variant={valorationsShow?'contained':'outlined'} onClick={showValorations} endIcon={<Badge badgeContent={acceptedValorations()} color="primary"><ValorationMeanIcon valorations={edusource.valorations} /> </Badge>} sx={{ borderRadius:"20px", mt:1}}>Comments</Button>:<></>}
+            {edusource.valorations.length===0?<Button sx={{ml:2, mt:1}}>Be the first to value this resource</Button>:<></>}
         </Box>
-        {edusource.valorations.length===0?<Link sx={{ml:2}}>Be the first to value this resource</Link>:<></>}
+        
         {showing?<>
             <ResourceWeb />
         </>:<></>}

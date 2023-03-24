@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { BrowserView, isBrowser } from 'react-device-detect';
+import { isBrowser } from 'react-device-detect';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -8,10 +8,11 @@ import { themeOptions } from 'src/theme/theme';
 import { ResourcesNetflixGrid } from 'src/components/resources/resources';
 import fakeLastResources from 'src/assets/fakeLists/lastResources'
 import fakeTagCloud from 'src/assets/fakeLists/fakeCloudTag';
-import { Copyright } from 'src/components/pageStruct/copyright';
 import { TagCloud } from 'react-tagcloud'
-import MainHeader from 'src/components/pageStruct/mainHeading';
 import { ShareBarBig } from 'src/components/pageStruct/sharebar';
+import { fetchLastResources } from 'src/api/edusourceApi';
+import { Box } from '@mui/system';
+import { useOutletContext } from 'react-router-dom';
 
 
 const theme = createTheme(themeOptions);
@@ -30,11 +31,35 @@ const colorOptions = {
   }
 
 export const LandingPage = () =>{
+    
+  
+    const [newWidth] = useOutletContext();
+    const [lastResources, SetLastResources] = React.useState();
+
+    React.useEffect(()=>{
+        if (!lastResources ||lastResources===undefined ||lastResources ===null){
+            try {
+                fetchLastResources().then((response)=>{
+                   
+                 SetLastResources(response.result)
+                   
+               }).catch(error=>{
+                   
+                console.log(error);
+               })
+               
+           } catch (error) {
+            console.log(error);
+           }
+        }
+    },[])
+
+
     return (
         <React.Fragment>
             <ThemeProvider theme={theme}>
+            <Box width={newWidth}>
                 <Grid container>
-                    <CssBaseline />
                     <Grid
                         item
                         xs={12}
@@ -49,10 +74,6 @@ export const LandingPage = () =>{
                             backgroundPosition: isBrowser?'center':'left',
                         }}
                     >
-                        <Grid item component="menu">
-                                <MainHeader />
-                        </Grid>
-
                       
 
                             {/* TEXTO */}
@@ -117,9 +138,9 @@ export const LandingPage = () =>{
                             </Grid> 
                     {/* RESOURCES GRID */}
                   
-                    <ResourcesNetflixGrid edusourceList={fakeLastResources} title="Last Resources" mt={4}/>
+                    <ResourcesNetflixGrid edusourceList={lastResources} title="Last Resources" mt={4} newWidth={newWidth}/> 
                   
-                    <ResourcesNetflixGrid edusourceList={fakeLastResources} title="Recently visited" newcolor="secondary.light"/>
+                    <ResourcesNetflixGrid edusourceList={fakeLastResources} title="Recently visited" newcolor="secondary.light" newWidth={newWidth}/>
                 
                     {/* COPYRIGTH */}
                     <Grid item my={3}>
@@ -127,9 +148,10 @@ export const LandingPage = () =>{
                     </Grid>
                    
                     <Grid item>
-                    <Copyright />
+                   
                     </Grid>
                 </Grid>
+            </Box>
             </ThemeProvider>
 
         </React.Fragment>

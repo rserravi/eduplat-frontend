@@ -133,9 +133,10 @@ export const LoginPage = ({ ...others }) =>{
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
+                        p:2
                     }}
                     >
-                    <Logo />
+                    <Logo size={300} />
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                         <LockOutlinedIcon />
                     </Avatar>
@@ -214,6 +215,7 @@ export const LoginPage = ({ ...others }) =>{
                                                     onBlur={handleBlur}
                                                     onChange={handleChange}
                                                     inputProps={{}}
+                                                    sx={{borderRadius:5}}
                                                 />
                                                 {touched.email && errors.email && (
                                                     <FormHelperText error id="standard-weight-helper-text--register">
@@ -255,6 +257,7 @@ export const LoginPage = ({ ...others }) =>{
                                                     </InputAdornment>
                                                 }
                                                 inputProps={{}}
+                                                sx={{borderRadius:5}}
                                             />
                                             {touched.password && errors.password && (
                                                 <FormHelperText error id="standard-weight-helper-text-password-register">
@@ -303,7 +306,7 @@ export const LoginPage = ({ ...others }) =>{
                                                 type="submit"
                                                 fullWidth
                                                 variant="contained"
-                                                sx={{ mt: 3, mb: 2 }}
+                                                sx={{ mt: 3, mb: 2, borderRadius:5 }}
                                                 >
                                                 Sign Up
                                             </Button>

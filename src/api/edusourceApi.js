@@ -25,7 +25,7 @@ export const fetchEdusourceByLink = (link) =>{
             
             
         } catch (error) {
-            console.log("HA HABIDO UN ERROR",error);
+            console.log("HA HABIDO UN ERROR en fetchEdusourceByLink",error);
             reject(error.message);
         }
     })
@@ -52,7 +52,32 @@ export const fetchEdusourceByPromoter = (id) =>{
             
             
         } catch (error) {
-            console.log("HA HABIDO UN ERROR",error);
+            console.log("HA HABIDO UN ERROR en fetchEdusourceByPromoter",error);
+            reject(error.message);
+        }
+    })
+}
+
+export const fetchLastResources = () =>{
+    return new Promise( async(resolve, reject)=>{
+        try {
+            const axiosUrl = edusourceUrl + "/last";
+            //console.log(axiosUrl);
+            const res = await axios.get(axiosUrl);
+            if(res){
+               // console.log(res.data);
+                if (res.data.status==="error"){
+                    reject(res.data.message)
+                }
+                resolve(res.data);
+            }
+            else {
+                console.log("NO EXISTE LA URL")
+            }
+            
+            
+        } catch (error) {
+            console.log("HA HABIDO UN ERROR en fetchLastResources",error);
             reject(error.message);
         }
     })

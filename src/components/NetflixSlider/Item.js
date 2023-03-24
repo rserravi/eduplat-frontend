@@ -17,19 +17,9 @@ const Item = ({ edusource }) => (
             'item--open': isActive,
           })}
         > 
-        <div className='card'>
-        <EduSourceCard 
-          title={edusource.title} 
-          autor={edusource.autor}
-          autorAvatar={edusource.autorAvatar} 
-          date={edusource.date} 
-          discipline={edusource.discipline} 
-          extract={edusource.extract}
-          image={edusource.image}
-          labels={edusource.labels}
-          valorations={edusource.valorations}
-        />
-        </div>
+        
+          <EduSourceCard edusource = {edusource} />
+     
           
           {/* <img src={edusource.image} alt="" /> */}
          

@@ -65,6 +65,6 @@ export const ValorationMeanIcon = (props)=>{
   else{
     result = Math.floor(value / count);
   }
-  console.log(customIcons[result]);
+  //console.log(customIcons[result]);
   return(<FavoriteIcon value={result} />)
 }

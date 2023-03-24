@@ -34,7 +34,7 @@ function MainHeader() {
         const loadUser = async () =>{
             try {
                 await fetchUser().then((response)=>{
-                    console.log(response)
+                    //console.log(response)
                     if (response.user){
                         dispatch (SET_AUTH_USER(response.user));
                     }

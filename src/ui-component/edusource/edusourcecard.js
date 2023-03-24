@@ -6,32 +6,49 @@ import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { Button } from '@mui/material';
 import { ValorationMeanIcon } from 'src/components/favorites';
+import { shortDate } from 'src/utils/dateUtils';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function EduSourceCard(props) {
 
-  const {title, autor, autorAvatar, date, discipline, image, extract, labels, valorations} = props;
+  const {edusource} = props;
   const [hovering, setHovering] = React.useState(false);
-  const subh =   discipline + ",  " + date;
+  const navigate = useNavigate();
+  const subh =   edusource.discipline.charAt(0).toUpperCase() + edusource.discipline.slice(1) + ",  " + shortDate(edusource.date);
 
   const visitPromoter = (event)=>{
-    console.log("VISITANDO PROMOTER ", autor)
+    event.preventDefault();
+    navigate("/user/"+edusource.promoterId.username);
   }
 
   const shareCard = (event)=>{
-    console.log("SHARING " + title);
+    console.log("SHARING " + edusource.title);
   }
+
+  const handleCardClic = (event)=>{
+    event.preventDefault();
+    navigate("/edusource/"+ edusource.resourceURL);
+
+  }
+
+  const imgstyles = {
+    media: {
+      height: 160,
+      objectFit:"cover"
+    }
+};
 
   return (
     <Card 
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
         sx={{ minWidth:260,
+          
           position:"relative",
           '&:hover': {
           
@@ -50,50 +67,55 @@ export default function EduSourceCard(props) {
           </IconButton>
         }
         titleTypographyProps={{variant:'body1' }}
-        title={title}
+        title={edusource.title}
         subheader= {subh}
       />
       </>:<>
       <CardHeader
         sx={{height:80}}
         titleTypographyProps={{variant:'body1' }}
-        title={title}
+        title={edusource.title}
         subheader= {subh}
       />
       </>}
       {hovering?<>
       <CardMedia
         component="img"
-        height="194"
-        image={image}
-        alt={title}
-        sx= {{filter: "opacity(10%)"}}
+        className='classes.media'
+        style={imgstyles.media}
+        onClick={handleCardClic}
+        image={edusource.picture.fileName}
+        alt={edusource.title}
+        sx= {{cursor:"pointer",filter: "opacity(10%)"}}
       />
       </>:<>
       <CardMedia
         component="img"
-        height="194"
-        image={image}
-        alt={title}
-        sx= {{filter: "opacity(100%)"}}
+        className='classes.media'
+        style={imgstyles.media}
+        onClick={handleCardClic}
+        image={edusource.picture.fileName}
+        alt={edusource.title}
+        sx= {{cursor:"pointer",filter: "opacity(100%)"}}
+        
       />
       </>
       }
       {hovering?<>
-      <CardContent style={{position:"absolute", marginTop:-150}}>
+      <CardContent onClick={handleCardClic} style={{cursor:"pointer",position:"absolute", marginTop:-150}}>
       <Typography sx={{fontSize:10}} variant="p" color="text.terciary">
-         {labels}
+         {edusource.theme[0]}
        </Typography>
         <Typography sx={{fontSize:12}} variant="body2" color="text.secondary">
-          {extract}
+          {edusource.description}
         </Typography>
       </CardContent>
       </>:<></>} 
       <CardActions disableSpacing>
-        <Button size="small" onClick={visitPromoter}> by {autor}</Button>
-        <IconButton aria-label="add to favorites">
-          <ValorationMeanIcon valorations={valorations} />
-        </IconButton>
+        <Button size="small" onClick={visitPromoter}> by @{edusource.promoterId.username}</Button>
+        
+          <ValorationMeanIcon valorations={edusource.valorations} />
+       
         <IconButton aria-label="share" onClick={shareCard}>
           <ShareIcon />
         </IconButton>

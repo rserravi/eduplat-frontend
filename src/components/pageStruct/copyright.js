@@ -7,6 +7,7 @@ import { FollowUs } from './sharebar';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions } from 'src/theme/theme';
 
+
 const theme = createTheme(themeOptions);
 
 export const Copyright = (props)=> {
@@ -30,18 +31,19 @@ export const Copyright = (props)=> {
     return (
         <React.Fragment>
              <ThemeProvider theme={theme} >
-            <Box sx={{ backgroundColor:'primary.light' }}>
+            <Box sx={{ display: 'flex', backgroundColor:'primary.light', maxWidth:"xs" }}>
             <Grid
                 container
                 direction="row"
                 justifyContent="center"
-                alignItems="flex-end"
+                alignItems="center"
                 sx={{my:2}}
                 >
-                <Grid  md={4} xs={12} p={2}>
+                <Grid  md={2} xs={12} p={2}>
                     <Grid 
                         container
                         direction="column"
+                        alignItems="center"
                         >
                         <Grid item>
                             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
@@ -61,10 +63,11 @@ export const Copyright = (props)=> {
 
                     </Grid>
                 </Grid>
-                <Grid  md={4} xs={12} p={2}>
+                <Grid  md={2} xs={12} p={2}>
                     <Grid 
                         container
                         direction="column"
+                        alignItems="center"
                         >
                         <Grid item>
                             <Link href='/legal/helpcenter' underline="hover">
@@ -90,10 +93,11 @@ export const Copyright = (props)=> {
                     </Grid>
                 </Grid>
                
-                <Grid  md={4} xs={12} p={2}>
+                <Grid  md={2} xs={12} p={2}>
                     <Grid 
                         container
                         direction="column"
+                        alignItems="center"
                         >
                         <Grid item>
                             <Link href='https://www.bienesdar.org/' target="_blank" rel="noopener" underline="hover">

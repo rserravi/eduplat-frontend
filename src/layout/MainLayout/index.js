@@ -18,10 +18,21 @@ import MainHeader from 'src/components/pageStruct/mainHeading';
 var newMaxWidth  = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
 const MainLayout = () => {
+    const [newWidth, setNewWidth] = React.useState(newMaxWidth);
+    React.useEffect(() => {
+
+        function handleResize() {
+            setNewWidth(window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth)
+        }
+
+
+    window.addEventListener('resize', handleResize)
+
+    },[])
    
     return(
         <ThemeProvider theme={themeOptions} >
-            <Box sx={{ display: 'flex', width:newMaxWidth }}>
+            <Box sx={{ display: 'flex', width:newWidth }}>
                 <CssBaseline />
                
                 <Box
@@ -30,7 +41,7 @@ const MainLayout = () => {
                     <MainHeader />
                     <Toolbar />
                     <Container sx={{ mb: 4}}>
-                        <Outlet />
+                            <Outlet context={[newWidth]} />
                         
                     </Container>
                 </Box>
@@ -41,7 +52,7 @@ const MainLayout = () => {
                 alignItems="center"
                
             >
-            <Copyright /> 
+            <Copyright width={newWidth}/> 
             </Box>
         </ThemeProvider>
         )

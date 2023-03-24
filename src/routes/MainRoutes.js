@@ -2,6 +2,7 @@ import { lazy } from 'react';
 import { CreateCollection } from 'src/collections/createCollection';
 import { CreateEdusource } from 'src/components/resources/createEdusource';
 import { EdusourcePage } from 'src/pages/edusource/edusource';
+import { LandingPage } from 'src/pages/landingPage';
 import { Connect } from 'src/pages/miscelanea/connect';
 import { EventsPage } from 'src/pages/miscelanea/events';
 import { Volunteers } from 'src/pages/miscelanea/volunteers';
@@ -20,6 +21,11 @@ const MainRoutes = {
     path: '/',
     element: <MainLayout />,
     children: [
+        {
+            path: '/',
+            element: <LandingPage />
+        },
+        
         {
             path: '/edusource/:id',
             element: <EdusourcePage />

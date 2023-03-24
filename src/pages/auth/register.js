@@ -140,9 +140,10 @@ export const RegisterPage = ({ ...others }) =>{
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
+                        p:2
                     }}
                     >
-                    <Logo />
+                    <Logo size={300}/>
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                         <LockOutlinedIcon />
                     </Avatar>
@@ -226,6 +227,9 @@ export const RegisterPage = ({ ...others }) =>{
                                                 label="First Name"
                                                 onChange={handleChange}
                                                 autoFocus
+                                                sx={{'& fieldset': {
+                                                    borderRadius: '20px',
+                                                  },}}
                                             />
                                         </Grid>
                                         <Grid item xs={12} sm={6}>
@@ -237,6 +241,9 @@ export const RegisterPage = ({ ...others }) =>{
                                                 name="lastname"
                                                 autoComplete="family-name"
                                                 onChange={handleChange}
+                                                sx={{'& fieldset': {
+                                                    borderRadius: '20px',
+                                                  },}}
                                             />
                                         </Grid>
                                         <Grid item xs={12}>
@@ -250,6 +257,7 @@ export const RegisterPage = ({ ...others }) =>{
                                                     onBlur = {handleUserNameBlur}
                                                     onChange={handleChange}
                                                     inputProps={{}}
+                                                    sx={{borderRadius:5}}
                                                 />
                                                 {touched.username && errors.username && (
                                                     <FormHelperText error id="standard-weight-helper-username--register">
@@ -279,6 +287,7 @@ export const RegisterPage = ({ ...others }) =>{
                                                     onBlur={handleBlur}
                                                     onChange={handleChange}
                                                     inputProps={{}}
+                                                    sx={{borderRadius:5}}
                                                 />
                                                 {touched.email && errors.email && (
                                                     <FormHelperText error id="standard-weight-helper-text--register">
@@ -321,6 +330,7 @@ export const RegisterPage = ({ ...others }) =>{
                                                     </InputAdornment>
                                                 }
                                                 inputProps={{}}
+                                                sx={{borderRadius:5}}
                                             />
                                             {touched.password && errors.password && (
                                                 <FormHelperText error id="standard-weight-helper-text-password-register">
@@ -391,7 +401,7 @@ export const RegisterPage = ({ ...others }) =>{
                                                 fullWidth
                                                 disabled = {errors.password || errors.email || errors.username || usernameExists}
                                                 variant="contained"
-                                                sx={{ mt: 3, mb: 2 }}
+                                                sx={{ mt: 3, mb: 2,borderRadius:5 }}
                                                 >
                                                 Sign Up
                                             </Button>

@@ -9,5 +9,5 @@ import StaticRoutes from './StaticPageRoutes';
 // ==============================|| ROUTING RENDER ||============================== //
 
 export default function ThemeRoutes() {
-    return useRoutes([AuthenticationRoutes, MainRoutes, StaticRoutes, SearchRoutes]);
+    return useRoutes([MainRoutes,AuthenticationRoutes, StaticRoutes, SearchRoutes]);
 }

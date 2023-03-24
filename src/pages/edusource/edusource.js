@@ -13,6 +13,8 @@ import CourseDrawer from 'src/components/pageStruct/courseDrawer';
 import EdusourceDrawer from 'src/components/pageStruct/edusourceDrawer';
 import { useDispatch } from 'react-redux';
 import { MENU_OPEN } from 'src/store/menuSlice';
+import { useOutletContext } from 'react-router-dom';
+
 
 const theme = createTheme(themeOptions);
 
@@ -24,6 +26,7 @@ export const EdusourcePage = () =>{
     const [promoter, setPromoter] = useState();
      // eslint-disable-next-line
      const [error, setError] = useState("");
+    const [newWidth] = useOutletContext();
      
 
     useEffect(() =>{
@@ -60,10 +63,10 @@ export const EdusourcePage = () =>{
             <>
                {edusource.course?
                 <CourseDrawer edusource={edusource} promoter={promoter} drawerOpen={true}/>:
-                <EdusourceDrawer edusource={edusource} promoter={promoter} drawerOpen={true}/>}    
+                <></>}    
                
             
-            <Box component="main" sx={{ flexGrow: 1, p: 3}}>
+            <Box component="main" sx={{ flexGrow: 1, p: 2}}>
                 <Grid
                     container
                     direction="row"
@@ -71,7 +74,7 @@ export const EdusourcePage = () =>{
                     alignItems="flex-start"
                     >
                         <Grid item>
-                            <EdusourceHeader edusource={edusource} promoter={promoter} />
+                            <EdusourceHeader edusource={edusource} promoter={promoter} newWidth={newWidth}/>
                         </Grid>
                         
                 </Grid>
@@ -82,8 +85,6 @@ export const EdusourcePage = () =>{
                     </Typography>
                     
                 </Grid>
-            
-                
                 <EdusourceBody edusource={edusource} promoter={promoter} />
                 
             </Box>
