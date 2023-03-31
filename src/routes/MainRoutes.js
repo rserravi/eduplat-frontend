@@ -27,7 +27,7 @@ const MainRoutes = {
         },
         
         {
-            path: '/edusource/:id',
+            path: '/resources/:id',
             element: <EdusourcePage />
         },
         {

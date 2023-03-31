@@ -82,3 +82,16 @@ export const fetchLastResources = () =>{
         }
     })
 }
+
+export const createResource = (frmData)=>{
+ 
+    return new Promise( async(resolve, reject)=>{
+        try {
+            const res = await axios.post(edusourceUrl, frmData);
+            resolve(res.data);
+        } catch (error) {
+            reject(error);
+        }
+    })
+
+}

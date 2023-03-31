@@ -40,6 +40,7 @@ const userSlice = createSlice({
             token:'',
             addedAt:''
         },
+        language: '',
         isVerified: false,
         singInOrigin:'',
         isCompleted:0,
@@ -92,6 +93,7 @@ const userSlice = createSlice({
             state.isLogged = action.payload.isLogged;
             state.valorations = action.payload.valorations;
             state.alerts = action.payload.alerts;
+            state.language = action.payload.language;
         },
         SET_LOADING(state, action) {
             state.loading = action.payload;

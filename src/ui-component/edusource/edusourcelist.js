@@ -14,7 +14,7 @@ export default function EdusourceList(props) {
    const subh =   edusource.discipline.charAt(0).toUpperCase() + edusource.discipline.slice(1) + ",  " + shortDate(edusource.date);
    const [hovering, setHovering] = React.useState(false);
    const handleEdusourceLink = (event)=>{
-      navigate("/edusource/"+ edusource.resourceURL);
+      navigate("/resources/"+ edusource.resourceURL);
    }
 
    const handlePromoterClick = (event)=>{

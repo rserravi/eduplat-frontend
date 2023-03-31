@@ -7,3 +7,4 @@ export const findInString = (str, label)=>{
     return (str.includes(label))
 }
 
+

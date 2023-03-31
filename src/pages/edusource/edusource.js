@@ -32,7 +32,7 @@ export const EdusourcePage = () =>{
     useEffect(() =>{
       
        if(!edusource || edusource===null){
-            dispatch(MENU_OPEN("/edusource/"+id));
+            dispatch(MENU_OPEN("/resource/"+id));
             try {
                  fetchEdusourceByLink(id).then((response)=>{
                     setEdusource(response.result)

@@ -20,6 +20,7 @@ import { strengthColor, strengthIndicator } from 'src/utils/password-strength';
 import { userGoogleRegistrationAPI, userFormRegistrationApi, checkUserNameExists } from 'src/api/userApi';
 import { SET_AUTH_USER, SET_LOADING } from 'src/store/userSlice';
 import Logo from 'src/ui-component/Logo';
+import i18next from 'i18next';
 
 // assets
 import Visibility from '@mui/icons-material/Visibility';
@@ -148,7 +149,7 @@ export const RegisterPage = ({ ...others }) =>{
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Register
+                        {i18next.t("register")}
                     </Typography>
 
                     <Grid
@@ -171,7 +172,7 @@ export const RegisterPage = ({ ...others }) =>{
                                     <FormHelperText error>{googleError}</FormHelperText>
                                     <Grid item>
                                         <Link href="/login" variant="bod2">
-                                            Sign in
+                                          {i18next.t("signIn")} 
                                         </Link>
                                     </Grid>
                                 </>
@@ -179,7 +180,7 @@ export const RegisterPage = ({ ...others }) =>{
                         </Grid>
                         <Grid item xs={12} sm={12} sx={{mt:2}}>
                             <Typography variant="body2">
-                            or sign up with Email address:
+                                {i18next.t("orSignUpWithEmailAddress")} 
                             </Typography>
                         </Grid>
                     </Grid>

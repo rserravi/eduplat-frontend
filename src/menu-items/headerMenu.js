@@ -133,7 +133,7 @@ function HeaderMenu(props) {
                     
                       <Divider />
                       <MenuItem>
-                        <Button onClick={handleClickCreateResource} variant='contained' color='secondary'>Create Resource</Button>  
+                        <Button onClick={handleClickCreateResource} variant='contained' color='secondary'>Publish Resource</Button>  
                       </MenuItem>
                       <MenuItem>
                         <Button onClick={handleClickCreateCollection} variant='contained' color='primary'>Create Collection</Button>  
@@ -219,7 +219,7 @@ function HeaderMenu(props) {
                             <MenuItem onClick={handelClickUsersSearch}>Search Users</MenuItem> 
                             <Divider />
                             <MenuItem>
-                              <Button onClick={handleClickCreateResource} variant='contained' color='secondary'>Create Resource</Button>  
+                              <Button onClick={handleClickCreateResource} variant='contained' color='secondary'>Publish Resource</Button>  
                             </MenuItem>
                             <MenuItem>
                               <Button onClick={handleClickCreateCollection} variant='contained' color='primary'>Create Collection</Button>  

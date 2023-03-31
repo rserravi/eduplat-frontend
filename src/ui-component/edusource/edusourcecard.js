@@ -32,7 +32,7 @@ export default function EduSourceCard(props) {
 
   const handleCardClic = (event)=>{
     event.preventDefault();
-    navigate("/edusource/"+ edusource.resourceURL);
+    navigate("/resources/"+ edusource.resourceURL);
 
   }
 

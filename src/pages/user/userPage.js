@@ -522,7 +522,7 @@ export const UserPage = () =>{
                                 mt={1}
                                 >
                                     <Grid item m={1} xs={2} sm={2} md={2}>
-                                    <a href={"/edusource/"+edu.resourceURL}><Image src={edu.picture.fileName} height={85} width={150} duration={0} sx={{borderRadius:5}} /></a>
+                                    <a href={"/resources/"+edu.resourceURL}><Image src={edu.picture.fileName} height={85} width={150} duration={0} sx={{borderRadius:5}} /></a>
                                     </Grid>
                                     <Grid item m={1}xs={12} sm={9} md={9.5} >
                                         <Grid container direction="row">
