@@ -22,6 +22,7 @@ import { Valoration } from 'src/components/valoration';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { ValorationMeanIcon } from 'src/components/favorites';
+import i18next from 'i18next';
 
 const theme = createTheme(themeOptions);
 var newMaxWidth  = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -316,14 +317,14 @@ export const UserPage = () =>{
                     </Typography>
                     <Grid container sx={{ml:4, mt:2}} alignItems="center">
 
-                        <Typography variant='body2'> Karma:  </Typography>
+                        <Typography variant='body2'> {i18next.t("Karma")}:  </Typography>
                         <Chip variant="outlined"label= {loadedUser.karma}
                             sx={{
                                 color:loadedUser.secondaryColor,
                                 borderColor: loadedUser.secondaryColor,
                                 mx:1,
                         }} />  
-                        <Typography variant='body2' >  Level : </Typography>
+                        <Typography variant='body2' >  {i18next.t("Level")} : </Typography>
                         <Chip variant="outlined"label= {loadedUser.editingLevel}
                             sx={{
                                 color:loadedUser.secondaryColor,
@@ -342,7 +343,7 @@ export const UserPage = () =>{
                             color: loadedUser.primaryColor?loadedUser.primaryColor:"#231e39", 
                         },
                     }}>
-                        Send Message
+                        {i18next.t("Send Message")}
                     </Button>
                     <Button  variant='outlined' sx={{
                         borderColor:loadedUser.secondaryColor?loadedUser.secondaryColor:"#b3b8cd",
@@ -355,7 +356,7 @@ export const UserPage = () =>{
                             color: loadedUser.primaryColor?loadedUser.primaryColor:"#231e39", 
                         },
                     }}>
-                        More...
+                        {i18next.t("More")}...
                     </Button>
                     
                 </Container>
@@ -380,7 +381,7 @@ export const UserPage = () =>{
                         <Typography variant='h4' sx={{
                             ml: 2
                             }}>
-                                About me:
+                                {i18next.t("About me")}:
                                 {loadedUser.username === user.username?<>
                                 <IconButton onClick={handleAboutOpen} size="small" aria-label="edit-name-and-username" 
                                 sx={{
@@ -428,12 +429,12 @@ export const UserPage = () =>{
                        
                        ml: 2
                     }}>
-                        Valorations {valOpen?
+                        {i18next.t("Valorations")} {valOpen?
                             <IconButton onClick={handleValButtonClick} style={{ color: loadedUser.secondaryColor}}><ArrowDropDownIcon /></IconButton>:
                             <IconButton onClick={handleValButtonClick} style={{ color: loadedUser.secondaryColor}}><ArrowDropUpIcon /></IconButton>
                             }
                             {acceptedValorations>0?<>
-                            <ValorationMeanIcon valorations={loadedUser.valorations} /> from {acceptedValorations} valorations
+                            <ValorationMeanIcon valorations={loadedUser.valorations} /> {i18next.t("from")} {acceptedValorations} {i18next.t("valorations")}
                             </>:<></>}
                  </Typography> 
 
@@ -465,7 +466,7 @@ export const UserPage = () =>{
                                 color: loadedUser.primaryColor?loadedUser.primaryColor:"#231e39", 
                             },
                         }}>
-                            Add User Valoration...
+                            {i18next.t("Add User Valoration")}...
                     </Button>
                     </>:<></>}
                  
@@ -493,7 +494,7 @@ export const UserPage = () =>{
                        
                        ml: 2
                     }}>
-                        Contributions {activityOpen?
+                        {i18next.t("Contributions")} {activityOpen?
                         <IconButton onClick={handleActivityButtonClick} style={{ color: loadedUser.secondaryColor}}><ArrowDropDownIcon /></IconButton>:
                         <IconButton onClick={handleActivityButtonClick} style={{ color: loadedUser.secondaryColor}}><ArrowDropUpIcon /></IconButton>
                         }
@@ -506,7 +507,7 @@ export const UserPage = () =>{
                     {edusources.length===0?
                         <>
                         <Typography variant='body1' sx={{ml:2, mt:1}}>
-                        {loadedUser.username} still has no contributions
+                        {loadedUser.username} {i18next.t("still has no contributions")}
                         </Typography>
                         </>:
                         <></>}
@@ -533,7 +534,7 @@ export const UserPage = () =>{
                                             }}
                                             >{edu.title}
                                             </Typography>
-                                            {acceptedEdusourceValorations(edu)>0?<><ValorationMeanIcon valorations={edu.valorations} /> <Typography sx={{ml:1}}>from {acceptedEdusourceValorations(edu)} valoration</Typography></>:<></>}
+                                            {acceptedEdusourceValorations(edu)>0?<><ValorationMeanIcon valorations={edu.valorations} /> <Typography sx={{ml:1}}>{i18next.t("from")} {acceptedEdusourceValorations(edu)} {i18next.t("valorations")}</Typography></>:<></>}
                                         </Grid>
                                         <Typography variant='body2'><i>{longDate(edu.date)}</i></Typography>
                                         <Typography sx={{fontSize:11}}>
@@ -561,7 +562,7 @@ export const UserPage = () =>{
                         }
                     })}
                     </>:<>
-                    {loadedUser.username} still has no contributions;
+                    {loadedUser.username} {i18next.t("still has no contributions")};
                     </>}
                 </>:<></>}
                  
@@ -570,10 +571,10 @@ export const UserPage = () =>{
                 {/* DIALOGS */} 
 
                 <Dialog open={openNameDialog} onClose={handleNameClose}>
-                    <DialogTitle>Edit name</DialogTitle>
+                    <DialogTitle>{i18next.t("Edit name")}</DialogTitle>
                     <DialogContent>
                     <DialogContentText>
-                        NOTE: If you change your user name, your main page url will change as well.
+                        {i18next.t("UserChangeTEXT")}
                     </DialogContentText>
                     <NameForm user={loadedUser} handleNameClose={handleNameClose}  />
                     </DialogContent>
@@ -582,7 +583,7 @@ export const UserPage = () =>{
                 </Dialog>
 
                 <Dialog open={openAboutMeDialog} onClose={handleAboutClose}>
-                    <DialogTitle>Edit about me</DialogTitle>
+                    <DialogTitle>{i18next.t("Edit about me")}</DialogTitle>
                     <DialogContent>
                     <AboutForm user={loadedUser} handleAboutClose={handleAboutClose}  />
                     </DialogContent>
@@ -591,10 +592,10 @@ export const UserPage = () =>{
                 </Dialog>
 
                 <Dialog open={openDescriptionDialog} onClose={handleDescriptionClose}>
-                    <DialogTitle>Edit description</DialogTitle>
+                    <DialogTitle>{i18next.t("Edit description")}</DialogTitle>
                     <DialogContent>
                     <DialogContentText>
-                       Enter your position and workplace
+                       {i18next.t("Enter your position and workplace")}
                     </DialogContentText>
                     <DescriptionForm user={loadedUser} handleDescriptionClose={handleDescriptionClose}  />
                     </DialogContent>

@@ -6,6 +6,7 @@ import { useState } from "react";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions } from 'src/theme/theme';
 import { useNavigate } from 'react-router-dom';
+import i18next from 'i18next';
 
 
 export const SearchInBar = (props)=>{
@@ -71,7 +72,7 @@ export const SearchInBar = (props)=>{
               autoFocus
               margin="dense"
               id="searchbar"
-              label="Search resources"
+              label={i18next.t("Search Resources")}
               type="search"
               style = {{width: 300}} 
               variant="standard"

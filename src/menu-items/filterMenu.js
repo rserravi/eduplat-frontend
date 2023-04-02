@@ -11,6 +11,8 @@ import { categoriesList } from 'src/utils/isced';
 import { arrayFromString, findInString } from 'src/utils/stringOperations';
 import { getTagsFromCategory, iscedList } from 'src/utils/isced';
 import fakeTagCloud from 'src/assets/fakeLists/fakeCloudTag';
+import i18next from 'i18next';
+import i18n from 'src/i18n';
 
 
 
@@ -199,26 +201,26 @@ const resetFilters = (event) =>{
     <ThemeProvider theme={theme}>
             
             <Button size='small' variant='contained' sx={{ borderRadius:"20px", width:130, mr:1, mb:1}} color='secondary' endIcon={<ArrowDropDownIcon />} onClick={handleOpenNavResourcesMenu}>
-                {findLangFromCode(languageFilter)}
+                {i18next.t(findLangFromCode(languageFilter))}
             </Button>
 
             <Button size='small' variant='contained' sx={{ borderRadius:"20px", width:130, mr:1, mb:1}} color='secondary' endIcon={<ArrowDropDownIcon />} onClick={handleOpenNavTypeOfMenu}>
-                {typeOfFilter}
+                {i18next.t(typeOfFilter)}
             </Button>
 
             <Button disabled={typeOfFilter==="users"} size='small' variant='contained' sx={{ borderRadius:"20px", width:119, mr:1, mb:1}} color={categoriesFilter===""?'primary':'secondary'} endIcon={<ArrowDropDownIcon />} onClick={handleOpenNavCategoriesMenu}>
-                Categories
+                {i18next.t("Categories")}
             </Button>
 
             <Button disabled={typeOfFilter==="users"} size='small' variant='contained' sx={{ borderRadius:"20px", width:119, mr:1, mb:1}} color={levelFilter===""?'primary':'secondary'} endIcon={<ArrowDropDownIcon />} onClick={handleOpenNavLevelMenu}>
-                Levels
+                {i18next.t("Levels")}
             </Button>
 
             <Button disabled={typeOfFilter==="users"} size='small' variant='contained' sx={{ borderRadius:"20px", width:119, mr:1, mb:1}} color={themesFilter===""?'primary':'secondary'} endIcon={<ArrowDropDownIcon />} onClick={handleOpenNavThemesMenu}>
-                Themes
+                {i18next.t("Themes")}
             </Button>
               
-            <Button size='small' variant='text' onClick={resetFilters} sx={{mb:1}}>Reset filters</Button>
+            <Button size='small' variant='text' onClick={resetFilters} sx={{mb:1}}>{i18next.t("Reset Filters")}</Button>
             <Divider />
            
             {/* LANGUAGE MENU */}
@@ -238,11 +240,11 @@ const resetFilters = (event) =>{
                 <MenuList dense>
                     {languagesCodes.map((option)=>{
                         return(
-                        <MenuItem onClick={(e)=>{handleSelectLang(e, option.code)}}  key={option.code}>{option.label}</MenuItem>
+                        <MenuItem onClick={(e)=>{handleSelectLang(e, option.code)}}  key={option.code}>{i18next.t(option.label)}</MenuItem>
                         )
                     })} 
                     <Divider />
-                    <MenuItem onClick={(e)=>{handleSelectLang(e, "any")}}  key="any">Any</MenuItem>
+                    <MenuItem onClick={(e)=>{handleSelectLang(e, "any")}}  key="any">{i18next.t("Any")}</MenuItem>
                 </MenuList>    
               </Menu>
             </div>
@@ -257,9 +259,9 @@ const resetFilters = (event) =>{
                 
               >
                 <MenuList dense>
-                    <MenuItem key={"resources"} onClick={(e)=>{handleSelectTypeOf(e, "resources")}}>Resources</MenuItem>
-                    <MenuItem key={'collections'} onClick={(e)=>{handleSelectTypeOf(e, "collections")}}>Collections</MenuItem> 
-                    <MenuItem key={'users'} onClick={(e)=>{handleSelectTypeOf(e, "users")}}>Users</MenuItem> 
+                    <MenuItem key={"resources"} onClick={(e)=>{handleSelectTypeOf(e, "resources")}}>{i18next.t("Resources")}</MenuItem>
+                    <MenuItem key={'collections'} onClick={(e)=>{handleSelectTypeOf(e, "collections")}}>{i18next.t("Collections")}</MenuItem> 
+                    <MenuItem key={'users'} onClick={(e)=>{handleSelectTypeOf(e, "users")}}>{i18next.t("Users")}</MenuItem> 
                 </MenuList>    
               </Menu>
             </div>
@@ -279,7 +281,7 @@ const resetFilters = (event) =>{
                   }}
               >
                 <MenuList dense>
-                <Button onClick={handleCategoriesDialogClick} variant='text'>*Categories Explanation</Button>
+                <Button onClick={handleCategoriesDialogClick} variant='text'>*{i18next.t("Categories Explanation")}</Button>
                     {categoriesList.map((cat)=>{
                         return(
                             <MenuItem key={cat.key}>
@@ -287,7 +289,7 @@ const resetFilters = (event) =>{
                                     <Checkbox checked={findInString(categoriesFilter,cat.label)} onChange={(e)=>handleSelectCategory(e, cat.label)}
                                         sx={{height:20}}
                                         />} 
-                                        label= {cat.label} 
+                                        label= {i18next.t(cat.label)} 
                                     />      
                             </MenuItem>
                             )
@@ -314,7 +316,7 @@ const resetFilters = (event) =>{
                                 <Checkbox checked={findInString(levelFilter,cat.label)} onChange={(e)=>handleSelectLevel(e, cat.label)}
                                     sx={{height:20}}
                                     />} 
-                                    label= {cat.desc} 
+                                    label= {i18next.t(cat.desc)} 
                                 />
                          </MenuItem>
                         )
@@ -345,7 +347,7 @@ const resetFilters = (event) =>{
                                     <Checkbox checked={findInString(themesFilter,cat)} onChange={(e)=>handleSelectThemes(e, cat)}
                                         sx={{height:20}}
                                         />} 
-                                        label= {cat} 
+                                        label= {i18next.t(cat)} 
                                     />      
                             </MenuItem>
                             )
@@ -362,14 +364,14 @@ const resetFilters = (event) =>{
                     aria-labelledby="categories-dialog-title"
                     aria-describedby="categories-dialog-description"
                 >
-                    <DialogTitle id="categories-dialog-title">ISCED Levels</DialogTitle>
+                    <DialogTitle id="categories-dialog-title">{i18next.t("ISCED Levels")}</DialogTitle>
                     <DialogContent dividers={true}>
                     <DialogContentText
                         id="categories-dialog-description"
                         ref={categoriesDescriptionElementRef}
                         tabIndex={-1}
                     >
-                        The duration of each level of education can vary greatly across countries. These differences can lead to problems when attempting to compare statistics across countries. The International Standard Classification of Education (ISCED) is the official framework used to facilitate international comparisons of education systems. It was developed in 1976 by the United Nations Educational, Scientific and Cultural Organization (UNESCO) and was revised in 1997 and 2011
+                        {i18next.t("ISCED text")}
                     </DialogContentText>
                     </DialogContent>
                     <DialogActions>

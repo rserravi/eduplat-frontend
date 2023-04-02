@@ -5,6 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import {TextField, Grid} from '@mui/material';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import { Box } from '@mui/system';
+import i18next from 'i18next';
 
 
 /// INTERFACE:
@@ -41,7 +42,7 @@ export const SocialForm = (props) =>{
                         <Grid item xs={12} sm={5.5} md={5.5}>
                             <TextField
                                 id="social"
-                                label="Social Media"
+                                label={i18next.t("Social Media")}
                                 name= "social"
                                 select
                                 variant="standard"
@@ -65,7 +66,7 @@ export const SocialForm = (props) =>{
                             <TextField
                                 id="socialUser1"
                                 name="socialUser1"
-                                label="User"
+                                label={i18next.t("User")}
                                 variant="standard"
                                 value={socialFrmData.user}
                                 fullWidth

@@ -6,6 +6,7 @@ import Logo from 'src/ui-component/Logo';
 import { FollowUs } from './sharebar';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions } from 'src/theme/theme';
+import i18next from 'i18next';
 
 
 const theme = createTheme(themeOptions);
@@ -54,7 +55,7 @@ export const Copyright = (props)=> {
                             </Box>
                         </Grid>
                         <Grid item>
-                            <Typography variant='body2'>Follow us</Typography>
+                            <Typography variant='body2'>{i18next.t("Follow us")}</Typography>
                         </Grid>
                         <Grid item>
                             <FollowUs />
@@ -71,22 +72,22 @@ export const Copyright = (props)=> {
                         >
                         <Grid item>
                             <Link href='/legal/helpcenter' underline="hover">
-                            <Typography>Help Center</Typography>
+                            <Typography>{i18next.t("Help Center")}</Typography>
                             </Link>
                         </Grid>
                         <Grid item>
                             <Link href='/legal/useterms' underline="hover">
-                            <Typography>Use Terms</Typography>
+                            <Typography>{i18next.t("Use Terms")}</Typography>
                             </Link>
                         </Grid>
                         <Grid item>
                             <Link href='/legal/privacity' underline="hover">
-                            <Typography>Privacity</Typography>
+                            <Typography>{i18next.t("Privacity")}</Typography>
                             </Link>
                         </Grid>
                         <Grid item>
                             <Link href='/legal/cookies' underline="hover">
-                            <Typography>Cookies</Typography>
+                            <Typography>{i18next.t("Cookies")}</Typography>
                             </Link>
                         </Grid>
 
@@ -111,12 +112,12 @@ export const Copyright = (props)=> {
                         </Grid>
                         <Grid item>
                             <Link href='/events' underline="hover">
-                            <Typography>Events</Typography>
+                            <Typography>{i18next.t("Events")}</Typography>
                             </Link>
                         </Grid>
                         <Grid item>
                             <Link href='https://docs.google.com/forms/d/e/1FAIpQLScCMmoGNuMGmMGQdsUGqtSqO-UhzQZrMey9UgEBjWSJd4KHHw/viewform/' target="_blank" rel="noopener" underline="hover">
-                            <Typography>How to collaborate?</Typography>
+                            <Typography>{i18next.t("How to collaborate?")}</Typography>
                             </Link>
                         </Grid>
 

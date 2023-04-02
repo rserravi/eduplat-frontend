@@ -441,7 +441,10 @@ export const countries = [
       code: 'IT', label: 'Italian', flag: "https://commons.wikimedia.org/wiki/File:Flag_of_Italy.svg#/media/File:Flag_of_Italy.svg"
     },
     {
-      code: 'GR', label: 'Griego', flag: "https://commons.wikimedia.org/wiki/File:Flag_of_Greece.svg#/media/File:Flag_of_Greece.svg"
+      code: 'GR', label: 'Greek', flag: "https://commons.wikimedia.org/wiki/File:Flag_of_Greece.svg#/media/File:Flag_of_Greece.svg"
+    },
+    {
+      code: 'PT', label: 'Portuguese', flag: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_Portugal.svg"
     },
     
   ]

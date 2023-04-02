@@ -10,7 +10,6 @@ import { themeOptions } from 'src/theme/theme';
 import { fetchUserbyId } from 'src/api/userApi';
 import { EdusourceBody } from 'src/components/resources/edusourceBody';
 import CourseDrawer from 'src/components/pageStruct/courseDrawer';
-import EdusourceDrawer from 'src/components/pageStruct/edusourceDrawer';
 import { useDispatch } from 'react-redux';
 import { MENU_OPEN } from 'src/store/menuSlice';
 import { useOutletContext } from 'react-router-dom';

@@ -7,31 +7,32 @@ import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt
 import SentimentVerySatisfiedIcon from '@mui/icons-material/SentimentVerySatisfied';
 import BlockIcon from '@mui/icons-material/Block';
 import { Tooltip } from '@mui/material';
+import i18next from 'i18next';
 
 export const customIcons = {
     0: {
       icon: <BlockIcon color="primary" />,
-      label: 'No valoration yet',
+      label: i18next.t('No valoration yet')
     },
     1: {
       icon: <SentimentVeryDissatisfiedIcon color="error" />,
-      label: 'Very Dissatisfied / No useful at all',
+      label: i18next.t('Very Dissatisfied / No useful at all')
     },
     2: {
       icon: <SentimentDissatisfiedIcon color="error" />,
-      label: 'Dissatisfied / Not useful',
+      label: i18next.t('Dissatisfied / Not useful'),
     },
     3: {
       icon: <SentimentSatisfiedIcon color="warning" />,
-      label: 'Neutral / Ok',
+      label: i18next.t('Neutral / Ok')
     },
     4: {
       icon: <SentimentSatisfiedAltIcon color="success" />,
-      label: 'Satisfied / Useful',
+      label: i18next.t('Satisfied / Useful'),
     },
     5: {
       icon: <SentimentVerySatisfiedIcon color="success" />,
-      label: 'Very Satisfied / Very useful',
+      label: i18next.t('Very Satisfied / Very useful')
     },
   };
   

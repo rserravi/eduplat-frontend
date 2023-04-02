@@ -62,6 +62,8 @@ import facebookIcon from 'src/assets/images/icons/facebook32x32.png'
 import twitterIcon from 'src/assets/images/icons/twitter32x32.png'
 import linkedinIcon from 'src/assets/images/icons/linkedin32x32.png'
 import telegramIcon from 'src/assets/images/icons/telegram32x32.png'
+import i18next from 'i18next';
+
 
 export const ShareBarBig = () =>{
     const shareUrl = 'https://eduplat.org';
@@ -69,7 +71,7 @@ export const ShareBarBig = () =>{
     return (
         <>
         <div className="Demo__container">
-        <Typography className='Title'>Spread the word</Typography>
+        <Typography className='Title'>{i18next.t("Spread the word")}</Typography>
         <div className="Demo__some-network">
             
           <FacebookShareButton

@@ -160,7 +160,7 @@ export const RegisterPage = ({ ...others }) =>{
                         >
                         <Grid item xs={12} sm={12} sx={{mt:5}}>
                             <Typography variant="body2">
-                                If you have a Google / Gmail account, register here
+                            {i18next.t("IfyouhaveaGoogleGmailaccount")}  {i18next.t("registerhere")}
                             </Typography>
                         </Grid>
                         <Grid item xs={12} sm={12} sx={{mt:2}}>
@@ -180,7 +180,7 @@ export const RegisterPage = ({ ...others }) =>{
                         </Grid>
                         <Grid item xs={12} sm={12} sx={{mt:2}}>
                             <Typography variant="body2">
-                                {i18next.t("orSignUpWithEmailAddress")} 
+                                {i18next.t("orSignUpWith")} {i18next.t("EmailAddress")} 
                             </Typography>
                         </Grid>
                     </Grid>
@@ -197,9 +197,9 @@ export const RegisterPage = ({ ...others }) =>{
                             username: Yup
                                 .string()
                                 .max(255)
-                                .required('Must provide an unique username'),
-                            email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-                            password: Yup.string().max(255).required('Password is required')
+                                .required(i18next.t("Mustprovideanuniqueusername")),
+                            email: Yup.string().email(i18next.t("Mustbeavalidemail")).max(255).required(i18next.t("Emailisrequired")),
+                            password: Yup.string().max(255).required(i18next.t("Passwordisrequired"))
                         })}
                         onSubmit={async (values, {setErrors, setStatus, setSubmitting }) =>{
                             try {
@@ -225,7 +225,7 @@ export const RegisterPage = ({ ...others }) =>{
                                                 required
                                                 fullWidth
                                                 id="firstname"
-                                                label="First Name"
+                                                label={i18next.t("FirstName")}
                                                 onChange={handleChange}
                                                 autoFocus
                                                 sx={{'& fieldset': {
@@ -238,7 +238,7 @@ export const RegisterPage = ({ ...others }) =>{
                                                 required
                                                 fullWidth
                                                 id="lastname"
-                                                label="Last Name"
+                                                label={i18next.t("LastName")}
                                                 name="lastname"
                                                 autoComplete="family-name"
                                                 onChange={handleChange}
@@ -249,7 +249,7 @@ export const RegisterPage = ({ ...others }) =>{
                                         </Grid>
                                         <Grid item xs={12}>
                                             <FormControl fullWidth error={Boolean(touched.username && errors.username)} sx={{ ...theme.typography.customInput }}>
-                                                <InputLabel htmlFor="outlined-adornment-username-register">Username</InputLabel>
+                                                <InputLabel htmlFor="outlined-adornment-username-register">{i18next.t("username")}</InputLabel>
                                                 <OutlinedInput
                                                     id="outlined-adornment-username-register"
                                                     type="username"
@@ -267,19 +267,19 @@ export const RegisterPage = ({ ...others }) =>{
                                                 )}
                                                 {usernameExists && (
                                                     <FormHelperText error id="standard-weight-helper-exists-text--register">
-                                                    Username alredy registered in database
+                                                    {i18next.t("Usernamealredyregisteredindatabase")}
                                                     </FormHelperText>
                                                 )}
                                                 {values.username==="" && (
                                                     <FormHelperText error id="standard-weight-helper-empty-text--register">
-                                                    UserName is required.
+                                                    {i18next.t("UserNameisrequired")}
                                                     </FormHelperText>
                                                 )}
                                             </FormControl>
                                         </Grid>
                                         <Grid item xs={12}>
                                             <FormControl fullWidth error={Boolean(touched.email && errors.email)} sx={{ ...theme.typography.customInput }}>
-                                                <InputLabel htmlFor="outlined-adornment-email-register">Email Address</InputLabel>
+                                                <InputLabel htmlFor="outlined-adornment-email-register">{i18next.t("EmailAddress")}</InputLabel>
                                                 <OutlinedInput
                                                     id="outlined-adornment-email-register"
                                                     type="email"
@@ -304,7 +304,7 @@ export const RegisterPage = ({ ...others }) =>{
                                             error={Boolean(touched.password && errors.password)}
                                             sx={{ ...theme.typography.customInput }}
                                         >
-                                             <InputLabel htmlFor="outlined-adornment-password-register">Password</InputLabel>
+                                             <InputLabel htmlFor="outlined-adornment-password-register">{i18next.t("Password")}</InputLabel>
                                             <OutlinedInput
                                                 id="outlined-adornment-password-register"
                                                 type={showPassword ? 'text' : 'password'}
@@ -375,9 +375,9 @@ export const RegisterPage = ({ ...others }) =>{
                                                     }
                                                     label={
                                                         <Typography variant="subtitle1">
-                                                            Agree with &nbsp;
+                                                            {i18next.t("AgreeWith")} &nbsp;
                                                             <Typography variant="subtitle1" component={Link} to="#">
-                                                                Terms & Condition.
+                                                                {i18next.t("TermsAndConditions")}
                                                             </Typography>
                                                         </Typography>
                                                     }
@@ -404,13 +404,13 @@ export const RegisterPage = ({ ...others }) =>{
                                                 variant="contained"
                                                 sx={{ mt: 3, mb: 2,borderRadius:5 }}
                                                 >
-                                                Sign Up
+                                                {i18next.t("Sign Up")}
                                             </Button>
                                         </Grid>
                                         <Grid container justifyContent="flex-end">
                                         <Grid item>
                                             <Link href="/login" variant="body2">
-                                            Already have an account? Sign in
+                                            {i18next.t("AlreadyHaveAnAccount?")}  {i18next.t("signUp")}
                                             </Link>
                                         </Grid>
                                         </Grid>

@@ -4,6 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import {TextField, Grid} from '@mui/material';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import { Box } from '@mui/system';
+import i18next from 'i18next';
 
 
 /// INTERFACE:
@@ -39,7 +40,7 @@ export const EmailForm = (props) =>{
                         <Grid item xs={12} sm={5.5} md={5.5}>
                             <TextField
                                 id="type"
-                                label="Email Type"
+                                label={i18next.t("Email Type")}
                                 name= "type"
                                 select
                                 variant="standard"
@@ -63,7 +64,7 @@ export const EmailForm = (props) =>{
                             <TextField
                                 id="emailUrl"
                                 name="emailUrl"
-                                label="Email"
+                                label={i18next.t("EmailAddress")}
                                 variant="standard"
                                 value={emailFrmData.emailUrl}
                                 fullWidth

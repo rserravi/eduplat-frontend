@@ -7,6 +7,8 @@ import { themeOptions } from 'src/theme/theme';
 import { useNavigate } from 'react-router-dom';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import InfoIcon from '@mui/icons-material/Info';
+import i18next from 'i18next';
+
 
 const theme = createTheme(themeOptions);
 
@@ -28,11 +30,11 @@ export const AlertsInBar = (props)=>{
   };
 
   const handleKarmaInfo = (event)=>{
-
+    //TODO
   }
 
   const handleLevelInfo = (event)=>{
-    
+    //TODO
   }
 
   const open = Boolean(anchorEl);
@@ -68,28 +70,28 @@ export const AlertsInBar = (props)=>{
           
           >
           <MenuList dense>
-              <Typography sx={{fontWeight:"bold", fontSize:15, ml:2}}>Alerts</Typography>
-              <Tooltip title={user.alerts.resource===0?"No new resources valued":"Someone has commented your resources: you must accept or deny the comments"}>
+              <Typography sx={{fontWeight:"bold", fontSize:15, ml:2}}>{i18next.t("Alerts")}</Typography>
+              <Tooltip title={user.alerts.resource===0?i18next.t("No new resources valued"):i18next.t("Someone has commented your resources:") + i18next.t("you must accept or deny the comments")}>
               <MenuItem onClick={handleClose}>
-                <Button variant={user.alerts.resource===0?'text':'contained'}  color={user.alerts.resource===0?'primary':'secondary'} size='small' sx={{mr:1, borderRadius:5}}>{user.alerts.resource}</Button> resources valorations
+                <Button variant={user.alerts.resource===0?'text':'contained'}  color={user.alerts.resource===0?'primary':'secondary'} size='small' sx={{mr:1, borderRadius:5}}>{user.alerts.resource}</Button> {i18next.t("resources valorations")}
               </MenuItem>
               </Tooltip>
-              <Tooltip title={user.alerts.user===0?"No new comments on your profile":"Someone has commented your profile: you must accept or deny the comments"}>
+              <Tooltip title={user.alerts.user===0?i18next.t("No new comments on your profile"):i18next.t("Someone has commented your profile:") + i18next.t("you must accept or deny the comments")}>
               <MenuItem onClick={handleClose}>
-                <Button variant={user.alerts.user===0?'text':'contained'}  color={user.alerts.user===0?'primary':'secondary'} size='small' sx={{mr:1, borderRadius:5}}>{user.alerts.user} </Button>profile valorations
+                <Button variant={user.alerts.user===0?'text':'contained'}  color={user.alerts.user===0?'primary':'secondary'} size='small' sx={{mr:1, borderRadius:5}}>{user.alerts.user} </Button>{i18next.t("profile valorations")}
               </MenuItem>
               </Tooltip>
-              <Tooltip title={user.alerts.message===0?"":"You have non readed messages"}>
+              <Tooltip title={user.alerts.message===0?"":i18next.t("You have non readed messages")}>
               <MenuItem onClick={handleClose}>
-               <Button variant={user.alerts.message===0?'text':'contained'}  color={user.alerts.message===0?'primary':'secondary'} size='small' sx={{mr:1, borderRadius:5}}> {user.alerts.message} </Button>  New Messages: 
+               <Button variant={user.alerts.message===0?'text':'contained'}  color={user.alerts.message===0?'primary':'secondary'} size='small' sx={{mr:1, borderRadius:5}}> {user.alerts.message} </Button> {i18next.t("New Messages:")}
               </MenuItem>
               </Tooltip>
               <Divider />
               <MenuItem onClick={handleKarmaInfo} >
-                Karma points: <Typography color='primary' sx={{fontWeight: 'bold', ml:1}}>{user.karma}</Typography> <IconButton size='small' > <InfoIcon /></IconButton>
+                {i18next.t("Karma points:")} <Typography color='primary' sx={{fontWeight: 'bold', ml:1}}>{user.karma}</Typography> <IconButton size='small' > <InfoIcon /></IconButton>
               </MenuItem>
               <MenuItem onClick={handleLevelInfo} >
-                Level:<Typography color='primary' sx={{fontWeight: 'bold', ml:1}}>{user.editingLevel}</Typography> <IconButton size='small' > <InfoIcon /></IconButton>
+                {i18next.t("Level")}<Typography color='primary' sx={{fontWeight: 'bold', ml:1}}>{user.editingLevel}</Typography> <IconButton size='small' > <InfoIcon /></IconButton>
               </MenuItem>
 
               </MenuList>

@@ -6,6 +6,7 @@ import { socialNetworks } from 'src/utils/social-networks-utils';
 import { phoneTypes } from 'src/utils/phoneTypes';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import i18next from 'i18next';
 
 
 export const AboutForm = (props) =>{
@@ -28,12 +29,12 @@ export const AboutForm = (props) =>{
             await userUpdate(frmData).then((result)=>{
                 console.log("RESULTADO OBTENIDO", result)
                 if (result.status==="success"){
-                    handleAboutClose("success", "About you has been udpated");
+                    handleAboutClose("success", i18next.t("About you has been udpated"));
                 }
                 
             }).catch((error)=>{
                 console.log(error);
-                handleAboutClose("error", "Something has failed");
+                handleAboutClose("error", i18next.t("Something has failed"));
             })
         }
         handleAboutClose();
@@ -150,7 +151,7 @@ export const AboutForm = (props) =>{
                     onChange={taglineChange} 
                     sx={{width:290}} 
                     variant="standard" 
-                    label="About me" 
+                    label={i18next.t("About me")}
                     defaultValue={loadedUser.tagline}
                     multiline
                     rows={9}
@@ -163,7 +164,7 @@ export const AboutForm = (props) =>{
 
             {/* SOCIAL NETWORKDS */}
 
-            <Typography variant='h4'>Social networks</Typography>
+            <Typography variant='h4'>{i18next.t("Social networks")}</Typography>
             {loadedUser.social.map((snet, index)=>{
                 return(
                     
@@ -217,9 +218,9 @@ export const AboutForm = (props) =>{
 
             {/* PHONES */}
             <Grid container direction="row" justifyContent="flex-start" alignItems="center">
-                <Typography variant='h4'>Phones</Typography>
+                <Typography variant='h4'>{i18next.t("Phones")}</Typography>
                 <FormGroup>
-                    <FormControlLabel control={<Checkbox sx={{ml:7}} onChange={handlePhoneCheckbox} checked={!loadedUser.publicData.phones} />} label="Keep private?" />
+                    <FormControlLabel control={<Checkbox sx={{ml:7}} onChange={handlePhoneCheckbox} checked={!loadedUser.publicData.phones} />} label={i18next.t("Keep private?")} />
                 </FormGroup>                
             </Grid>
             {loadedUser.phones.map((snet, index)=>{
@@ -281,11 +282,11 @@ export const AboutForm = (props) =>{
             sx={{mt:2}}
             >
                 <Grid item sx={{mr:2}}>
-                <Button onClick={handleAcceptClick} variant='contained' sx={{borderRadius:"20px"}}>Accept</Button>
+                <Button onClick={handleAcceptClick} variant='contained' sx={{borderRadius:"20px"}}>{i18next.t("Accept")}</Button>
                 </Grid>
 
                 <Grid item>
-                    <Button onClick={handleAboutClose} variant='contained' sx={{borderRadius:"20px"}}>Cancel</Button>
+                    <Button onClick={handleAboutClose} variant='contained' sx={{borderRadius:"20px"}}>{i18next.t("Cancel")}</Button>
                 </Grid>
         
         </Grid> 

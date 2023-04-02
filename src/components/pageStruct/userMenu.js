@@ -9,6 +9,7 @@ import { userLogout } from 'src/api/userApi';
 import { SET_NULL } from 'src/store/userSlice';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions } from 'src/theme/theme';
+import i18next from 'i18next';
 
 const theme = createTheme(themeOptions);
 
@@ -124,10 +125,10 @@ export const UserMenu = (props) =>{
                 >
                 
                     <MenuItem onClick={handleLoginClick}>
-                        <Typography textAlign="center">Login</Typography>
+                        <Typography textAlign="center">{i18next.t("signIn")}</Typography>
                     </MenuItem>
                     <MenuItem onClick={handleRegisterClick}>
-                        <Typography textAlign="center">Register</Typography>
+                        <Typography textAlign="center">{i18next.t("signUp")}</Typography>
                     </MenuItem>
                 </Menu>
             </Box>
@@ -158,21 +159,21 @@ export const UserMenu = (props) =>{
                 >
                 
                     <MenuItem onClick={handleProfileClick}>
-                        Profile
+                        {i18next.t("Profile")}
                     </MenuItem>
                     <MenuItem onClick={handleMyAccountClick}>
-                        My account
+                        {i18next.t("My account")}
                     </MenuItem>
                     <Divider />
                     <MenuItem>
                         <Button onClick={handleClickCreateResource} variant='contained' color='secondary'>
-                            Create Resource
+                            {i18next.t("Publish Resource")}
                         </Button>
                     </MenuItem>
 
                     <MenuItem>
                         <Button onClick={handleClickCreateCollection} variant='contained' color='primary'>
-                            Create Collection
+                            {i18next.t("Create Collection")}
                         </Button>
                     </MenuItem>
 
@@ -180,13 +181,13 @@ export const UserMenu = (props) =>{
                         <ListItemIcon>
                             <Settings fontSize="small" />
                         </ListItemIcon>
-                        Settings
+                        {i18next.t("Settings")}
                     </MenuItem>
                     <MenuItem onClick={handleLogoutClick}>
                         <ListItemIcon>
                             <Logout fontSize="small" />
                         </ListItemIcon>
-                        Logout
+                        {i18next.t("Logout")}
                     </MenuItem>
                 </Menu>
             </Box>

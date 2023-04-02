@@ -29,6 +29,7 @@ import { Formik } from 'formik';
 import {Image} from 'mui-image';
 import { createResource } from 'src/api/edusourceApi';
 import { getResourceUrlFromTitle, setPictureInResource } from 'src/utils/resourceUtils';
+import i18next from 'i18next';
 
 
 const theme = createTheme(themeOptions);
@@ -255,7 +256,7 @@ export const CreateEdusource= ({ ...others }) =>{
                         >
                         
                         <Typography component="h1" variant="h5">
-                            Create Resource
+                            {i18next.t("Publish Resource")}
                         </Typography>
 
                         <Formik
@@ -266,7 +267,7 @@ export const CreateEdusource= ({ ...others }) =>{
                                 url: Yup
                                     .string()
                                     .max(500)
-                                    .required('Must provide an url')
+                                    .required(i18next.t('Must provide an url'))
                             })}
                             onSubmit={async (values, {setErrors, setStatus, setSubmitting }) =>{
                                 try {
@@ -297,9 +298,9 @@ export const CreateEdusource= ({ ...others }) =>{
                                                     required
                                                     fullWidth
                                                     id="url"
-                                                    label="URL of the resource"
+                                                    label={i18next.t("URL of the resource")}
                                                     onChange={handleChange}
-                                                    helperText="Copy and paste from your navigator"
+                                                    helperText={i18next.t("Copy and paste from your navigator")}
                                                     autoFocus
                                                     value={values.url}
                                                     sx={{width:newWidth-32,
@@ -316,7 +317,7 @@ export const CreateEdusource= ({ ...others }) =>{
                                                                 variant="contained"
                                                                 sx={{borderRadius:5 }}
                                                                 >  
-                                                               Continue
+                                                               {i18next.t("Continue")}
                                                             </Button>
                                                           </InputAdornment>
                                                         ),
@@ -341,7 +342,7 @@ export const CreateEdusource= ({ ...others }) =>{
                         >
                             <Grid item xs={10} sm={10}>
                                 <TextField
-                                    label ="Title"
+                                    label ={i18next.t("Title")}
                                     fullWidth
                                     defaultValue={title}
                                     sx={{ 
@@ -353,7 +354,7 @@ export const CreateEdusource= ({ ...others }) =>{
                             </Grid>
                             <Grid item xs={2} sm={2}>
                                 <TextField
-                                    label ="Language"
+                                    label ={i18next.t("Language")}
                                     fullWidth
                                     select
                                     defaultValue={language}
@@ -365,16 +366,16 @@ export const CreateEdusource= ({ ...others }) =>{
                                 >
                                      {languagesCodes.map((option)=>{
                                         return(
-                                        <MenuItem onClick={(e)=>{handleSelectLang(e, option.code)}}  key={option.code}>{option.label}</MenuItem>
+                                        <MenuItem onClick={(e)=>{handleSelectLang(e, option.code)}}  key={option.code}>{i18next.t(option.label)}</MenuItem>
                                         )
                                     })} 
                                     <Divider />
-                                    <MenuItem onClick={(e)=>{handleSelectLang(e, "any")}}  key="any">Any</MenuItem>
+                                    <MenuItem onClick={(e)=>{handleSelectLang(e, "any")}}  key="any">{i18next.t("Any")}</MenuItem>
                                 </TextField>
                             </Grid>
                             <Grid item xs={12} sm={12}>
                                 <TextField
-                                    label ="Description"
+                                    label ={i18next.t("Description")}
                                     fullWidth
                                     multiline
                                     rows={newWidth>500?4:7}
@@ -388,11 +389,11 @@ export const CreateEdusource= ({ ...others }) =>{
 
                             <Grid item xs={12} sm={12}>
                                 <TextField
-                                    label ="Categories"
+                                    label ={i18next.t("Categories")}
                                     fullWidth
                                     select
                                     rows={newWidth>500?4:7}
-                                    helperText="Please select a category"
+                                    helperText={i18next.t("Please select a category")}
                                     
                                     onChange={handleSelectCategory}
                                     sx={{ mt:1,
@@ -400,7 +401,7 @@ export const CreateEdusource= ({ ...others }) =>{
                                         borderRadius: '20px',
                                     },}}
                                 >
-                                        <Button onClick={handleCategoriesDialogClick} variant='text'>*Categories Explanation</Button>
+                                        <Button onClick={handleCategoriesDialogClick} variant='text'>*{i18next.t("Categories Explanation")}</Button>
                                             {categoriesList.map((cat)=>{
                                                 return(
                                                     <MenuItem key={cat.key} value={cat.label}>
@@ -413,11 +414,11 @@ export const CreateEdusource= ({ ...others }) =>{
 
                             <Grid item xs={4} sm={4}>
                                 <TextField
-                                    label ="Themes"
+                                    label ={i18next.t("Themes")}
                                     fullWidth
                                     select
                                     rows={newWidth>500?4:7}
-                                    helperText="Please select a theme"
+                                    helperText={i18next.t("Please select a theme")}
                                     disabled={discipline==""}
                                     onChange={themesChange}
                                     sx={{ mt:1,
@@ -437,8 +438,8 @@ export const CreateEdusource= ({ ...others }) =>{
                             </Grid>
                             <Grid item xs={8} sm={8}>
                                 <TextField
-                                    label = "Add free labels"
-                                    helperText="Add free themes/labels/hashtags separated by comma"
+                                    label = {i18next.t("Add free labels")}
+                                    helperText={i18next.t("Add free themes/labels/hashtags separated by comma")}
                                     onChange={freeLabelsChange}
                                     fullWidth
                                     sx={{ mt:1,
@@ -449,16 +450,16 @@ export const CreateEdusource= ({ ...others }) =>{
                             </Grid>
                             
                             <Grid item xs={4} sm={4}>
-                                <Typography variant='body2' color="primary" sx={{mt:1, ml:2, fontSize:11}}>Image(s)</Typography>
+                                <Typography variant='body2' color="primary" sx={{mt:1, ml:2, fontSize:11}}>{i18next.t("Image(s)")}</Typography>
                                 <Image src={image} width={newWidth>500?300: newWidth-32} sx={{borderRadius:'20px'}} ></Image>
                             </Grid>
                          
                             <Grid item xs={12} sm={5} mt={1}>
                                 {urlData.images && urlData.images.length >0?
-                                <Button size='small' variant='contained' color={imageSelectorOpen?'secondary':'primary'} sx={{borderRadius:5, mr:2 }} onClick={imageSelectorClick}>{imageSelectorOpen?"Close Images":"Select another image"}</Button>
+                                <Button size='small' variant='contained' color={imageSelectorOpen?'secondary':'primary'} sx={{borderRadius:5, mr:2 }} onClick={imageSelectorClick}>{imageSelectorOpen?i18next.t("Close Images"):i18next.t("Select another image")}</Button>
                                 :<></>}
-                                <Button size='small' variant='contained' sx={{borderRadius:5, mr:2 }}>Load from disk</Button>
-                                <Button size='small' variant='contained' sx={{borderRadius:5 }}> Paste</Button>
+                                <Button size='small' variant='contained' sx={{borderRadius:5, mr:2 }}>{i18next.t("Load from disk")}</Button>
+                                <Button size='small' variant='contained' sx={{borderRadius:5 }}>{i18next.t("Paste")}</Button>
                                 {imageSelectorOpen?<>
                                 <ImageList sx={{width:newWidth>500?newWidth-432: newWidth-32, height:newWidth>500?700:1000}} variant="masonry" cols={newWidth>500?6:3} gap={4}>
                                     {urlData.images.map((im, index)=>{
@@ -492,9 +493,9 @@ export const CreateEdusource= ({ ...others }) =>{
                         <Grid container direction="row" mt={4}
                             justifyContent="space-evenly"
                             alignItems="flex-end">
-                                <Button variant='contained' size="big" color='secondary' sx={{borderRadius:5, mr:2 }} onClick={SaveAndSee}>Save and See</Button>
-                                <Button variant='contained' size="big" color='secondary' sx={{borderRadius:5, mr:2 }} onClick={SaveAndAnother}>Save and Create another</Button>
-                                <Button variant='contained' size="big" color='secondary' sx={{borderRadius:5, mr:2 }} onClick={CancelClick}>Cancel</Button>
+                                <Button variant='contained' size="big" color='secondary' sx={{borderRadius:5, mr:2 }} onClick={SaveAndSee}>{i18next.t("Save and See")}</Button>
+                                <Button variant='contained' size="big" color='secondary' sx={{borderRadius:5, mr:2 }} onClick={SaveAndAnother}>{i18next.t("Save and Create another")}</Button>
+                                <Button variant='contained' size="big" color='secondary' sx={{borderRadius:5, mr:2 }} onClick={CancelClick}>{i18next.t("Cancel")}</Button>
                             </Grid>
                         </>:
                         <></>}
@@ -510,18 +511,18 @@ export const CreateEdusource= ({ ...others }) =>{
                         aria-labelledby="categories-dialog-title"
                         aria-describedby="categories-dialog-description"
                     >
-                        <DialogTitle id="categories-dialog-title">ISCED Levels</DialogTitle>
+                        <DialogTitle id="categories-dialog-title">{i18next.t("ISCED Levels")}</DialogTitle>
                         <DialogContent dividers={true}>
                         <DialogContentText
                             id="categories-dialog-description"
                             ref={categoriesDescriptionElementRef}
                             tabIndex={-1}
                         >
-                            The duration of each level of education can vary greatly across countries. These differences can lead to problems when attempting to compare statistics across countries. The International Standard Classification of Education (ISCED) is the official framework used to facilitate international comparisons of education systems. It was developed in 1976 by the United Nations Educational, Scientific and Cultural Organization (UNESCO) and was revised in 1997 and 2011
+                            {i18next.t("ISCED text")}
                         </DialogContentText>
                         </DialogContent>
                         <DialogActions>
-                        <Button onClick={handleCategoriesDialogClick}>Close</Button>
+                        <Button onClick={handleCategoriesDialogClick}>{i18next.t("Close")}</Button>
                         </DialogActions>
                     </Dialog>
             </ThemeProvider>

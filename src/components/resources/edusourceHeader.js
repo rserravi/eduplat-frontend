@@ -3,6 +3,7 @@ import {  Avatar,  Box,  Grid, Link, Typography } from '@mui/material'
 import {Image} from 'mui-image';
 import { longDate } from 'src/utils/dateUtils';
 import { themeOptions } from 'src/theme/theme';
+import i18next from 'i18next';
 
 export const EdusourceHeader= (props) =>{
     const {edusource, promoter, newWidth} = props;
@@ -40,12 +41,12 @@ export const EdusourceHeader= (props) =>{
                     <Grid container alignItems="flex-end">
                         <Avatar alt={promoter.firstname + " " + promoter.lastname} src={promoter.picture.fileName}  sx={{ width: 24, height: 24 }} />
                         <Typography variant="body1" onClick={visitAutor}>
-                            <Link href={"/user/" + promoter.username} > @{promoter.username}</Link>, level: <i style={{color:themeOptions.palette.primary.main}}>{promoter.editingLevel}</i>, karma: <i style={{color:themeOptions.palette.primary.main}}>{promoter.karma}</i>
+                            <Link href={"/user/" + promoter.username} > @{promoter.username}</Link>, {i18next.t("level")}: <i style={{color:themeOptions.palette.primary.main}}>{promoter.editingLevel}</i>, {i18next.t("karma")}: <i style={{color:themeOptions.palette.primary.main}}>{promoter.karma}</i>
                         </Typography>
                     </Grid>
                     <Grid item>
                     <Typography variant="body1">
-                        Category: <Link href={'/discipline/'+edusource.discipline}>{edusource.discipline}</Link> - ( 
+                        {i18next.t("Category")}: <Link href={'/discipline/'+edusource.discipline}>{edusource.discipline}</Link> - ( 
                         {edusource.theme?
                                 edusource.theme.map((tema, index)=>{
                                     
@@ -56,7 +57,7 @@ export const EdusourceHeader= (props) =>{
                     </Typography>
                     </Grid>
                     <Typography variant="body1">
-                        Autors: 
+                        {i18next.t("Authors")}: 
                         {edusource.autors.map((autor, index)=>{
                             return (<React.Fragment key={index}>
                                     &nbsp; <Link  href='/'>@{autor.autorName}</Link>
@@ -116,16 +117,16 @@ export const EdusourceHeader= (props) =>{
                             </Typography>
                             </Grid>
                             <Grid item sx={{mr:1}}>
-                            level: <i style={{color:themeOptions.palette.primary.main}}>{promoter.editingLevel}</i>,
+                            {i18next.t("level")}: <i style={{color:themeOptions.palette.primary.main}}>{promoter.editingLevel}</i>,
                             </Grid>
                             <Grid item sx={{mr:1}}>
-                            karma: <i style={{color:themeOptions.palette.primary.main}}>{promoter.karma}</i>
+                            {i18next.t("karma")}: <i style={{color:themeOptions.palette.primary.main}}>{promoter.karma}</i>
                             </Grid>
                         </Grid>     
                     </Grid>
                     <Grid item sx={{mt:1}}> 
                     <Typography variant="body1">
-                        Category: <Link href={'/discipline/'+edusource.discipline}>{edusource.discipline}</Link> - ( 
+                        {i18next.t("Category")}: <Link href={'/discipline/'+edusource.discipline}>{edusource.discipline}</Link> - ( 
                         {edusource.theme?
                                 edusource.theme.map((tema, index)=>{
                                     
@@ -136,7 +137,7 @@ export const EdusourceHeader= (props) =>{
                     </Typography>
                     </Grid>
                     <Typography variant="body1">
-                        Autors: 
+                        {i18next.t("Authors")}: 
                         {edusource.autors.map((autor, index)=>{
                             return (<React.Fragment key={index}>
                                     &nbsp; <Link  href='/'>@{autor.autorName}</Link>

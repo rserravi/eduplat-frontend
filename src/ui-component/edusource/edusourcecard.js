@@ -12,6 +12,7 @@ import { Button } from '@mui/material';
 import { ValorationMeanIcon } from 'src/components/favorites';
 import { shortDate } from 'src/utils/dateUtils';
 import { useNavigate } from 'react-router-dom';
+import i18next from 'i18next';
 
 
 export default function EduSourceCard(props) {
@@ -112,7 +113,7 @@ export default function EduSourceCard(props) {
       </CardContent>
       </>:<></>} 
       <CardActions disableSpacing>
-        <Button size="small" onClick={visitPromoter}> by @{edusource.promoterId.username}</Button>
+        <Button size="small" onClick={visitPromoter}> {i18next.t("by")} @{edusource.promoterId.username}</Button>
         
           <ValorationMeanIcon valorations={edusource.valorations} />
        

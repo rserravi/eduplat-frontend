@@ -3,6 +3,7 @@ import TextField from '@mui/material/TextField';
 import Card from '@mui/material/Card';
 import { Autocomplete, Box, Grid } from '@mui/material';
 import { countries } from 'src/utils/countries';
+import i18next from 'i18next';
 
 export const AddressForm = (props) =>{
     const data = props.data;
@@ -88,7 +89,7 @@ export const AddressForm = (props) =>{
                 <TextField
                     id="streetaddress"
                     name="streetaddress"
-                    label="Street"
+                    label={i18next.t("Street")}
                     helperText=""
                     variant="standard"
                     fullWidth
@@ -103,7 +104,7 @@ export const AddressForm = (props) =>{
                 <TextField
                     id="city"
                     name="city"
-                    label="City or Town"
+                    label={i18next.t("City or Town")}
                     helperText=""
                     variant="standard"
                     fullWidth
@@ -118,7 +119,7 @@ export const AddressForm = (props) =>{
                 <TextField
                     id="state"
                     name="state"
-                    label="State or Province"
+                    label={i18next.t("State or Province")}
                     helperText=""
                     variant="standard"
                     fullWidth
@@ -133,7 +134,7 @@ export const AddressForm = (props) =>{
                 <TextField
                     id="postalCode"
                     name="postalCode"
-                    label="Postal Code"
+                    label={i18next.t("Postal Code")}
                     helperText=""
                     variant="standard"
                     fullWidth
@@ -150,7 +151,7 @@ export const AddressForm = (props) =>{
                     fullWidth
                     options={countries}
                     variant="standard"
-                    label="Country"
+                    label={i18next.t("Country")}
                     onChange={handleChangeCountry}
                     autoHighlight
                     

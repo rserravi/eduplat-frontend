@@ -7,6 +7,7 @@ import { fetchUserbyId } from 'src/api/userApi';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions } from 'src/theme/theme';
 import { FavoriteIcon } from './favorites';
+import i18next from 'i18next';
 
 const theme = createTheme(themeOptions);
 
@@ -105,7 +106,7 @@ export const Valoration =(props) =>{
                     <Grid item sx={{mt:1}}>  
                         <Grid container direction="row" justifyContent="flex-start" alignItems="center">
                             <Grid item>
-                                <Typography>Karma: {sender.karma}. - Level: {sender.editingLevel}</Typography>
+                                <Typography>{i18next.t("Karma")}: {sender.karma}. - {i18next.t("Level")}: {sender.editingLevel}</Typography>
                             </Grid>
                         </Grid>        
                     </Grid>

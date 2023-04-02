@@ -7,6 +7,7 @@ import EduSourceList from 'src/ui-component/edusource/edusourcelist';
 import "./resources.css"
 import Slider from '../NetflixSlider';
 import { Box } from '@mui/system';
+import i18next from 'i18next';
 
 
 
@@ -56,7 +57,7 @@ export const ResourcesNetflixGrid = (props) =>{
            
             
             >
-            <Grid item><Typography variant='h3' sx={{ml:2}}>{title}</Typography></Grid>
+            <Grid item><Typography variant='h3' sx={{ml:2}}>{i18next.t(title)}</Typography></Grid>
             <Grid item>
                 <ButtonGroup>
                     <IconButton color={mode==="Grid"?"primary":""} onClick={HandelGridClick}>

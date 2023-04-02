@@ -13,6 +13,7 @@ import { FilterMenu } from 'src/menu-items/filterMenu';
 import { searchInUser } from 'src/api/userApi';
 import { UserCard } from 'src/ui-component/cards/user/userCard';
 import { LocalBrowserHistory } from 'src/utils/searchHistory';
+import i18next from 'i18next';
 
 
 const theme = createTheme(themeOptions);
@@ -106,10 +107,12 @@ export const OpenSearch = () =>{
     const searchResources = () =>{
         //BUSCAR RECURSOS
         setSerp(fakeLastResources)
+        //TODO
     }
 
     const searchCollections = () =>{
         //BUSCAR COLECCIONES
+        //TOD
     }
 
     const searchusers = async () =>{
@@ -161,7 +164,7 @@ export const OpenSearch = () =>{
                             >
                             <Grid item>
                                 <Typography variant='h2' component='h1' >
-                                    Search Resources
+                                    {i18next.t("Search Resources")}
                                 </Typography>
                             </Grid>
                             <Grid item xs={12} mt={1}>
@@ -183,7 +186,7 @@ export const OpenSearch = () =>{
                                     onChange={OnSearchChange}
                                     onKeyDown={handleKeyDown}
                                     // onBlur={OnSearchClick}
-                                    placeholder={typeOfFilter==="users"?"Who are you looking for?":"What do you want to learn today?"}
+                                    placeholder={typeOfFilter==="users"?i18next.t("Who are you looking for?"):i18next.t("What do you want to learn today?")}
                                     InputProps={{
                                         endAdornment: (
                                           <InputAdornment position="end">
@@ -208,7 +211,7 @@ export const OpenSearch = () =>{
                 {serp && serp!==null?<>
                 <Box sx={{width:newWidth}}>
                     {typeOfFilter==="resources"?
-                    <ResourcesNetflixGrid edusourceList={serp} title="Search results" mt={2}/>
+                    <ResourcesNetflixGrid edusourceList={serp} title={i18next.t("Search results")} mt={2}/>
                     :<></>}
                     {typeOfFilter==="users"?
                     <>
@@ -221,8 +224,8 @@ export const OpenSearch = () =>{
                         })}
                           {serp.length===0?<>
                             <Box sx={{ml:2, mt:2}} >
-                                <Typography variant='body1'><b>No results.</b> Try another search or other filters</Typography>
-                                <Typography variant='body1'>You can <b>reset filters</b> or try to search in <b>"Any"</b> Language</Typography>
+                                <Typography variant='body1'><b>{i18next.t("No results")}</b> {i18next.t("Try another search or other filters")}</Typography>
+                                <Typography variant='body1'>{i18next.t("You can")} <b>{i18next.t("reset filters")}</b> {i18next.t("or try to search in")} <b>{i18next.t('"Any"')}</b> {i18next.t("Language")}</Typography>
                             </Box>
                           </>:<></>}
                     </>:<></>}

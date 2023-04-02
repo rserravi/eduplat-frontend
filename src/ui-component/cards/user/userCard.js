@@ -3,6 +3,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { Avatar, Badge,  Grid, Paper, styled } from '@mui/material';
 import { SocialRow } from './socialRow';
+import i18next from 'i18next';
 
 
 export const UserCard =(props) =>{
@@ -78,7 +79,7 @@ export const UserCard =(props) =>{
                         >{user.publicData.name? "@"+ user.username:<></>}</Typography>
                     </Grid>
                     <Grid item > 
-                        <Typography variant='body2' color="secondary">{user.job.position} at {user.job.workplace}</Typography>
+                        <Typography variant='body2' color="secondary">{user.job.position} {i18next.t("at")} {user.job.workplace}</Typography>
                     </Grid>
                     <Grid item>
                         <Typography sx={{
@@ -90,7 +91,7 @@ export const UserCard =(props) =>{
                     <Grid item sx={{mt:1}}>  
                         <Grid container direction="row" justifyContent="flex-start" alignItems="center">
                             <Grid item>
-                                <Typography>Karma: {user.karma}. - Level: {user.editingLevel}</Typography>
+                                <Typography>{i18next.t("Karma")}: {user.karma}. - {i18next.t("Level")}: {user.editingLevel}</Typography>
                             </Grid>
                             <Grid item sx={{ml:2}}>
                                 <SocialRow user={user} type={"default"}/>
@@ -100,13 +101,13 @@ export const UserCard =(props) =>{
 
                         <Grid item sx={{ml:-1}}>
                             <StyledBadge color="secondary" badgeContent={user.resourcesCount} sx={{mr:1}}>
-                            <Typography color="primary" ><b>Resources</b></Typography>
+                            <Typography color="primary" ><b>{i18next.t("Resources")}</b></Typography>
                             </StyledBadge>
                             <StyledBadge color="secondary" badgeContent={user.collectionsCount} sx={{mr:1}}>
-                            <Typography sx={{ml:2}} color="primary" ><b>Collections</b></Typography>
+                            <Typography sx={{ml:2}} color="primary" ><b>{i18next.t("Collections")}</b></Typography>
                             </StyledBadge>
                             <StyledBadge color="secondary" badgeContent={user.valorationsCount} sx={{mr:1}}>
-                            <Typography sx={{ml:2}} color="primary" ><b>Valorations</b></Typography>
+                            <Typography sx={{ml:2}} color="primary" ><b>{i18next.t("Valorations")}</b></Typography>
                             </StyledBadge>
                         </Grid>
 

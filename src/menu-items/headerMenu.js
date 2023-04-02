@@ -8,6 +8,7 @@ import { themeOptions } from 'src/theme/theme';
 import { Divider, IconButton, MenuList, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from 'react-router-dom';
+import i18next from 'i18next';
 
 
 // ==============================|| HEADER MENU BROWSER ||============================== //
@@ -91,7 +92,7 @@ function HeaderMenu(props) {
                 onClick={handleOpenNavResourcesMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                Resources
+                {i18next.t("Resources")}
               </Button>
               
               
@@ -99,26 +100,26 @@ function HeaderMenu(props) {
                 onClick={handelClickEvents}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                Events
+                 {i18next.t("Events")}
               </Button>
               <Button
                 onClick={handelClickAboutUs}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                About us
+                {i18next.t("About us")}
               </Button>
               <Button
                 onClick={handelClickVolunteers}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                Volunteers
+                 {i18next.t("Volunteers")}
               </Button>
 
               <Button
                 onClick={handelClickConnect}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                Connect
+                 {i18next.t("Connect")}
               </Button>
             </Box>   
             <div>
@@ -126,17 +127,17 @@ function HeaderMenu(props) {
               <>
               <Menu anchorEl={anchorElNavResources} open={openResourcesNav} onClose={handleCloseNavResourcesMenu}>
                   <MenuList>
-                      <MenuItem onClick={handelClickResourcesSearch}>Search Resources</MenuItem>
-                      <MenuItem onClick={handelClickCollectionSearch}>Search Collections</MenuItem>
-                      <MenuItem onClick={handelClickUsersSearch}>Search Users</MenuItem> 
+                      <MenuItem onClick={handelClickResourcesSearch}> {i18next.t("Search Resources")}</MenuItem>
+                      <MenuItem onClick={handelClickCollectionSearch}> {i18next.t("Search Collections")}</MenuItem>
+                      <MenuItem onClick={handelClickUsersSearch}> {i18next.t("Search Users")}</MenuItem> 
                     
                     
                       <Divider />
                       <MenuItem>
-                        <Button onClick={handleClickCreateResource} variant='contained' color='secondary'>Publish Resource</Button>  
+                        <Button onClick={handleClickCreateResource} variant='contained' color='secondary'> {i18next.t("Publish Resource")}</Button>  
                       </MenuItem>
                       <MenuItem>
-                        <Button onClick={handleClickCreateCollection} variant='contained' color='primary'>Create Collection</Button>  
+                        <Button onClick={handleClickCreateCollection} variant='contained' color='primary'> {i18next.t("Create Collection")}</Button>  
                       </MenuItem>        
                   </MenuList>    
               </Menu>
@@ -144,9 +145,9 @@ function HeaderMenu(props) {
               <>
               <Menu anchorEl={anchorElNavResources} open={openResourcesNav} onClose={handleCloseNavResourcesMenu}>
                 <MenuList>
-                    <MenuItem onClick={handelClickResourcesSearch}>Search Resources</MenuItem>
-                    <MenuItem onClick={handelClickCollectionSearch}>Search Collections</MenuItem>
-                    <MenuItem onClick={handelClickUsersSearch}>Search Users</MenuItem>  
+                    <MenuItem onClick={handelClickResourcesSearch}>{i18next.t("Search Resources")}</MenuItem>
+                    <MenuItem onClick={handelClickCollectionSearch}> {i18next.t("Search Collections")}</MenuItem>
+                    <MenuItem onClick={handelClickUsersSearch}>{i18next.t("Search Users")}</MenuItem>  
                     
                 </MenuList>    
               </Menu>
@@ -190,20 +191,20 @@ function HeaderMenu(props) {
                             }}
                             >
                                 <MenuItem onClick={handleOpenNavResourcesMenu}>
-                                    <Typography textAlign="center">Resources</Typography>
+                                    <Typography textAlign="center">{i18next.t("Resources")}</Typography>
                                 </MenuItem>
                                
                                 <MenuItem onClick={handelClickEvents}>
-                                    <Typography textAlign="center">Events</Typography>
+                                    <Typography textAlign="center">{i18next.t("Events")}</Typography>
                                 </MenuItem>
                                 <MenuItem onClick={handelClickAboutUs}>
-                                    <Typography textAlign="center">About us</Typography>
+                                    <Typography textAlign="center">{i18next.t("About us")}</Typography>
                                 </MenuItem>
                                 <MenuItem onClick={handelClickVolunteers}>
-                                    <Typography textAlign="center">Volunteers</Typography>
+                                    <Typography textAlign="center">{i18next.t("Volunteers")}</Typography>
                                 </MenuItem>
                                 <MenuItem onClick={handelClickConnect}>
-                                    <Typography textAlign="center">Connect</Typography>
+                                    <Typography textAlign="center">{i18next.t("Connect")}</Typography>
                                 </MenuItem>
                         </Menu>
                         
@@ -214,15 +215,15 @@ function HeaderMenu(props) {
                     <>
                     <Menu anchorEl={anchorElNavResources} open={openResourcesNav} onClose={handleCloseNavResourcesMenu}>
                         <MenuList>
-                            <MenuItem onClick={handelClickResourcesSearch}>Search Resources</MenuItem>
-                            <MenuItem onClick={handelClickCollectionSearch}>Search Collections</MenuItem>
-                            <MenuItem onClick={handelClickUsersSearch}>Search Users</MenuItem> 
+                            <MenuItem onClick={handelClickResourcesSearch}>{i18next.t("Search Resources")}</MenuItem>
+                            <MenuItem onClick={handelClickCollectionSearch}> {i18next.t("Search Collections")}</MenuItem>
+                            <MenuItem onClick={handelClickUsersSearch}>{i18next.t("Search Users")}</MenuItem> 
                             <Divider />
                             <MenuItem>
-                              <Button onClick={handleClickCreateResource} variant='contained' color='secondary'>Publish Resource</Button>  
+                              <Button onClick={handleClickCreateResource} variant='contained' color='secondary'> {i18next.t("Publish Resource")}</Button>  
                             </MenuItem>
                             <MenuItem>
-                              <Button onClick={handleClickCreateCollection} variant='contained' color='primary'>Create Collection</Button>  
+                              <Button onClick={handleClickCreateCollection} variant='contained' color='primary'>{i18next.t("Create Collection")}</Button>  
                             </MenuItem>        
                         </MenuList>    
                     </Menu>
@@ -230,9 +231,9 @@ function HeaderMenu(props) {
                     <>
                     <Menu anchorEl={anchorElNavResources} open={openResourcesNav} onClose={handleCloseNavResourcesMenu}>
                       <MenuList>
-                          <MenuItem onClick={handelClickResourcesSearch}>Search Resources</MenuItem>
-                          <MenuItem onClick={handelClickCollectionSearch}>Search Collections</MenuItem>
-                          <MenuItem onClick={handelClickUsersSearch}>Search Users</MenuItem>  
+                          <MenuItem onClick={handelClickResourcesSearch}>{i18next.t("Search Resources")}</MenuItem>
+                          <MenuItem onClick={handelClickCollectionSearch}> {i18next.t("Search Collections")}</MenuItem>
+                          <MenuItem onClick={handelClickUsersSearch}>{i18next.t("Search Users")}</MenuItem>  
                       </MenuList>    
                     </Menu>
                     </>}

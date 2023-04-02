@@ -4,6 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import {TextField, Grid} from '@mui/material';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import { Box } from '@mui/system';
+import i18next from 'i18next';
 
 
 /// INTERFACE:
@@ -39,7 +40,7 @@ export const PhoneForm = (props) =>{
                         <Grid item xs={12} sm={5.5} md={5.5}>
                             <TextField
                                 id="type"
-                                label="Phone Type"
+                                label={i18next.t("Phone Type")}
                                 name= "type"
                                 select
                                 variant="standard"
@@ -63,7 +64,7 @@ export const PhoneForm = (props) =>{
                             <TextField
                                 id="phoneNumber"
                                 name="phoneNumber"
-                                label="Phone Number"
+                                label={i18next.t("Phone Number")}
                                 variant="standard"
                                 value={phoneFrmData.phoneNumber}
                                 fullWidth

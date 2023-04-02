@@ -13,6 +13,7 @@ import { ShareBarBig } from 'src/components/pageStruct/sharebar';
 import { fetchLastResources } from 'src/api/edusourceApi';
 import { Box } from '@mui/system';
 import { useOutletContext } from 'react-router-dom';
+import i18next from 'i18next';
 
 
 const theme = createTheme(themeOptions);
@@ -88,27 +89,27 @@ export const LandingPage = () =>{
                                 >
                                 <Grid item backgroundColor= 'primary.main'>
                                     <Typography variant='h2' component='h3' color='primary.contrast'>
-                                        EduPlat.org es la Plataforma Educativa
+                                        {i18next.t("landingText1line")}
                                     </Typography>
                                 </Grid>
                                 <Grid item backgroundColor= 'primary.main'>
                                     <Typography variant='h2' component='h3' color='primary.contrastText'>
-                                    donde estudiantes, familias, escuelas, profesores
+                                    {i18next.t("landingText2line")}
                                     </Typography>
                                 </Grid>
                                 <Grid item backgroundColor= 'primary.main'>
                                     <Typography variant='h2' component='h3' color='primary.contrastText'>
-                                    y otros profesionales de la educación
+                                    {i18next.t("landingText3line")}
                                     </Typography>
                                 </Grid>
                                 <Grid item backgroundColor= 'primary.main'>
                                     <Typography variant='h2' component='h3' color='primary.contrastText'>
-                                    pueden colaborar compartiendo recursos.
+                                    {i18next.t("landingText4line")}
                                     </Typography>
                                 </Grid>
                                 <Grid item>
                                     <Typography variant='a' component='a' color='primary.contrastText'>
-                                        read more...
+                                        {i18next.t("readmore...")}
                                     </Typography>
                                 </Grid>
                             </Grid>

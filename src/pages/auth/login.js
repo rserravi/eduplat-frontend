@@ -19,6 +19,8 @@ import { strengthColor, strengthIndicator } from 'src/utils/password-strength';
 import { userLogin, userGoogleLogin } from 'src/api/userApi';
 import { SET_LOADING } from 'src/store/userSlice';
 import Logo from 'src/ui-component/Logo';
+import i18next from 'i18next';
+
 
 // assets
 import Visibility from '@mui/icons-material/Visibility';
@@ -141,7 +143,7 @@ export const LoginPage = ({ ...others }) =>{
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Log In / Sign In
+                        {i18next.t("signUp")}
                     </Typography>
 
                     <Grid
@@ -152,7 +154,7 @@ export const LoginPage = ({ ...others }) =>{
                         >
                         <Grid item xs={12} sm={12} sx={{mt:5}}>
                             <Typography variant="body2">
-                                If you registered witha a Google / Gmail account, log in here
+                            {i18next.t("IfyouhaveaGoogleGmailaccount")}  {i18next.t("loginhere")}
                             </Typography>
                         </Grid>
                         <Grid item xs={12} sm={12} sx={{mt:2}}>
@@ -164,7 +166,7 @@ export const LoginPage = ({ ...others }) =>{
                                     <FormHelperText error>{googleError}</FormHelperText>
                                     <Grid item>
                                         <Link href="/login" variant="bod2">
-                                            Sign in
+                                            {i18next.t("signIn")}
                                         </Link>
                                     </Grid>
                                 </>
@@ -172,7 +174,7 @@ export const LoginPage = ({ ...others }) =>{
                         </Grid>
                         <Grid item xs={12} sm={12} sx={{mt:2}}>
                             <Typography variant="body2">
-                            or sign in with Email address:
+                            {i18next.t("orSignInpWith")} {i18next.t("EmailAddress")} 
                             </Typography>
                         </Grid>
                     </Grid>
@@ -183,8 +185,8 @@ export const LoginPage = ({ ...others }) =>{
                             password:''
                         }}
                         validationSchema={Yup.object().shape({
-                            email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-                            password: Yup.string().max(255).required('Password is required')
+                            email: Yup.string().email(i18next.t("Mustbeavalidemail")).max(255).required(i18next.t("Emailisrequired")),
+                            password: Yup.string().max(255).required(i18next.t("Passwordisrequired"))
                         })}
                         onSubmit={async (values, {setErrors, setStatus, setSubmitting }) =>{
                             try {
@@ -206,7 +208,7 @@ export const LoginPage = ({ ...others }) =>{
             
                                         <Grid item xs={12}>
                                             <FormControl fullWidth error={Boolean(touched.email && errors.email)} sx={{ ...theme.typography.customInput }}>
-                                                <InputLabel htmlFor="outlined-adornment-email-register">Email Address</InputLabel>
+                                                <InputLabel htmlFor="outlined-adornment-email-register">{i18next.t("EmailAddress")}</InputLabel>
                                                 <OutlinedInput
                                                     id="outlined-adornment-email-register"
                                                     type="email"
@@ -230,13 +232,13 @@ export const LoginPage = ({ ...others }) =>{
                                             error={Boolean(touched.password && errors.password)}
                                             sx={{ ...theme.typography.customInput }}
                                         >
-                                             <InputLabel htmlFor="outlined-adornment-password-register">Password</InputLabel>
+                                             <InputLabel htmlFor="outlined-adornment-password-register">{i18next.t("Password")}</InputLabel>
                                             <OutlinedInput
                                                 id="outlined-adornment-password-register"
                                                 type={showPassword ? 'text' : 'password'}
                                                 value={values.password}
                                                 name="password"
-                                                label="Password"
+                                                label={i18next.t("Password")}
                                                 autoComplete="new-password"
                                                 onBlur={handleBlur}
                                                 onChange={(e) => {
@@ -283,7 +285,7 @@ export const LoginPage = ({ ...others }) =>{
                                                     }
                                                     label={
                                                         <Typography variant="subtitle1">
-                                                            Remember me
+                                                            {i18next.t("rememberme")}
                                                         </Typography>
                                                     }
                                                 />
@@ -308,19 +310,19 @@ export const LoginPage = ({ ...others }) =>{
                                                 variant="contained"
                                                 sx={{ mt: 3, mb: 2, borderRadius:5 }}
                                                 >
-                                                Sign Up
+                                                {i18next.t("signUp")}
                                             </Button>
                                         </Grid>
                                         <Grid item xs={12}>
                                         <Grid container>
                                             <Grid item xs>
                                                 <Link href="#" variant="body2">
-                                                Forgot password?
+                                                {i18next.t("forgotPassword")}
                                                 </Link>
                                             </Grid>
                                             <Grid item>
                                                 <Link href="/register" variant="body2">
-                                                {"Don't have an account? Sign Up"}
+                                                {i18next.t("DontHaveAnAccount?")} {i18next.t("signIn")}
                                                 </Link>
                                             </Grid>
                                         </Grid>
