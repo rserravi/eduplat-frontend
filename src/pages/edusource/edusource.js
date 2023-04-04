@@ -84,7 +84,7 @@ export const EdusourcePage = () =>{
                     </Typography>
                     
                 </Grid>
-                <EdusourceBody edusource={edusource} promoter={promoter} />
+                <EdusourceBody edusource={edusource} promoter={promoter} newWidth={newWidth} />
                 
             </Box>
             

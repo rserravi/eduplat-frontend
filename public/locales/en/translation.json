@@ -63,6 +63,7 @@
     "profile valorations":"profile valorations",
     "Valorations":"Valorations",
     "valorations":"valorations",
+    "Valoration":"Valoration",
     "New Messages:":"New Messages:",
     "Karma points:":"Karma points:",
     "Level:":"Level:",
@@ -214,6 +215,10 @@
     "Handball":"Handball",
     "Medicine":"Medicine",
     "Computers":"Computers",
-    "Sports":"Sports"
+    "Sports":"Sports",
+    "you commented":"you commented",
+    "Add a comment to the resource":"Add a comment to the resource",
+    "Value": "Value",
+    "Add a comment about the user":"Add a comment about the user"
 
 }

@@ -8,6 +8,7 @@ const googleLoginUrl = userUrl + '/google-login';
 const loginUrl = userUrl + '/login/';
 const userListUrl = userUrl + "/list";
 const logOutUrl = userUrl + "/logout";
+const valorationUrl= userUrl + "/valoration";
 
 
 export const userGoogleRegistrationAPI = (frmData) => {
@@ -241,5 +242,30 @@ export const searchInUser = (terms, languageFilter)=>{
         }
     })
 }
+
+export const addUserValoration = (frmData)=>{
+    return new Promise( async(resolve, reject)=>{
+        console.log("frmData en ADD USER VALORATION API",frmData)
+        try {
+            const res = await axios.post(valorationUrl, frmData);
+            resolve(res.data);
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
+export const changeUserValoration = (frmData)=>{
+    return new Promise( async(resolve, reject)=>{
+        console.log("frmData en CHANGE USER VALORATION API",frmData)
+        try {
+            const res = await axios.patch(valorationUrl, frmData);
+            resolve(res.data);
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
 
 

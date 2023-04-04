@@ -29,6 +29,7 @@ export default function EduSourceCard(props) {
 
   const shareCard = (event)=>{
     console.log("SHARING " + edusource.title);
+    //TODO
   }
 
   const handleCardClic = (event)=>{

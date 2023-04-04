@@ -63,6 +63,7 @@
     "profile valorations":"valoraciones de perfil",
     "Valorations":"Valoraciones",
     "valorations":"valoraciones",
+    "Valoration":"Valoración",
     "New Messages:":"Mensajes Nuevos: ",
     "Karma points:":"Puntos de Karma: ",
     "Level":"Nivel: ",
@@ -164,7 +165,7 @@
     "from":"de",
     "Add User Valoration":"Añadir valoración de usuario",
     "Contributions":"Contribuciones",
-    "still has no contributions":"no tiene valoraciones aún",
+    "still has no contributions":"aún no tiene publicaciones.",
     "Edit name":"Editar nombre",
     "UserChangeTEXT":"NOTA: Si cambias tu nombre de usuario, tu enlace personal cambiará también.",
     "Edit about me":"Editar acerca de mi",
@@ -214,5 +215,9 @@
     "Handball":"Balonmano",
     "Medicine":"Medicina",
     "Computers":"Informática",
-    "Sports":"Deportes"
+    "Sports":"Deportes",
+    "you commented":"comentaste",
+    "Add a comment to the resource":"Añade un comentario al recurso",
+    "Value": "Valora a",
+    "Add a comment about the user":"Añade un comentario sobre el usuario"
 }

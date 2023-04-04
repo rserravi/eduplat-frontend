@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import { Avatar, Badge,  Grid, Paper, styled } from '@mui/material';
 import { SocialRow } from './socialRow';
 import i18next from 'i18next';
+import { karmaLevel } from 'src/utils/karma';
 
 
 export const UserCard =(props) =>{
@@ -91,7 +92,7 @@ export const UserCard =(props) =>{
                     <Grid item sx={{mt:1}}>  
                         <Grid container direction="row" justifyContent="flex-start" alignItems="center">
                             <Grid item>
-                                <Typography>{i18next.t("Karma")}: {user.karma}. - {i18next.t("Level")}: {user.editingLevel}</Typography>
+                                <Typography>{i18next.t("Karma")}: {user.karma}. - {i18next.t("Level")}:<i> {karmaLevel(user.karma)}</i></Typography>
                             </Grid>
                             <Grid item sx={{ml:2}}>
                                 <SocialRow user={user} type={"default"}/>

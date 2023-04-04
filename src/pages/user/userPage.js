@@ -1,4 +1,4 @@
-import { Alert, Button,  Chip,  CssBaseline, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Fab, Grid, IconButton,  Snackbar, Typography } from '@mui/material';
+import { Alert, Box, Button,  Chip,  CssBaseline, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Fab, Grid, IconButton,  Snackbar, TextField, Typography } from '@mui/material';
 import * as React from 'react'
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -7,13 +7,13 @@ import { fetchEdusourceByPromoter } from 'src/api/edusourceApi';
 import Loader from 'src/ui-component/Loader';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions } from 'src/theme/theme';
-import { fetchUserByUsername } from 'src/api/userApi';
+import { addUserValoration, changeUserValoration, fetchUserByUsername } from 'src/api/userApi';
 import Container from '@mui/material/Container';
 import { MENU_OPEN } from 'src/store/menuSlice';
 import SendIcon from '@mui/icons-material/Send';
 import EditIcon from '@mui/icons-material/Edit';
 import {Image} from 'mui-image';
-import { longDate } from 'src/utils/dateUtils';
+import { longDate, shortDate } from 'src/utils/dateUtils';
 import { NameForm } from 'src/components/form-components/name-comp';
 import { AboutForm } from 'src/components/form-components/aboutme';
 import { DescriptionForm } from 'src/components/form-components/description-comp';
@@ -21,24 +21,36 @@ import { SocialRow } from 'src/ui-component/cards/user/socialRow';
 import { Valoration } from 'src/components/valoration';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import { ValorationMeanIcon } from 'src/components/favorites';
+import { customIcons, FavoriteIcon, Favorites, ValorationMeanIcon } from 'src/components/favorites';
 import i18next from 'i18next';
+import { karmaLevel, karmaPalettes } from 'src/utils/karma';
 
 const theme = createTheme(themeOptions);
 var newMaxWidth  = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
-
+//TODO: DINAMIC BACKGROUND IN HEADER PICTURE
 export const UserPage = () =>{
 
+    const initialPalette={
+        key:0,
+        name: "Dark Night",
+        primaryColor: "#231e39",
+        secondaryColor:"#b3b8cd",
+        primaryText:"#b3b8cd",
+        secondaryText:"#1f1a32",
+        pictureHeader: "https:/images.unsplash.com/photo-1540228232483-1b64a7024923?ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80"
+    }
 
     const {id} = useParams();
     const dispatch = useDispatch();
     const [loadedUser, setLoadedUser] = useState();
+    const [palette, setPalette] = useState(initialPalette);
     const user = useSelector(state => state.user)
     const [edusources, setEdusources] = useState();
     const [newWidth, setNewWidth] = useState(newMaxWidth);
      // eslint-disable-next-line
     const [error, setError] = useState("");
+    const CHARACTER_LIMIT = 250;
 
     //DIALOGS
     const [openNameDialog, setOpenNameDialog]= useState(false);
@@ -46,14 +58,87 @@ export const UserPage = () =>{
     const [openDescriptionDialog, setOpenDescriptionDialog]= useState(false);
     const [openHeaderPicDialog, setOpenHeaderPicDialog]= useState(false);
     const [openProfilePicDialog, setOpenProfilePicDialog]= useState(false);
+    const [openValorationDialog, setOpenValorationDialog]= useState(false);
     const [valOpen, setValOpen] = useState(true);
     const [activityOpen, setActivityOpen] = useState(true);
     const [openSnack, setOpenSnack] = useState(false);
+
+    //SNACK
     const [severity, setSeverity] = useState("info");
     const [message, setMessage] = useState("");
 
+    //VALORATIONS
+    const [valoration, setValoration] = React.useState(0);
+    const [comment, setComment] = React.useState("");
+    const [valDate, setValDate] = React.useState();
+    const [alreadyCommented, setAlreadyCommented]= React.useState(false);
+
+    const changeFavoriteRating = (newValue)=>{
+        if (newValue!==null || newValue!==undefined){
+            console.log("ESTAMOS EN CHANGEFAVORITE",newValue)
+            setValoration(newValue);
+            handleValorationDialogOpen();
+        }
+    }
+
 
     //DIALOGS OPEN CLOSE FUNCTIONS
+
+    const handleValorationDialogOpen = ()=>{
+        setOpenValorationDialog(true)
+    }
+
+    const handleValorationDialogAccept = async (status, message)=>{
+        const frmData = {
+            userId: loadedUser._id,
+            senderId: user._id,
+            comment: comment,
+            value: valoration,
+        }
+
+        if (alreadyCommented){
+            await changeUserValoration(frmData).then((result)=>{
+                console.log(result);
+                setSeverity("success")
+                setMessage("Valoration updated correctly")
+                setOpenSnack(true);
+                handleValorationDialogClose();
+            }).catch((error)=>{
+                console.log(error);
+                setError(error)
+                setSeverity("error")
+                setMessage(error.message)
+                handleValorationDialogClose();
+                setOpenSnack(true);
+            })
+        }else{
+        await addUserValoration(frmData).then((result)=>{
+            console.log(result);
+            setSeverity("success")
+            setMessage("Valoration added correctly")
+            setOpenSnack(true);
+            handleValorationDialogClose();
+        }).catch((error)=>{
+            console.log(error);
+            setError(error)
+            setSeverity("error")
+            setMessage(error.message)
+            handleValorationDialogClose();
+            setOpenSnack(true);
+        })
+        }
+    }
+    
+    const handleValorationDialogClose = (status, message)=>{
+        if (status && message){
+            //console.log(status, message);
+            setSeverity(status);
+            setMessage(message);
+            setOpenSnack(true);
+            //setLoadedUser(null);
+        }
+        setOpenValorationDialog(false);
+    }
 
     const handleNameOpen = () => {
         setOpenNameDialog(true);
@@ -156,6 +241,11 @@ export const UserPage = () =>{
         return count;
     }
 
+    const commentChange = (event)=>{
+        if (comment.length < 300){
+            setComment(event.target.value)
+        }
+    }
 
     useEffect(() =>{
       
@@ -164,13 +254,50 @@ export const UserPage = () =>{
             try {
                  fetchUserByUsername(id).then((response)=>{
                    //console.log(response);
-                    setLoadedUser(response.user) 
+                    setLoadedUser(response.user)
+                    
+                    // SET COMENTARIES
+                    
+                    var result= false
+                    var valor = 0;
+                    console.log("EN userHasCommented", response.user.valorations)
+                    if (response.user.valorations.length >0){
+                        for (let val = 0; val < response.user.valorations.length; val++) {
+                            if (response.user.valorations[val].senderId===user._id){
+                                setValoration(response.user.valorations[val].value);
+                                setComment(response.user.valorations[val].comment);
+                                setValDate(response.user.valorations[val].date);
+                                valor = response.user.valorations[val].value
+                                result = true;
+                                break;
+                            }
+                        }
+                    }
+                    //console.log("RESULTADO EN USERHASCOMMENTED",result, "con valor", valor);
+                    setAlreadyCommented(result);
+
+
                     fetchEdusourceByPromoter(response.user._id).then ((result)=>{
                         setEdusources(result.result);
                     }).catch(error=>{
                         console.log(error);
                         setError(error);
                     })
+                    
+                    //PALETTE CONFIG
+                    if (response.user.palette.key<=100){
+                    setPalette(karmaPalettes[response.user.palette.key])
+                    }else{
+                        const newPalette = {
+                            key:response.user.palette.key,
+                            primaryColor:response.user.palette.primaryColor,
+                            secondaryColor:response.user.palette.secondaryColor,
+                            primaryText:response.user.palette.primaryText,
+                            secondaryText:response.user.palette.secondaryText,
+                            pictureHeader: response.user.palette.pictureHeader.fileName
+                        }
+                        setPalette(newPalette)
+                    }
                     
                 }).catch(error=>{
                     console.log(error);
@@ -181,6 +308,9 @@ export const UserPage = () =>{
                 setError(error);
             }
         }
+      
+       
+        
                 
 
     },[loadedUser, id, dispatch])
@@ -213,8 +343,8 @@ export const UserPage = () =>{
                         mt:2, 
                         mr:10,
                         ml:1, 
-                        backgroundColor:loadedUser.primaryColor?loadedUser.primaryColor:theme.color.primaryColor,
-                        color:loadedUser.secondaryColor?loadedUser.secondaryColor:theme.color.secondaryColor,
+                        backgroundColor:palette.primaryColor,
+                        color:palette.secondaryColor,
                         borderRadius: 5,
                         textAlign: "left",
                         boxShadow:"0, 10px, 20x, -10px, rgba(0,0,0,.75)",
@@ -248,13 +378,14 @@ export const UserPage = () =>{
                         {/* CLASS COVER-PHOTO*/}
 
                         <Container sx={{
-                            // background : "url(https:/images.unsplash.com/photo-1540228232483-1b64a7024923?ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80)",
-                            background: "url("+ loadedUser.pictureHeader.fileName + ")",
+                            
+                             background : "url(https:/images.unsplash.com/photo-1540228232483-1b64a7024923?ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80)",
+                             //background : "url("+palette.pictureHeader+")",
+                    
                             height: newWidth<500?150:280,
                             borderRadius:"5px 5px 0 0"
                         }}>
-                            
-                            
+
                             <Image alt='user' src={loadedUser.picture.fileName?loadedUser.picture.fileName:"https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"} height={100} width={125} duration={0} 
                             style={{
                                
@@ -267,7 +398,7 @@ export const UserPage = () =>{
                             />
                             
                         </Container>
-                  
+                    
                     <Typography sx={{
                         fontSize: 25,
                         fontWeight: "bold",
@@ -279,8 +410,8 @@ export const UserPage = () =>{
                             {loadedUser.username === user.username?<>
                             <IconButton onClick={handleNameOpen} size="small" aria-label="edit-name-and-username" 
                                 sx={{
-                                    backgroundColor: loadedUser.primaryColor,
-                                    color: loadedUser.secondaryColor,
+                                    backgroundColor: palette.primaryColor,
+                                    color: palette.secondaryColor,
                                     
                                 }}>
                                 <EditIcon />
@@ -307,8 +438,8 @@ export const UserPage = () =>{
                         {loadedUser.username === user.username?<>
                         <IconButton onClick={handleDescriptionOpen}  size="small" aria-label="edit-name-and-username" 
                                 sx={{
-                                    backgroundColor: loadedUser.primaryColor,
-                                    color: loadedUser.secondaryColor,
+                                    backgroundColor: palette.primaryColor,
+                                    color: palette.secondaryColor,
                                     
                                 }}>
                                 <EditIcon />
@@ -320,15 +451,15 @@ export const UserPage = () =>{
                         <Typography variant='body2'> {i18next.t("Karma")}:  </Typography>
                         <Chip variant="outlined"label= {loadedUser.karma}
                             sx={{
-                                color:loadedUser.secondaryColor,
-                                borderColor: loadedUser.secondaryColor,
+                                color:palette.secondaryColor,
+                                borderColor: palette.secondaryColor,
                                 mx:1,
                         }} />  
                         <Typography variant='body2' >  {i18next.t("Level")} : </Typography>
-                        <Chip variant="outlined"label= {loadedUser.editingLevel}
+                        <Chip variant="outlined"label= {karmaLevel(loadedUser.karma)}
                             sx={{
-                                color:loadedUser.secondaryColor,
-                                borderColor: loadedUser.secondaryColor,
+                                color:palette.secondaryColor,
+                                borderColor: palette.secondaryColor,
                                 mx:1,
                         }} /> 
                    </Grid>
@@ -340,20 +471,20 @@ export const UserPage = () =>{
                         '&:hover': {
                             backgroundColor: loadedUser.secondaryColor?loadedUser.secondaryColor:"#b3b8cd",
                             borderColor: loadedUser.secondaryColor?loadedUser.secondaryColor:"#b3b8cd", 
-                            color: loadedUser.primaryColor?loadedUser.primaryColor:"#231e39", 
+                            color: palette.primaryColor,
                         },
                     }}>
                         {i18next.t("Send Message")}
                     </Button>
                     <Button  variant='outlined' sx={{
-                        borderColor:loadedUser.secondaryColor?loadedUser.secondaryColor:"#b3b8cd",
-                        color:loadedUser.secondaryColor?loadedUser.secondaryColor:"#b3b8cd",
+                        borderColor:palette.secondaryColor,
+                        color:palette.secondaryColor,
                         borderRadius:"20px",
                         ml:0,
                         '&:hover': {
-                            backgroundColor: loadedUser.secondaryColor?loadedUser.secondaryColor:"#b3b8cd",
-                            borderColor: loadedUser.secondaryColor?loadedUser.secondaryColor:"#b3b8cd", 
-                            color: loadedUser.primaryColor?loadedUser.primaryColor:"#231e39", 
+                            backgroundColor: palette.secondaryColor,
+                            borderColor: palette.secondaryColor,
+                            color: palette.primaryColor,
                         },
                     }}>
                         {i18next.t("More")}...
@@ -368,8 +499,8 @@ export const UserPage = () =>{
                         mt:0.5, 
                         mr:10,
                         ml:1, 
-                        backgroundColor:loadedUser.primaryColor?loadedUser.primaryColor:theme.color.primaryColor,
-                        color:loadedUser.secondaryColor?loadedUser.secondaryColor:theme.color.secondaryColor,
+                        backgroundColor:palette.primaryColor,
+                        color:palette.secondaryColor,
                         borderRadius: 5,
                         textAlign: "left",
                         boxShadow:"0, 10px, 20x, -10px, rgba(0,0,0,.75)",
@@ -385,8 +516,8 @@ export const UserPage = () =>{
                                 {loadedUser.username === user.username?<>
                                 <IconButton onClick={handleAboutOpen} size="small" aria-label="edit-name-and-username" 
                                 sx={{
-                                    backgroundColor: loadedUser.primaryColor,
-                                    color: loadedUser.secondaryColor,
+                                    backgroundColor: palette.primaryColor,
+                                    color: palette.secondaryColor,
                                     
                                 }}>
                                 <EditIcon />
@@ -404,7 +535,7 @@ export const UserPage = () =>{
 
                         {/* SOCIAL */}
 
-                        <SocialRow user={loadedUser} type="own" sx={{ml:1}}/>
+                        <SocialRow user={loadedUser} type="own" palette={palette} sx={{ml:1}}/>
 
                 </Container>
   
@@ -415,8 +546,8 @@ export const UserPage = () =>{
                         mt:0.5, 
                         mr:10,
                         ml:1, 
-                        backgroundColor:loadedUser.primaryColor?loadedUser.primaryColor:theme.color.primaryColor,
-                        color:loadedUser.secondaryColor?loadedUser.secondaryColor:theme.color.secondaryColor,
+                        backgroundColor:palette.primaryColor,
+                        color:palette.secondaryColor,
                         borderRadius: 5,
                         textAlign: "left",
                         boxShadow:"0, 10px, 20x, -10px, rgba(0,0,0,.75)",
@@ -430,8 +561,8 @@ export const UserPage = () =>{
                        ml: 2
                     }}>
                         {i18next.t("Valorations")} {valOpen?
-                            <IconButton onClick={handleValButtonClick} style={{ color: loadedUser.secondaryColor}}><ArrowDropDownIcon /></IconButton>:
-                            <IconButton onClick={handleValButtonClick} style={{ color: loadedUser.secondaryColor}}><ArrowDropUpIcon /></IconButton>
+                            <IconButton onClick={handleValButtonClick} style={{ color: palette.secondaryColor}}><ArrowDropDownIcon /></IconButton>:
+                            <IconButton onClick={handleValButtonClick} style={{ color: palette.secondaryColor}}><ArrowDropUpIcon /></IconButton>
                             }
                             {acceptedValorations>0?<>
                             <ValorationMeanIcon valorations={loadedUser.valorations} /> {i18next.t("from")} {acceptedValorations} {i18next.t("valorations")}
@@ -445,7 +576,7 @@ export const UserPage = () =>{
                         {loadedUser.valorations.map((val, index)=>{
                             return(
                             <React.Fragment key={index}>
-                                <Valoration valoration={val} primaryColor={loadedUser.primaryColor} secondaryColor={loadedUser.secondaryColor}/>
+                                <Valoration valoration={val} primaryColor={palette.primaryColor} secondaryColor={palette.secondaryColor}/>
                             </React.Fragment>
                             )
                         })}
@@ -454,7 +585,7 @@ export const UserPage = () =>{
                     </>:<></>}
                     
 
-                    <Button  variant='outlined' sx={{
+                    {/* <Button  variant='outlined' sx={{
                             borderColor:loadedUser.secondaryColor?loadedUser.secondaryColor:"#b3b8cd",
                             color:loadedUser.secondaryColor?loadedUser.secondaryColor:"#b3b8cd",
                             borderRadius:"20px",
@@ -467,7 +598,15 @@ export const UserPage = () =>{
                             },
                         }}>
                             {i18next.t("Add User Valoration")}...
-                    </Button>
+                    </Button> */}
+                    {user && user._id!=="" && user._id!==loadedUser._id?
+                        <Favorites defaultFav={valoration} changeFavoriteRating={changeFavoriteRating} mode={"ligth"} ml={2}/>
+                        :<></>}
+                        {alreadyCommented?<>
+                            
+                                <Typography variant='body2' ml={2}>{shortDate(valDate)} {i18next.t("you commented")}:</Typography> <Typography variant='body2' ml={2}><i>"{comment}"</i></Typography>
+                            
+                        </>:<></>}
                     </>:<></>}
                  
                  
@@ -475,13 +614,13 @@ export const UserPage = () =>{
 
                 
 
-                 {/* ACTIVITY */}
+                 {/* ACTIVITY / CONTRIBUTIONS*/}
                  <Container sx={{
                         mt:0.5, 
                         mr:10,
                         ml:1, 
-                        backgroundColor:loadedUser.primaryColor?loadedUser.primaryColor:theme.color.primaryColor,
-                        color:loadedUser.secondaryColor?loadedUser.secondaryColor:theme.color.secondaryColor,
+                        backgroundColor:palette.primaryColor,
+                        color:palette.secondaryColor,
                         borderRadius: 5,
                         textAlign: "left",
                         boxShadow:"0, 10px, 20x, -10px, rgba(0,0,0,.75)",
@@ -495,8 +634,8 @@ export const UserPage = () =>{
                        ml: 2
                     }}>
                         {i18next.t("Contributions")} {activityOpen?
-                        <IconButton onClick={handleActivityButtonClick} style={{ color: loadedUser.secondaryColor}}><ArrowDropDownIcon /></IconButton>:
-                        <IconButton onClick={handleActivityButtonClick} style={{ color: loadedUser.secondaryColor}}><ArrowDropUpIcon /></IconButton>
+                        <IconButton onClick={handleActivityButtonClick} style={{ color: palette.secondaryColor}}><ArrowDropDownIcon /></IconButton>:
+                        <IconButton onClick={handleActivityButtonClick} style={{ color: palette.secondaryColor}}><ArrowDropUpIcon /></IconButton>
                         }
                  </Typography>
 
@@ -549,7 +688,7 @@ export const UserPage = () =>{
                                         <Typography variant='body2' sx={{mt:1}}>{edu.description}</Typography>
                                     </Grid>
                                 </Grid>
-                                <Divider sx={{mt:1, border:"1px solid " + loadedUser.secondaryColor}}/>
+                                <Divider sx={{mt:1, border:"1px solid " + palette.secondaryColor}}/>
                             </React.Fragment>
                         )
                         }
@@ -600,6 +739,41 @@ export const UserPage = () =>{
                     <DescriptionForm user={loadedUser} handleDescriptionClose={handleDescriptionClose}  />
                     </DialogContent>
                     <DialogActions>
+                    </DialogActions>
+                </Dialog>
+
+                    {/* VALORATIONS DIALOG */}
+
+                <Dialog open={openValorationDialog} onClose={handleValorationDialogClose}>
+                    <DialogTitle>{i18next.t("Value")} @{loadedUser.username}</DialogTitle>
+                    <DialogContent>
+                    <DialogContentText>
+                        <Box sx={{display: 'flex', alignItems:"center"}}>
+                        <FavoriteIcon value={valoration} /> <Typography variant='body1' ml={1}>{customIcons[valoration]!==undefined?i18next.t(customIcons[valoration].label):<></>}</Typography>
+                        
+                        </Box>
+                        <Typography variant='body1' sx={{mt:1}}> {i18next.t("Add a comment to the resource")}</Typography>
+                    </DialogContentText>
+                    <TextField
+                        autoFocus
+                        multiline
+                        margin="dense"
+                        id="userValoration"
+                        label={i18next.t("Valoration")}
+                        fullWidth
+                        variant="standard"
+                        defaultValue={comment}
+                        rows={4}
+                        onChange={commentChange}
+                        helperText={comment.length + "/ "+CHARACTER_LIMIT}
+                        inputProps={{
+                            maxLength: CHARACTER_LIMIT
+                        }}
+                    />
+                    </DialogContent>
+                    <DialogActions>
+                    <Button onClick={handleValorationDialogAccept}>{i18next.t("Accept")}</Button>
+                    <Button onClick={handleValorationDialogClose}>{i18next.t("Cancel")}</Button>
                     </DialogActions>
                 </Dialog>
 

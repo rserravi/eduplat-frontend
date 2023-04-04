@@ -54,7 +54,9 @@ const MainLayout = () => {
             >
             <Copyright width={newWidth}/> 
             </Box>
+            <div id="snack"></div>
         </ThemeProvider>
+        
         )
 };
 

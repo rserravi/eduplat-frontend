@@ -44,15 +44,19 @@ function HeaderMenu(props) {
 
   const handelClickResourcesSearch = (event) =>{
     console.log("SEARCH");
+   
     navigate("/search/resources");
+    window.location.reload()
   }
 
   const handelClickUsersSearch = (event) =>{
     navigate("/search/users");
+    window.location.reload()
   }
 
   const handelClickCollectionSearch = (event) =>{
     navigate("/search/collections");
+    window.location.reload()
   }
 
   const handelClickEvents = (event) =>{

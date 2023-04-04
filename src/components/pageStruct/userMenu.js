@@ -58,7 +58,9 @@ export const UserMenu = (props) =>{
     }
     
     const handleProfileClick = ()=>{
+      
         navigate('/user/'+user.username)
+        window.location.reload()
     }
 
     const handleMyAccountClick = ()=>{
