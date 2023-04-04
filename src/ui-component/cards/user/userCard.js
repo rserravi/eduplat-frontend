@@ -5,6 +5,7 @@ import { Avatar, Badge,  Grid, Paper, styled } from '@mui/material';
 import { SocialRow } from './socialRow';
 import i18next from 'i18next';
 import { karmaLevel } from 'src/utils/karma';
+import { getHeadShot } from 'src/utils/picUtils';
 
 
 export const UserCard =(props) =>{
@@ -46,7 +47,7 @@ export const UserCard =(props) =>{
                     size='small' 
                     onClick={(e)=>{e.preventDefault(); navigation("/user/"+user.username)}}
                 >
-                <Avatar alt={user.username} src={user.picture.fileName}/>
+                <Avatar alt={user.username} src={getHeadShot(user)}/>
                 </IconButton>
             </Grid>
             <Grid item xs={10} sx={{ml:1}}>

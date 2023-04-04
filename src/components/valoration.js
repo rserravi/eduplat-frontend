@@ -9,18 +9,19 @@ import { themeOptions } from 'src/theme/theme';
 import { FavoriteIcon } from './favorites';
 import i18next from 'i18next';
 import { karmaLevel } from 'src/utils/karma';
+import { getHeadShot } from 'src/utils/picUtils';
 
 const theme = createTheme(themeOptions);
 
 export const Valoration =(props) =>{
 
-  const {valoration, primaryColor, secondaryColor} = props;
+  const {valoration, textColor, backgroundColor} = props;
 
   const [sender, setSender] = useState();
   // eslint-disable-next-line
   const [error, setError] = useState("");
-  const primary= primaryColor?primaryColor:theme.palette.primary;
-  const secondary = secondaryColor?secondaryColor: theme.palette.secondary;
+  const primary= textColor?textColor:theme.palette.primary;
+  const secondary = backgroundColor?backgroundColor: theme.palette.secondary;
 
   
   const navigation = (payload) =>{
@@ -70,14 +71,15 @@ export const Valoration =(props) =>{
                     size='small' 
                     onClick={(e)=>{e.preventDefault(); navigation("/user/"+sender.username)}}
                 >
-                <Avatar alt={sender.username} src={sender.picture.fileName}/>
+                <Avatar alt={sender.username} src={getHeadShot(sender)}/>
                 </IconButton>
             </Grid>
             <Grid item xs={10} sx={{ml:1}}>
                 <Grid container direction="column">
                     <Grid item>
                         <Typography 
-                            variant='body2' 
+                            variant='body2'
+                            color={primary}
                             onClick={(e)=>{e.preventDefault(); navigation("/user/"+sender.username)}}
                             sx={{
                                 fontWeight:"bold", 
@@ -93,7 +95,8 @@ export const Valoration =(props) =>{
                     </Grid>
                     <Grid item>
                         <Typography 
-                            variant='body2'  
+                            variant='body2'
+                            color={primary}
                             sx={{
                                 fontWeight:"bold",
                                 '&:hover': {
@@ -107,12 +110,12 @@ export const Valoration =(props) =>{
                     <Grid item sx={{mt:1}}>  
                         <Grid container direction="row" justifyContent="flex-start" alignItems="center">
                             <Grid item>
-                                <Typography>{i18next.t("Karma")}: {sender.karma}. - {i18next.t("Level")}: {karmaLevel(sender.karma)}</Typography>
+                                <Typography color={primary}>{i18next.t("Karma")}: {sender.karma}. - {i18next.t("Level")}: {karmaLevel(sender.karma)}</Typography>
                             </Grid>
                         </Grid>        
                     </Grid>
                     <Grid item>
-                        <Typography variant='body1' sx={{fontSize:15, fontWeight:'bold', ml:2, my:1}} ><i>"{valoration.comment}"</i></Typography>
+                        <Typography color={primary}variant='body1' sx={{fontSize:15, fontWeight:'bold', ml:2, my:1}} ><i>"{valoration.comment}"</i></Typography>
                     </Grid>
                     <Grid>
                         <FavoriteIcon value={valoration.value+1} />

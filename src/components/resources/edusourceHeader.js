@@ -5,6 +5,7 @@ import { longDate } from 'src/utils/dateUtils';
 import { themeOptions } from 'src/theme/theme';
 import i18next from 'i18next';
 import { karmaLevel } from 'src/utils/karma';
+import { getHeadShot } from 'src/utils/picUtils';
 
 //TODO: Add link to Author Social Network
 
@@ -42,7 +43,7 @@ export const EdusourceHeader= (props) =>{
                     >
  
                     <Grid container alignItems="flex-end">
-                        <Avatar alt={promoter.firstname + " " + promoter.lastname} src={promoter.picture.fileName}  sx={{ width: 24, height: 24 }} />
+                        <Avatar alt={promoter.firstname + " " + promoter.lastname} src={getHeadShot(promoter)}  sx={{ width: 24, height: 24 }} />
                         <Typography variant="body1" onClick={visitAutor}>
                             <Link href={"/user/" + promoter.username} > @{promoter.username}</Link>, {i18next.t("level")}: <i style={{color:themeOptions.palette.primary.main}}>{karmaLevel(promoter.karma)}</i>, {i18next.t("karma")}: <i style={{color:themeOptions.palette.primary.main}}>{promoter.karma}</i>
                         </Typography>

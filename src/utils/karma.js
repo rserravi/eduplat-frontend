@@ -66,8 +66,54 @@ export const karmaPalettes = [
         primaryColor: "#231e39",
         secondaryColor:"#b3b8cd",
         primaryText:"#b3b8cd",
+        secondaryText:"#2C3F59",
+        pictureHeader: "url(/images/headers/iso-republic-moonlight-through-tree-branches.jpg)"
+    },
+    {
+        key:1,
+        name: "Greener than grass",
+        primaryColor: "#2D4A11",
+        secondaryColor:"#94B623",
+        primaryText:"#b3b8cd",
         secondaryText:"#1f1a32",
-        pictureHeader: "https://images.unsplash.com/photo-1540228232483-1b64a7024923?ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80)"
+        pictureHeader: "url(/images/headers/iso-republic-leaf-macro-02.jpg)"
+    },
+    {
+        key:2,
+        name: "Woody Good",
+        primaryColor: "#735646",
+        secondaryColor:"#F2C8A2",
+        primaryText:"#b3b8cd",
+        secondaryText:"#0D0D0D",
+        pictureHeader: "url(/images/headers/iso-republic-stacked-split-wood.jpg)",
+    },
+    {
+        key:3,
+        name: "Sorcery",
+        primaryColor: "#D1A0F2",
+        secondaryColor:"#7C1ED9",
+        primaryText:"#b3b8cd",
+        secondaryText:"#CDCCD9",
+        pictureHeader: "url(/images/headers/iso-republic-neon-abstract-background-10.jpg)",
+    },
+    {
+        key:4,
+        name: "Clean technology",
+        primaryColor: "#D8D9D7",
+        secondaryColor:"#58594F",
+        primaryText:"#b3b8cd",
+        secondaryText:"#F0F2F2",
+        pictureHeader: "url(/images/headers/iso-republic-keyboard-notepad-mouse.jpg)",
+    },
+
+    {
+        key:5,
+        name: "Yellowart",
+        primaryColor: "#F2CD5C",
+        secondaryColor:"#038C3E",
+        primaryText:"#b3b8cd",
+        secondaryText:"#F2F0D5",
+        pictureHeader: "url(/images/headers/iso-republic-art-supplies-02.jpg)",
     },
     {
         key:100

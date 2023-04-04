@@ -10,6 +10,7 @@ import { SET_NULL } from 'src/store/userSlice';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions } from 'src/theme/theme';
 import i18next from 'i18next';
+import { getHeadShot } from 'src/utils/picUtils';
 
 const theme = createTheme(themeOptions);
 
@@ -138,7 +139,7 @@ export const UserMenu = (props) =>{
             <Box sx={{ flexGrow: 0, ml:2  }}>
                 <Tooltip title={user.firstname + " " + user.lastname}>
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                        <Avatar alt={user.firstname + " " + user.lastname} src={user.picture.fileName} >
+                        <Avatar alt={user.firstname + " " + user.lastname} src={getHeadShot(user)} >
                             <PersonOutlineIcon />
                         </Avatar>
                     </IconButton>

@@ -24,6 +24,8 @@ import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { customIcons, FavoriteIcon, Favorites, ValorationMeanIcon } from 'src/components/favorites';
 import i18next from 'i18next';
 import { karmaLevel, karmaPalettes } from 'src/utils/karma';
+import { PictureDialog } from 'src/components/form-components/image-comp';
+import { getHeadShot } from 'src/utils/picUtils';
 
 const theme = createTheme(themeOptions);
 var newMaxWidth  = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -38,7 +40,7 @@ export const UserPage = () =>{
         secondaryColor:"#b3b8cd",
         primaryText:"#b3b8cd",
         secondaryText:"#1f1a32",
-        pictureHeader: "https:/images.unsplash.com/photo-1540228232483-1b64a7024923?ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80"
+        pictureHeader: "url(/images/headers/iso-republic-moonlight-through-tree-branches.jpg)"
     }
 
     const {id} = useParams();
@@ -197,8 +199,15 @@ export const UserPage = () =>{
         setOpenProfilePicDialog(true);
     };
     
-    const handleProfilePicClose = () => {
-        setOpenProfilePicDialog(false);
+    const handleProfilePicClose = (status, message) => {
+            if (status && message){
+                //console.log(status, message);
+                setSeverity(status);
+                setMessage(message);
+                setOpenSnack(true);
+                setLoadedUser(null);
+            }
+            setOpenProfilePicDialog(false);
     };
 
     const handleSnackClose = (event, reason) => {
@@ -349,7 +358,6 @@ export const UserPage = () =>{
                         textAlign: "left",
                         boxShadow:"0, 10px, 20x, -10px, rgba(0,0,0,.75)",
                         width: newWidth - 20,
-
                     }} 
                     >
                          {loadedUser.username === user.username?<>
@@ -365,6 +373,7 @@ export const UserPage = () =>{
                         </>:<></>}
                         {loadedUser.username === user.username?<>
                             <Fab size="small" aria-label="edit-portrait-picture" 
+                                onClick={handleProfilePicOpen}
                                 sx={{
                                     position:"absolute",
                                     top:newWidth<500?230:380,
@@ -379,22 +388,23 @@ export const UserPage = () =>{
 
                         <Container sx={{
                             
-                             background : "url(https:/images.unsplash.com/photo-1540228232483-1b64a7024923?ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80)",
-                             //background : "url("+palette.pictureHeader+")",
-                    
+                            // background : "url(https:/images.unsplash.com/photo-1540228232483-1b64a7024923?ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80)",
+                            backgroundImage : palette.pictureHeader,
+                            backgroundSize: "cover",
+                            backgroundRepeat:"no-repeat",
+                            backgroundPositionY: "center",
                             height: newWidth<500?150:280,
                             borderRadius:"5px 5px 0 0"
                         }}>
 
-                            <Image alt='user' src={loadedUser.picture.fileName?loadedUser.picture.fileName:"https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"} height={100} width={125} duration={0} 
-                            style={{
-                               
-                                borderRadius:"50%",
-                                border: "3px solid #1f1a32",
-                                marginTop: newWidth<500?200:450,
-                                marginLeft: 50,
-
-                            }}
+                             {/* <Image alt='user' src={loadedUser.picture.fileName?loadedUser.picture.fileName:"https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"} height={100} width={125} duration={0}  */}
+                             <Image alt='user' src={getHeadShot(loadedUser)} height={100} width={125} duration={0} 
+                                style={{
+                                    borderRadius:"50%",
+                                    border: "3px solid #1f1a32",
+                                    marginTop: newWidth<500?200:450,
+                                    marginLeft: 50,
+                                }}
                             />
                             
                         </Container>
@@ -465,12 +475,13 @@ export const UserPage = () =>{
                    </Grid>
                     
                     <Button startIcon={<SendIcon />} variant='contained' sx={{
-                        backgroundColor:loadedUser.secondaryColor?loadedUser.secondaryColor:"#b3b8cd",
+                        backgroundColor:palette.secondaryColor?palette.secondaryColor:"#b3b8cd",
                         borderRadius:"20px",
                         m:4,
+                        color:palette.secondaryText,
                         '&:hover': {
-                            backgroundColor: loadedUser.secondaryColor?loadedUser.secondaryColor:"#b3b8cd",
-                            borderColor: loadedUser.secondaryColor?loadedUser.secondaryColor:"#b3b8cd", 
+                            backgroundColor: palette.secondaryColor?palette.secondaryColor:"#b3b8cd",
+                            borderColor: palette.secondaryColor?palette.secondaryColor:"#b3b8cd", 
                             color: palette.primaryColor,
                         },
                     }}>
@@ -576,7 +587,7 @@ export const UserPage = () =>{
                         {loadedUser.valorations.map((val, index)=>{
                             return(
                             <React.Fragment key={index}>
-                                <Valoration valoration={val} primaryColor={palette.primaryColor} secondaryColor={palette.secondaryColor}/>
+                                <Valoration valoration={val} backgroundColor={palette.secondaryColor} textColor={palette.secondaryText}/>
                             </React.Fragment>
                             )
                         })}
@@ -584,21 +595,6 @@ export const UserPage = () =>{
                     
                     </>:<></>}
                     
-
-                    {/* <Button  variant='outlined' sx={{
-                            borderColor:loadedUser.secondaryColor?loadedUser.secondaryColor:"#b3b8cd",
-                            color:loadedUser.secondaryColor?loadedUser.secondaryColor:"#b3b8cd",
-                            borderRadius:"20px",
-                            ml:2,
-                            mt:2,
-                            '&:hover': {
-                                backgroundColor: loadedUser.secondaryColor?loadedUser.secondaryColor:"#b3b8cd",
-                                borderColor: loadedUser.secondaryColor?loadedUser.secondaryColor:"#b3b8cd", 
-                                color: loadedUser.primaryColor?loadedUser.primaryColor:"#231e39", 
-                            },
-                        }}>
-                            {i18next.t("Add User Valoration")}...
-                    </Button> */}
                     {user && user._id!=="" && user._id!==loadedUser._id?
                         <Favorites defaultFav={valoration} changeFavoriteRating={changeFavoriteRating} mode={"ligth"} ml={2}/>
                         :<></>}
@@ -776,6 +772,12 @@ export const UserPage = () =>{
                     <Button onClick={handleValorationDialogClose}>{i18next.t("Cancel")}</Button>
                     </DialogActions>
                 </Dialog>
+
+                <PictureDialog
+                    user={user}
+                    open={openProfilePicDialog}
+                    onClose={handleProfilePicClose}
+                />  
 
                 {/* SNACKBAR */}
                 <Snackbar open={openSnack} autoHideDuration={6000} onClose={handleSnackClose}>

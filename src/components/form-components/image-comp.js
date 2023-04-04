@@ -10,19 +10,43 @@ import FileResizer from 'react-image-file-resizer';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import UploadIcon from '@mui/icons-material/Upload';
 import DeleteIcon from '@mui/icons-material/Delete';
+import i18next from 'i18next';
+import { userUpdate } from 'src/api/userApi';
+import Image from 'mui-image';
 
-const SimpleDialog = (props) => {
-    const { onClose, picture, open } = props;
-
+export const PictureDialog = (props) => {
+    const { onClose, user, open } = props;
+    const picture = user.picture.type==="link"?user.picture.fileName:user.picture.file
     const [imageInDiag, setImageInDiag]= React.useState(picture);
   
-    const handleClose = () => {
-      onClose(imageInDiag);
+    const handleClose = async () => {
+      const frmData = {
+        "_id": user._id,
+        "picture":{
+            "file":imageInDiag,
+            "uploadTime": Date.now(),
+            "type": "buffer"
+        }
+        
+      }
+        await userUpdate(frmData).then((result)=>{
+            console.log("RESULTADO OBTENIDO", result)
+            if (result.status==="success"){
+                onClose("success", i18next.t("Your picture has been udpated"));
+            }
+            
+        }).catch((error)=>{
+            console.log(error);
+            onClose("error",i18next.t("Something has failed"));
+        })
+
+       onClose(imageInDiag);
+      
     };
 
     const handleCancel = ()=>{
         setImageInDiag(picture);
-        handleClose();
+        onClose("warning", i18next.t("Editing canceled"))
     }
 
     const [webcamShow, setWebcamShow] = React.useState(false); 
@@ -77,7 +101,7 @@ const SimpleDialog = (props) => {
     
     return (
       <Dialog onClose={handleClose} open={open}>
-        <DialogTitle>Picture</DialogTitle>  
+        <DialogTitle>{i18next.t("Picture Profile")}</DialogTitle>  
         <DialogContent>
         <Grid 
             container
@@ -97,7 +121,13 @@ const SimpleDialog = (props) => {
                         width={160}
                         videoConstraints={videoConstraints}
                     /> :
-                    <img width={145} height={165} src={imageInDiag} alt="Upload"></img>
+                    <Image width={160} height={160} src={imageInDiag} alt="Upload" duration={0} 
+                    style={{
+                        borderRadius:"50%",
+                        border: "3px solid #1f1a32",
+                       
+                    }}
+                    />
                     }
                 </ButtonBase>
                 <Grid container direction="row" justifyContent="space-around" alignItems="flex-end">
@@ -121,9 +151,9 @@ const SimpleDialog = (props) => {
         </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} autoFocus>Accept</Button>
-          <Button onClick={handleCancel} >Cancel</Button>
-        </DialogActions> 
+          <Button variant='contained' sx={{borderRadius:"20px"}} onClick={handleClose} autoFocus>{i18next.t("Accept")}</Button>
+          <Button variant='contained' sx={{borderRadius:"20px"}} onClick={handleCancel} >{i18next.t("Cancel")}</Button>
+        </DialogActions>
     </Dialog>
     );
   }
@@ -178,7 +208,7 @@ export const ImageComponent = (props) =>{
                         </IconButton>
                     </Grid>
             </Grid>  
-            <SimpleDialog
+            <PictureDialog
                 picture={image}
                 open={dialogOpen}
                 onClose={handleAvatarClose}
@@ -186,3 +216,5 @@ export const ImageComponent = (props) =>{
         </React.Fragment>
     )
   }
+
+  
