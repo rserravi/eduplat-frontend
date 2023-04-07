@@ -1,3 +1,5 @@
+import { themeOptions } from "src/theme/theme"
+
 export const karmaAndLevel = [
     {
         karma: 0,
@@ -117,6 +119,15 @@ export const karmaPalettes = [
     },
     {
         key:100
+    },
+    {
+        key:1000,
+        name: "ThemeDefault",
+        primaryColor: themeOptions.palette.primary.main,
+        secondaryColor:themeOptions.palette.secondary.main,
+        primaryText:themeOptions.palette.text.primary,
+        secondaryText:themeOptions.palette.text.secondary,
+        pictureHeader: "url(/images/headers/iso-republic-moonlight-through-tree-branches.jpg)"
     }
 ]
 

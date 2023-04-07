@@ -56,6 +56,7 @@ export const FavoriteIcon = (props)=>{
 
 export const ValorationMeanIcon = (props)=>{
   const {valorations} = props;
+  //console.log("MEAN ICON",valorations)
   var count=0;
   var value=0;
 

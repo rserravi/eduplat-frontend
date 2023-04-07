@@ -15,7 +15,6 @@ export const PhoneForm = (props) =>{
     const frmNumber = props.frmIndex;
     const updateP = props.updateParent;
 
-
     //console.log(data, frmNumber);
 
     const [phoneFrmData, setPhoneFrmData]= React.useState(data);

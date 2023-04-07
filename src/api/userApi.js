@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const rootUrl = 'http://localhost:3001/v1';
 const newAccessJWTurl = rootUrl + "/tokens";
-const userUrl = rootUrl + '/user/';
+const userUrl = rootUrl + '/user';
 const googleRegisterUrl = userUrl + '/google-registration';
 const googleLoginUrl = userUrl + '/google-login';
 const loginUrl = userUrl + '/login/';
@@ -77,7 +77,9 @@ export const userGoogleLogin = (frmData) =>{
 export const fetchNewAccessJWT = () =>{
     return new Promise( async(resolve, reject)=>{
         try {
+            
             const {refreshJWT} = JSON.parse(localStorage.getItem("eduplat"));
+            
             if (!refreshJWT){
                 reject("Token not found!");
             }
@@ -163,20 +165,35 @@ export const fetchUser = () =>{
 }
 
 export const userLogout = async() =>{
-    try {
-        const accessJWT = sessionStorage.getItem("accessJWT");
-    if (!accessJWT){
-        console.log("Token not found!");
-    }
-  
-    await axios.delete(logOutUrl, {
-        headers: {
-            Authorization :accessJWT,
+    return new Promise( async(resolve, reject)=>{
+        try {
+            console.log("login OUT");
+            const accessJWT = sessionStorage.getItem("accessJWT");
+            if (!accessJWT){
+                console.log("Token not found!");
+                reject({"status":"error", "message":"Token not found"})
+            }
+
+        
+            await axios.delete(logOutUrl, {
+                headers: {
+                    Authorization :accessJWT,
+                }
+            }).then((result)=>{
+                console.log("RESULT IN LOGOUT",result.data)
+                sessionStorage.removeItem("accessJWT")
+                resolve(result.data)
+                
+            }).catch((error)=>{
+                console.log("ERROR EN LOGOUT", error);
+                reject(error)
+            })
+            
+        } catch (error) {
+            console.log(error);
+            reject(error);
         }
-    });
-    } catch (error) {
-        console.log(error);
-    }
+    })
  }
 
 export const checkUserNameExists = (username)=>{

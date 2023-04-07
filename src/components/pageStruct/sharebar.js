@@ -54,7 +54,7 @@ import {
 import './sharebar.css';
 import { socialNetworks } from 'src/utils/social-networks-utils';
 import exampleImage from './react-share-pin-example.png';
-import { Avatar, Grid, IconButton, Typography } from '@mui/material';
+import { Grid,  Typography } from '@mui/material';
 import { getSocialUrl } from 'src/utils/socialList';
 import instagramIcon from 'src/assets/images/icons/instagram32x32.png';
 import tiktokIcon from 'src/assets/images/icons/tiktok32x32.png'

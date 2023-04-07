@@ -5,6 +5,7 @@ const edusourceUrl = rootUrl + '/edusource/';
 const byLink = edusourceUrl + '/bylink';
 const byPromoter = edusourceUrl + '/bypromoter/';
 const valorationUrl = edusourceUrl + '/valoration';
+const byPromoterSeparated = edusourceUrl + '/sortedbypromoterid';
 
 export const fetchEdusourceByLink = (link) =>{
     console.log("FETCHING", link)
@@ -146,3 +147,49 @@ export const findValoration = (userId, edusourceId) =>{
         }
     })
 }
+
+export const fetchValorationsSorted = (promoterId) =>{
+    return new Promise( async(resolve, reject)=>{
+        try {
+            const axiosUrl = byPromoterSeparated + "?promoterId="+promoterId;
+            //console.log(axiosUrl);
+            const res = await axios.get(axiosUrl);
+            if(res){
+               // console.log(res.data);
+                if (res.data.status==="error"){
+                    reject(res.data.message)
+                }
+                resolve(res.data);
+            }
+            else {
+                console.log("NO EXISTE LA URL")
+            }
+            
+            
+        } catch (error) {
+            console.log("HA HABIDO UN ERROR en fetchValorationsSorted",error);
+            reject(error.message);
+        }
+    })
+}
+
+/* // Pagination https://stackoverflow.com/questions/5539955/how-to-paginate-with-mongoose-in-node-js
+router.get("/search/:page", (req, res, next) => {
+    const resultsPerPage = 5;
+    let page = req.params.page >= 1 ? req.params.page : 1;
+    const query = req.query.search;
+
+    page = page - 1
+
+    Product.find({ name: query })
+        .select("name")
+        .sort({ name: "asc" })
+        .limit(resultsPerPage)
+        .skip(resultsPerPage * page)
+        .then((results) => {
+            return res.status(200).send(results);
+        })
+        .catch((err) => {
+            return res.status(500).send(err);
+        });
+}); */

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { Avatar, Grid, Paper } from '@mui/material';
+import { Avatar, Button, Grid, Paper } from '@mui/material';
 import { fetchUserbyId } from 'src/api/userApi';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions } from 'src/theme/theme';
@@ -15,18 +15,29 @@ const theme = createTheme(themeOptions);
 
 export const Valoration =(props) =>{
 
-  const {valoration, textColor, backgroundColor} = props;
+    //ACCEPTED MODE: (all, accepted, noaccepted)
+    //EDITING: when true, show editing buttons to show or hide in profile.
+  const {valoration, textColor, backgroundColor, acceptedMode, editing} = props;
 
   const [sender, setSender] = useState();
   // eslint-disable-next-line
   const [error, setError] = useState("");
   const primary= textColor?textColor:theme.palette.primary;
   const secondary = backgroundColor?backgroundColor: theme.palette.secondary;
+  const mode = acceptedMode && acceptedMode!=""?acceptedMode:"all";
 
   
   const navigation = (payload) =>{
     console.log(payload)
     window.open(payload);
+  }
+
+  const showButton = (event)=>{
+    //TODO: ACCEPT VALORATION
+  }
+
+  const hideButton = (event)=>{
+    //TODO: HIDE VALORATION.
   }
 
   
@@ -38,7 +49,7 @@ export const Valoration =(props) =>{
             fetchUserbyId(valoration.senderId).then((response)=>{
                 //console.log(response);
                  setSender(response.user) 
-                 console.log("USUARIO ENCONTRADO!",response.user);
+                 //console.log("USUARIO ENCONTRADO!",response.user);
                  
              }).catch(error=>{
                  console.log(error);
@@ -53,7 +64,7 @@ export const Valoration =(props) =>{
 
  },[valoration])
 
-  if (valoration.accepted){
+  if ((valoration.accepted && acceptedMode==="accepted") || (!valoration.accepted && acceptedMode==="noaccepted") || acceptedMode==="all"){
   return (
     <>
     {sender && sender._id!==""?<>
@@ -126,6 +137,11 @@ export const Valoration =(props) =>{
             </Grid>
 
         </Grid>
+        {editing?<>
+             <Button size='small' disabled={valoration.accepted} onClick={showButton} color='success' variant='contained' sx={{ m:1, borderRadius:5 }} >{i18next.t("show")}</Button>
+             <Button size='small' disabled={!valoration.accepted} onClick={hideButton} color='warning' variant='contained' sx={{ m:1, borderRadius:5 }} >{i18next.t("hide")}</Button>
+             </>
+       :<></>}
 
     </Paper>
     

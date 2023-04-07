@@ -7,6 +7,8 @@ import { Connect } from 'src/pages/miscelanea/connect';
 import { EventsPage } from 'src/pages/miscelanea/events';
 import { Volunteers } from 'src/pages/miscelanea/volunteers';
 import { UserPage } from 'src/pages/user/userPage';
+import { MyAccount } from 'src/pages/myAccount/myAccountPage';
+
 
 // project imports
 import MainLayout from '../layout/MainLayout';
@@ -58,6 +60,14 @@ const MainRoutes = {
             path: '/connect',
             element: <Connect />
         },
+        {
+            path: '/myaccount',
+            element: <MyAccount />
+        },
+        {
+            path: '/myaccount/:tab/',
+            element: <MyAccount />
+        },   
 
     ]
 };

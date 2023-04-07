@@ -21,6 +21,7 @@ export const UserMenu = (props) =>{
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [anchorElLogin, setAnchorElLogin] = React.useState(null);
     const [snackOpen, setSnackOpen] = React.useState(false);
+    const [snackSeverity, setSnackSeverity] = React.useState("error");
     const [errorMsg, setErrorMsg] = React.useState("");
     const openUser = Boolean(anchorElUser);
     const openLogin = Boolean(anchorElLogin);
@@ -65,11 +66,13 @@ export const UserMenu = (props) =>{
     }
 
     const handleMyAccountClick = ()=>{
-        navigate('/myaccount');
+        navigate('/myaccount/data');
+        window.location.reload()
     }
 
     const handleSettingsClick = ()=>{
-        navigate('/settings');
+        navigate('/myaccount/setup');
+        window.location.reload()
     }
 
     const handleClickCreateResource = (event)=>{
@@ -83,15 +86,21 @@ export const UserMenu = (props) =>{
     const handleLogoutClick = async ()=>{
         await userLogout().then((result)=>{
             if (result.status==="success"){
+                console.log(result.status);
+                setSnackSeverity("success")
+                setErrorMsg(i18next.t("Login sucessful"))
+                setSnackOpen(true);
                 dispatch(SET_NULL())
-                navigate('/');
+                window.location.reload()
             }
             else{
+                setSnackSeverity("error")
                 setErrorMsg(result.message);
                 setSnackOpen(true);
             }
             
         }).catch((error)=>{
+            setSnackSeverity("error")
             setErrorMsg(error.message);
             setSnackOpen(true);
         })
@@ -128,10 +137,10 @@ export const UserMenu = (props) =>{
                 >
                 
                     <MenuItem onClick={handleLoginClick}>
-                        <Typography textAlign="center">{i18next.t("signIn")}</Typography>
+                        <Typography textAlign="center">{i18next.t("signUp")}</Typography>
                     </MenuItem>
                     <MenuItem onClick={handleRegisterClick}>
-                        <Typography textAlign="center">{i18next.t("signUp")}</Typography>
+                        <Typography textAlign="center">{i18next.t("signIn")}</Typography>
                     </MenuItem>
                 </Menu>
             </Box>
@@ -197,7 +206,7 @@ export const UserMenu = (props) =>{
         </>
     }
     <Snackbar open={snackOpen} autoHideDuration={6000} onClose={handleSnackClose}>
-        <Alert onClose={handleSnackClose} severity="error" sx={{ width: '100%' }}>
+        <Alert onClose={handleSnackClose} severity={snackSeverity} sx={{ width: '100%' }}>
           {errorMsg}
         </Alert>
       </Snackbar>

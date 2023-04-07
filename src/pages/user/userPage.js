@@ -587,7 +587,7 @@ export const UserPage = () =>{
                         {loadedUser.valorations.map((val, index)=>{
                             return(
                             <React.Fragment key={index}>
-                                <Valoration valoration={val} backgroundColor={palette.secondaryColor} textColor={palette.secondaryText}/>
+                                <Valoration valoration={val} backgroundColor={palette.secondaryColor} textColor={palette.secondaryText} acceptedMode={"accepted"}/>
                             </React.Fragment>
                             )
                         })}
@@ -720,7 +720,7 @@ export const UserPage = () =>{
                 <Dialog open={openAboutMeDialog} onClose={handleAboutClose}>
                     <DialogTitle>{i18next.t("Edit about me")}</DialogTitle>
                     <DialogContent>
-                    <AboutForm user={loadedUser} handleAboutClose={handleAboutClose}  />
+                        <AboutForm user={loadedUser} handleAboutClose={handleAboutClose} />
                     </DialogContent>
                     <DialogActions>
                     </DialogActions>

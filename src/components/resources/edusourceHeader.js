@@ -113,7 +113,7 @@ export const EdusourceHeader= (props) =>{
                             alignItems="flex-start"
                             >                    
                             <Grid item>
-                            <Avatar alt={promoter.firstname + " " + promoter.lastname} src={promoter.picture.fileName}  sx={{ width: 24, height: 24 }} />
+                            <Avatar alt={promoter.firstname + " " + promoter.lastname} src={getHeadShot(promoter)}  sx={{ width: 24, height: 24 }} />
                             </Grid>
                             <Grid item sx={{mr:1}}>
                             <Typography variant="body1" onClick={visitAutor}>

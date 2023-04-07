@@ -15,9 +15,12 @@ import i18next from 'i18next';
 //var lang = Navigator.language;
 var lang = getBrowserLocales();
 console.log("LENGUAJE NAVEGADOR DETECTADO:", lang)
-if (store.getState().user._id!==""){
-  lang = store.getState().user.language
-}
+/* if (store.getState().user._id!==""){
+  if (store.getState().user.language!=="BROWSER"){
+    console.log("USUARIO ENCONTRADO. IDIOMA", store.getState().user.language)
+    lang = store.getState().user.language
+  }
+}  */
 
 if(!i18next.isInitialized){
   i18next.init({
@@ -40,6 +43,7 @@ if(!i18next.isInitialized){
         <React.StrictMode>
         <Provider store={store}>
           <p>ERROR DE LENGUAJE</p>
+          {error.message}
         </Provider>
       </React.StrictMode>
       )

@@ -5,6 +5,7 @@ import { red } from '@mui/material/colors';
 import { Box, Button, Divider, Grid, IconButton } from '@mui/material';
 import { shortDate } from 'src/utils/dateUtils';
 import { useNavigate } from 'react-router-dom';
+import { getHeadShot } from 'src/utils/picUtils';
 
 
 export default function EdusourceList(props) {
@@ -49,7 +50,7 @@ export default function EdusourceList(props) {
         <Grid 
             container
             direction="row"
-            jjustifyContent="flex-start"
+            justifyContent="flex-start"
             alignItems="flex-start"
         >
             <Grid item  xs="auto" >
@@ -69,7 +70,7 @@ export default function EdusourceList(props) {
                                 sx={{ bgcolor: red[500] }} 
                                 aria-label="autorAvatar"
                                 alt={edusource.promoterId.username}
-                                src={edusource.promoterId.picture.fileName}
+                                src={getHeadShot(edusource.promoterId)}
                                 >
                                 {edusource.promoterId.picture.fileName?<></>:<>{edusource.promoterId.username.charAt(1).toUpperCase()}</>}
                             </Avatar>
@@ -118,7 +119,7 @@ export default function EdusourceList(props) {
     <Grid 
         container
         direction="row"
-        jjustifyContent="flex-start"
+        justifyContent="flex-start"
         alignItems="flex-start"
     >
         <Grid item  xs="auto" >

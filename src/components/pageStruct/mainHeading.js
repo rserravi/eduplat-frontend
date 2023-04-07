@@ -15,6 +15,7 @@ import HeaderMenu from 'src/menu-items/headerMenu';
 import { SearchInBar } from './searchInBar';
 import { UserMenu } from './userMenu';
 import { AlertsInBar } from './alertsInBar';
+import i18next from 'i18next';
 
 
 // ==============================|| MAIN HEADER ||============================== //
@@ -37,6 +38,12 @@ function MainHeader() {
                     //console.log(response)
                     if (response.user){
                         dispatch (SET_AUTH_USER(response.user));
+                       /*  if (response.user.language!=="BROWSER"){
+                          var lang = response.user.language.toLowerCase();
+                          console.log("USUARIO ENCONTRADO. IDIOMA", lang)
+                          i18next.changeLanguage(lang).then(()=>console.log("IDIOMA FINAL",i18next.language)).catch((err)=>{console.error(err)})
+                          
+                        } */
                     }
                 }).catch(error=>{
                     console.log(error);
@@ -51,6 +58,7 @@ function MainHeader() {
         async function fetchData(){
             if(!user ||user._id===""){
                 const loadedUser =  loadUser()
+               
                 //console.log(loadedUser)
             }
         }
