@@ -1,6 +1,7 @@
 import { lazy } from 'react';
 import { CreateCollection } from 'src/collections/createCollection';
 import { CreateEdusource } from 'src/components/resources/createEdusource';
+import { EditEdusource } from 'src/components/resources/editEdusource';
 import { EdusourcePage } from 'src/pages/edusource/edusource';
 import { LandingPage } from 'src/pages/landingPage';
 import { Connect } from 'src/pages/miscelanea/connect';
@@ -35,6 +36,10 @@ const MainRoutes = {
         {
             path: "/resources/create",
             element: <CreateEdusource />
+        },
+        {
+            path: "/resources/edit/:editUrl",
+            element: <EditEdusource />
         },
         {
             path: "/collections/create",

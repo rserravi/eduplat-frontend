@@ -25,7 +25,7 @@ import { customIcons, FavoriteIcon, Favorites, ValorationMeanIcon } from 'src/co
 import i18next from 'i18next';
 import { karmaLevel, karmaPalettes } from 'src/utils/karma';
 import { PictureDialog } from 'src/components/form-components/image-comp';
-import { getHeadShot } from 'src/utils/picUtils';
+import { getHeadShot, getRightPicture } from 'src/utils/picUtils';
 
 const theme = createTheme(themeOptions);
 var newMaxWidth  = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -416,7 +416,7 @@ export const UserPage = () =>{
                         mt: newWidth<500?7:2,
                         ml: newWidth<500?4:30,
                     }}>
-                        {loadedUser.publicData.name?loadedUser.firstname + " " + loadedUser.lastname:loadedUser.username}
+                        {!loadedUser.publicData.name?loadedUser.firstname + " " + loadedUser.lastname:loadedUser.username}
                             {loadedUser.username === user.username?<>
                             <IconButton onClick={handleNameOpen} size="small" aria-label="edit-name-and-username" 
                                 sx={{
@@ -436,7 +436,7 @@ export const UserPage = () =>{
 
 
                     }}>
-                        {!loadedUser.publicData.name?<></>:loadedUser.username}
+                        {loadedUser.publicData.name?<></>:loadedUser.username}
                         
                     </Typography>
                     
@@ -658,7 +658,7 @@ export const UserPage = () =>{
                                 mt={1}
                                 >
                                     <Grid item m={1} xs={2} sm={2} md={2}>
-                                    <a href={"/resources/"+edu.resourceURL}><Image src={edu.picture.fileName} height={85} width={150} duration={0} sx={{borderRadius:5}} /></a>
+                                    <a href={"/resources/"+edu.resourceURL}><Image src={getRightPicture(edu.picture)} height={85} width={150} duration={0} sx={{borderRadius:5}} /></a>
                                     </Grid>
                                     <Grid item m={1}xs={12} sm={9} md={9.5} >
                                         <Grid container direction="row">
@@ -705,7 +705,7 @@ export const UserPage = () =>{
 
                 {/* DIALOGS */} 
 
-                <Dialog open={openNameDialog} onClose={handleNameClose}>
+                <Dialog open={openNameDialog} >
                     <DialogTitle>{i18next.t("Edit name")}</DialogTitle>
                     <DialogContent>
                     <DialogContentText>
@@ -717,7 +717,7 @@ export const UserPage = () =>{
                     </DialogActions>
                 </Dialog>
 
-                <Dialog open={openAboutMeDialog} onClose={handleAboutClose}>
+                <Dialog open={openAboutMeDialog}>
                     <DialogTitle>{i18next.t("Edit about me")}</DialogTitle>
                     <DialogContent>
                         <AboutForm user={loadedUser} handleAboutClose={handleAboutClose} />
@@ -726,7 +726,7 @@ export const UserPage = () =>{
                     </DialogActions>
                 </Dialog>
 
-                <Dialog open={openDescriptionDialog} onClose={handleDescriptionClose}>
+                <Dialog open={openDescriptionDialog} >
                     <DialogTitle>{i18next.t("Edit description")}</DialogTitle>
                     <DialogContent>
                     <DialogContentText>
@@ -740,7 +740,7 @@ export const UserPage = () =>{
 
                     {/* VALORATIONS DIALOG */}
 
-                <Dialog open={openValorationDialog} onClose={handleValorationDialogClose}>
+                <Dialog open={openValorationDialog} >
                     <DialogTitle>{i18next.t("Value")} @{loadedUser.username}</DialogTitle>
                     <DialogContent>
                     <DialogContentText>

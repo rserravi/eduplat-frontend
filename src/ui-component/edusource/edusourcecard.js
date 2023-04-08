@@ -13,6 +13,7 @@ import { ValorationMeanIcon } from 'src/components/favorites';
 import { shortDate } from 'src/utils/dateUtils';
 import { useNavigate } from 'react-router-dom';
 import i18next from 'i18next';
+import { getRightPicture } from 'src/utils/picUtils';
 
 
 export default function EduSourceCard(props) {
@@ -86,7 +87,7 @@ export default function EduSourceCard(props) {
         className='classes.media'
         style={imgstyles.media}
         onClick={handleCardClic}
-        image={edusource.picture.fileName}
+        image={getRightPicture(edusource.picture)}
         alt={edusource.title}
         sx= {{cursor:"pointer",filter: "opacity(10%)"}}
       />
@@ -96,7 +97,7 @@ export default function EduSourceCard(props) {
         className='classes.media'
         style={imgstyles.media}
         onClick={handleCardClic}
-        image={edusource.picture.fileName}
+        image={getRightPicture(edusource.picture)}
         alt={edusource.title}
         sx= {{cursor:"pointer",filter: "opacity(100%)"}}
         

@@ -8,11 +8,11 @@ const valorationUrl = edusourceUrl + '/valoration';
 const byPromoterSeparated = edusourceUrl + '/sortedbypromoterid';
 
 export const fetchEdusourceByLink = (link) =>{
-    console.log("FETCHING", link)
+    //console.log("FETCHING", link)
     return new Promise( async(resolve, reject)=>{
         try {
             const axiosUrl = byLink + "?link="+link;
-            console.log(axiosUrl);
+            //console.log(axiosUrl);
             const res = await axios.get(axiosUrl);
             if(res){
                 //console.log(res.data);
@@ -90,6 +90,30 @@ export const createResource = (frmData)=>{
     return new Promise( async(resolve, reject)=>{
         try {
             const res = await axios.post(edusourceUrl, frmData);
+            resolve(res.data);
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
+export const updateTheResource = (frmData)=>{
+    return new Promise( async(resolve, reject)=>{
+        try {
+            const res = await axios.patch(edusourceUrl, frmData);
+            resolve(res.data);
+        } catch (error) {
+            reject(error);
+        }
+    })
+}
+
+export const deleteResource = (frmData)=>{
+ 
+    return new Promise( async(resolve, reject)=>{
+        try {
+            const res = await axios.delete(edusourceUrl+"?edusourceId="+frmData._id);
+            console.log("RESPUESTA en DELETE RESOURCE");
             resolve(res.data);
         } catch (error) {
             reject(error);
@@ -173,7 +197,7 @@ export const fetchValorationsSorted = (promoterId) =>{
     })
 }
 
-/* // Pagination https://stackoverflow.com/questions/5539955/how-to-paginate-with-mongoose-in-node-js
+/* // Pagination 
 router.get("/search/:page", (req, res, next) => {
     const resultsPerPage = 5;
     let page = req.params.page >= 1 ? req.params.page : 1;

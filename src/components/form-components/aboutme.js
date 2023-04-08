@@ -24,6 +24,7 @@ export const AboutForm = (props) =>{
                 "tagline": loadedUser.tagline,
                 "social": loadedUser.social,
                 "phones": loadedUser.phones,
+                "emails": loadedUser.emails,
                 "publicData": loadedUser.publicData
             }
             await userUpdate(frmData).then((result)=>{
@@ -84,6 +85,15 @@ export const AboutForm = (props) =>{
         setLoadedUser({...loadedUser, "social": oldSocial}); 
     }
 
+    const handleSocialCheckbox = (event)=>{
+        event.preventDefault();
+        setEdited(true);
+        const oldPublicData = loadedUser.publicData;
+        oldPublicData.social = event.target.checked;
+        setLoadedUser({...loadedUser, "publicData": oldPublicData}); 
+    }
+
+
     // PHONES FUNCTIONS
 
     const handleAddPhone = (event)=>{
@@ -127,9 +137,62 @@ export const AboutForm = (props) =>{
         event.preventDefault();
         setEdited(true);
         const oldPublicData = loadedUser.publicData;
-        oldPublicData.phones = !event.target.checked;
+        oldPublicData.phones = event.target.checked;
         setLoadedUser({...loadedUser, "publicData": oldPublicData}); 
     }
+
+     // EMAILS FUNCTIONS
+
+     const handleAddEmail= (event)=>{
+        event.preventDefault();
+        setEdited(true);
+        const oldEmails = loadedUser.emails;
+        const newEmails = {
+            emailUrl :"",
+            emailDescription:""
+        }
+        oldEmails.push(newEmails);
+        setLoadedUser({...loadedUser, "emails":oldEmails})
+    }
+
+    const handleDeleteEmail = (event) => {
+        event.preventDefault();
+        setEdited(true);
+        const oldEmails = loadedUser.emails;
+        oldEmails.pop();
+        setLoadedUser({...loadedUser, "emails":oldEmails})
+    }
+
+    const handleChangeEmailNumber = (event, index)=>{
+        event.preventDefault();
+        setEdited(true);
+        const oldEmails = loadedUser.emails;
+        oldEmails[index].emailUrl = event.target.value;
+        setLoadedUser({...loadedUser, "emails": oldEmails});       
+    }
+
+    const handleChangeEmailDescription = (event, index)=>{
+        event.preventDefault();
+        setEdited(true);
+        const oldEmails = loadedUser.emails;
+        oldEmails[index].phoneDescription = event.target.value;
+        console.log(event.target.value);
+        setLoadedUser({...loadedUser, "emails": oldEmails}); 
+    }
+
+    const handleEmailsCheckbox = (event)=>{
+        event.preventDefault();
+        setEdited(true);
+        const oldPublicData = loadedUser.publicData;
+        oldPublicData.emails = event.target.checked;
+        setLoadedUser({...loadedUser, "publicData": oldPublicData}); 
+    }
+
+
+   
+
+   
+   
 
     /////////////////////////////////////////////////////////////////////////////////
     /////                                                                       /////
@@ -164,7 +227,13 @@ export const AboutForm = (props) =>{
 
             {/* SOCIAL NETWORKDS */}
 
-            <Typography variant='h4'>{i18next.t("Social networks")}</Typography>
+          
+            <Grid container direction="row" justifyContent="flex-start" alignItems="center">
+                <Typography variant='h4'>{i18next.t("Social networks")}</Typography>
+                <FormGroup>
+                    <FormControlLabel control={<Checkbox sx={{ml:7}} onChange={handleSocialCheckbox} checked={loadedUser.publicData.social} />} label={i18next.t("Keep private?")} />
+                </FormGroup>                
+            </Grid>
             {loadedUser.social.map((snet, index)=>{
                 return(
                     
@@ -220,7 +289,7 @@ export const AboutForm = (props) =>{
             <Grid container direction="row" justifyContent="flex-start" alignItems="center">
                 <Typography variant='h4'>{i18next.t("Phones")}</Typography>
                 <FormGroup>
-                    <FormControlLabel control={<Checkbox sx={{ml:7}} onChange={handlePhoneCheckbox} checked={!loadedUser.publicData.phones} />} label={i18next.t("Keep private?")} />
+                    <FormControlLabel control={<Checkbox sx={{ml:7}} onChange={handlePhoneCheckbox} checked={loadedUser.publicData.phones} />} label={i18next.t("Keep private?")} />
                 </FormGroup>                
             </Grid>
             {loadedUser.phones.map((snet, index)=>{
@@ -269,6 +338,61 @@ export const AboutForm = (props) =>{
                     <AddIcon />
                 </IconButton>
             </ButtonGroup>
+
+             {/* EMAILS */}
+             <Grid container direction="row" justifyContent="flex-start" alignItems="center">
+                <Typography variant='h4'>{i18next.t("Emails")}</Typography>
+                <FormGroup>
+                    <FormControlLabel control={<Checkbox sx={{ml:7}} onChange={handleEmailsCheckbox} checked={loadedUser.publicData.emails} />} label={i18next.t("Keep private?")} />
+                </FormGroup>                
+            </Grid>
+            {loadedUser.emails.map((snet, index)=>{
+                return(
+                    
+                <React.Fragment key={index}>
+                    <Grid container direction="row" sx={{mt:1}}>
+                        <Grid item xs={4}>
+                            <TextField
+                                select
+                                variant="standard"
+                                defaultValue={snet.emailDescription}
+                                onChange={(e)=>{handleChangeEmailDescription(e,index)}}
+                            >
+                                    {phoneTypes.map((option) => (
+                                    <MenuItem key={option.label} value={option.value}>
+                                        <ListItemIcon>
+                                            {option.label}
+                                        </ListItemIcon>
+                                    </MenuItem>
+                                ))}  
+
+                            </TextField>
+                        </Grid>
+                        <Grid item xs={6} sx={{ml:2}}>
+                            <TextField
+                                variant="standard"
+                                onChange={(e)=>{handleChangeEmailNumber(e,index)}}
+                                defaultValue={snet.emailUrl}
+                                margin="dense"
+                            >   
+
+                            </TextField>
+                        </Grid>
+                        <Grid item xs={1}>
+                        <IconButton aria-label="delete"  color="primary" onClick={handleDeleteEmail}>
+                            <DeleteOutlineIcon />
+                        </IconButton>
+                        </Grid>
+                    </Grid>
+                </React.Fragment>
+                )
+            })}
+            <ButtonGroup orientation='vertical'>
+                <IconButton aria-label="add" color="secondary" onClick={handleAddEmail}>
+                    <AddIcon />
+                </IconButton>
+            </ButtonGroup>
+
 
         </Grid>
 

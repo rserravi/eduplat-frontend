@@ -5,9 +5,8 @@ import { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { scrapping } from 'src/api/scrapApi';
 import { categoriesList } from 'src/utils/isced';
-import { arrayFromString, strToArray } from 'src/utils/stringOperations';
 import { getTagsFromCategory } from 'src/utils/isced';
-import { findLangFromCode, languagesCodes } from 'src/utils/countries';
+import { languagesCodes } from 'src/utils/countries';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -491,7 +490,7 @@ export const CreateEdusource= ({ ...others }) =>{
                             
                         </Grid>
                         <Grid container direction="row" mt={4}
-                            justifyContent="space-evenly"
+                            justifyContent="flex-start"
                             alignItems="flex-end">
                                 <Button variant='contained' size="big" color='secondary' sx={{borderRadius:5, mr:2 }} onClick={SaveAndSee}>{i18next.t("Save and See")}</Button>
                                 <Button variant='contained' size="big" color='secondary' sx={{borderRadius:5, mr:2 }} onClick={SaveAndAnother}>{i18next.t("Save and Create another")}</Button>

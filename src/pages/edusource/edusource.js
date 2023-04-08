@@ -1,8 +1,8 @@
-import { Box,  CssBaseline, Grid, Typography } from '@mui/material';
+import { Box,  Button,  ButtonGroup,  CssBaseline, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Typography } from '@mui/material';
 import * as React from 'react'
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { fetchEdusourceByLink } from 'src/api/edusourceApi';
+import { deleteResource, fetchEdusourceByLink } from 'src/api/edusourceApi';
 import { EdusourceHeader } from 'src/components/resources/edusourceHeader';
 import Loader from 'src/ui-component/Loader';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -10,9 +10,11 @@ import { themeOptions } from 'src/theme/theme';
 import { fetchUserbyId } from 'src/api/userApi';
 import { EdusourceBody } from 'src/components/resources/edusourceBody';
 import CourseDrawer from 'src/components/pageStruct/courseDrawer';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { MENU_OPEN } from 'src/store/menuSlice';
 import { useOutletContext } from 'react-router-dom';
+import i18next from 'i18next';
+import { useNavigate } from 'react-router-dom';
 
 
 const theme = createTheme(themeOptions);
@@ -26,7 +28,45 @@ export const EdusourcePage = () =>{
      // eslint-disable-next-line
      const [error, setError] = useState("");
     const [newWidth] = useOutletContext();
-     
+    const [deleteDialog, setDeleteDialog] = React.useState(false);
+    const [eduToDelete, setEduToDelete] = React.useState();
+    const user = useSelector(state => state.user)
+    const navigate = useNavigate();
+
+    const editClickHandle = (event, edusource)=>{
+        event.preventDefault();
+        navigate("/resources/edit/"+edusource.resourceURL)
+    }
+
+    const deleteCliclHandle = (event, edusource)=>{
+        event.preventDefault();
+        setEduToDelete(edusource);
+        setDeleteDialog(true);
+
+    }
+    const deleteDialogClose = (event)=>{
+        setDeleteDialog(false);
+    }
+
+    const dangerouslyProceedToDelete = async (event)=>{
+        try {
+            if (eduToDelete){
+                await deleteResource(eduToDelete).then((data)=>{
+                    console.log(data)
+                    setDeleteDialog(false)
+                  
+                }).catch((err)=>{
+                    console.log(err);
+                })
+            }
+            
+        } catch (error) {
+            console.log(error)
+            
+        }
+    }
+
+ 
 
     useEffect(() =>{
       
@@ -38,7 +78,6 @@ export const EdusourcePage = () =>{
                     
                     fetchUserbyId(response.result.promoterId).then((fetchedPromoter)=>{
                         setPromoter(fetchedPromoter.user)
-
                     }).catch(error=>{setError(error)})                    
                 }).catch(error=>{
                     console.log(error);
@@ -84,6 +123,16 @@ export const EdusourcePage = () =>{
                     </Typography>
                     
                 </Grid>
+                
+                {user && (user._id===edusource.promoterId)?<>
+                <Grid item sx= {{my:1}}>
+                    <ButtonGroup >
+                        <Button color='secondary' variant='contained' onClick={(e)=>{ editClickHandle(e, edusource)}} size="small" sx={{borderRadius :"15px", mt:1}}>{i18next.t("edit")}</Button>
+                        <Button color='secondary' variant='contained' onClick={(e)=>{ deleteCliclHandle(e, edusource)}} size="small" sx={{borderRadius :"15px", mt:1}}>{i18next.t("delete")}</Button>
+                    </ButtonGroup>
+                    </Grid>
+                </>:<></>}
+                
                 <EdusourceBody edusource={edusource} promoter={promoter} newWidth={newWidth} />
                 
             </Box>
@@ -92,6 +141,30 @@ export const EdusourcePage = () =>{
             error?<>{error}</>:<><Loader /></>
             }
             </Box>
+
+             {/* DELETE DIALOG */}
+
+
+            <Dialog
+                open={deleteDialog}
+                onClose={deleteDialogClose}
+                aria-labelledby="delete-dialog-title"
+                aria-describedby="delete-dialog-description"
+            >
+                <DialogTitle id="delete-dialog-title">
+                    {i18next.t("Do you really want to delete this resource?")}
+                </DialogTitle>
+                <DialogContent>
+                <DialogContentText id="delete-dialog-description">
+                    {i18next.t("DeleteInstrucctions")}
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={deleteDialogClose}  autoFocus>{i18next.t("Cancel")}</Button>
+                <Button onClick={dangerouslyProceedToDelete}> {i18next.t("Accept")} </Button>
+                </DialogActions>
+            </Dialog>
+
             </ThemeProvider>
         </React.Fragment>
         

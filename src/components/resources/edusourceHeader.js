@@ -5,7 +5,7 @@ import { longDate } from 'src/utils/dateUtils';
 import { themeOptions } from 'src/theme/theme';
 import i18next from 'i18next';
 import { karmaLevel } from 'src/utils/karma';
-import { getHeadShot } from 'src/utils/picUtils';
+import { getHeadShot, getRightPicture } from 'src/utils/picUtils';
 
 //TODO: Add link to Author Social Network
 
@@ -32,7 +32,7 @@ export const EdusourceHeader= (props) =>{
             
                 <Grid container>
                 <Grid item sx={{mr:2}}>
-                    <Image src={edusource.picture.fileName} width={150} height={85} duration={0} sx={{borderRadius:5}} ></Image>
+                    <Image src={getRightPicture(edusource.picture)} width={150} height={85} duration={0} sx={{borderRadius:5}} ></Image>
                 </Grid>
                 <Grid item>
                 <Grid 

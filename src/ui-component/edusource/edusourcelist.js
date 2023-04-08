@@ -5,7 +5,7 @@ import { red } from '@mui/material/colors';
 import { Box, Button, Divider, Grid, IconButton } from '@mui/material';
 import { shortDate } from 'src/utils/dateUtils';
 import { useNavigate } from 'react-router-dom';
-import { getHeadShot } from 'src/utils/picUtils';
+import { getHeadShot, getRightPicture } from 'src/utils/picUtils';
 
 
 export default function EdusourceList(props) {
@@ -17,6 +17,8 @@ export default function EdusourceList(props) {
    const handleEdusourceLink = (event)=>{
       navigate("/resources/"+ edusource.resourceURL);
    }
+
+   //console.log("EDUSOURCE en EduSourceList", edusource)
 
    const handlePromoterClick = (event)=>{
     navigate("/user/"+edusource.promoterId.username);
@@ -54,7 +56,7 @@ export default function EdusourceList(props) {
             alignItems="flex-start"
         >
             <Grid item  xs="auto" >
-                <img style={imgstyles.media} src={edusource.picture.fileName} alt="" />
+                <img style={imgstyles.media} src={getRightPicture(edusource.picture)} alt="" />
             </Grid>
             <Grid item xs={9} sx={{ml:2, mt:-1}}>
                 <Grid 

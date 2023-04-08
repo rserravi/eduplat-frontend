@@ -246,6 +246,11 @@
     "ResourcesValorationInstrucctions":"Decide qué valoraciones quieres que se muestren en tu perfil público",
     "Resource Valuations pending acceptance":"Valoraciones de recursos pendientes de aprobación",
     "Resource Valuations accepted":"Valoraciones de recursos aprobadas",
-    "has commented the":"ha comentado el"
-
+    "has commented the":"ha comentado el",
+    "edit":"editar",
+    "delete":"borrar",
+    "My resources":"Mis recursos",
+    "Edit Resource":"Editar Recurso",
+    "Do you really want to delete this resource?":"¿Estás seguro de borrar este recurso?",
+    "DeleteInstrucctions":"Si procedes a borrar el recurso, no habrá marcha atrás y desaparecerá también de las colecciones, si pertenece a alguna."
 }

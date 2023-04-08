@@ -214,6 +214,14 @@ export const EdusourceBody= (props) =>{
                 )
         
             default:
+                return (
+                    <Paper sx={{mt:2, p:1}}>
+                    <div style={{divStyle}}>
+                        <iframe src={edusource.link} style={iframeStyle} height={800} title={"WEBSITE"}/>
+                       
+                    </div>
+                    </Paper>
+                )
                 break;
         }  
     }

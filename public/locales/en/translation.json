@@ -246,6 +246,12 @@
     "ResourcesValorationInstrucctions":"Decide wich valuations you want to show in your public profile",
     "Resource Valuations pending acceptance":"Resource Valuations pending acceptance",
     "Resource Valuations accepted":"Resource Valuations accepted",
-    "has commented the":"has commented the"
+    "has commented the":"has commented the",
+    "edit":"edit",
+    "delete":"delete",
+    "My resources":"My resources",
+    "Edit Resource":"Edit Resource",
+    "Do you really want to delete this resource?":"Do you really want to delete this resource?",
+    "DeleteInstrucctions":"If you proceed to delete the resource, there will be no going back and it will also disappear from the collections, if it belongs to any"
 
 }

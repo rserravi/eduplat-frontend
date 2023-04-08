@@ -1,4 +1,4 @@
-import { ButtonGroup, Grid, IconButton, Typography } from '@mui/material'
+import { Button, ButtonGroup, Grid, IconButton, Typography } from '@mui/material'
 import * as React from 'react'
 import fakeLastResources from 'src/assets/fakeLists/lastResources'
 import GridOnIcon from '@mui/icons-material/GridOn';
@@ -8,12 +8,21 @@ import "./resources.css"
 import Slider from '../NetflixSlider';
 import { Box } from '@mui/system';
 import i18next from 'i18next';
-
+import { useNavigate } from 'react-router-dom';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import { deleteResource } from 'src/api/edusourceApi';
 
 
 export const ResourcesNetflixGrid = (props) =>{
-    var {edusourceList, title, newcolor, mt} = props;
+    var {edusourceList, title, newcolor, mt, defaultMode} = props;
+    const [deleteDialog, setDeleteDialog] = React.useState(false);
+    const [eduToDelete, setEduToDelete] = React.useState();
     const {newWidth} = props;
+    const navigate = useNavigate();
     if (!edusourceList){
         
         edusourceList = fakeLastResources;
@@ -26,8 +35,12 @@ export const ResourcesNetflixGrid = (props) =>{
     }
 
     const getInitialMode = () => {
+        
         var result= "Grid"
         if (newWidth <500){
+            result = "List"
+        }
+        if (defaultMode && defaultMode==="List"){
             result = "List"
         }
         return result
@@ -45,6 +58,39 @@ export const ResourcesNetflixGrid = (props) =>{
         setMode("List")
     }
 
+    const editClickHandle = (event, edusource)=>{
+        event.preventDefault();
+        navigate("/resources/edit/"+edusource.resourceURL)
+    }
+
+    const deleteCliclHandle = (event, edusource)=>{
+        event.preventDefault();
+        setEduToDelete(edusource);
+        setDeleteDialog(true);
+
+    }
+    const deleteDialogClose = (event)=>{
+        setDeleteDialog(false);
+    }
+
+    const dangerouslyProceedToDelete = async (event)=>{
+        try {
+            if (eduToDelete){
+                await deleteResource(eduToDelete).then((data)=>{
+                    console.log(data)
+                    setDeleteDialog(false)
+                  
+                }).catch((err)=>{
+                    console.log(err);
+                })
+            }
+            
+        } catch (error) {
+            console.log(error)
+            
+        }
+    }
+
 
     return (
         <>
@@ -53,11 +99,10 @@ export const ResourcesNetflixGrid = (props) =>{
             container
             direction="row"
             justifyContent="flex-start"
-            alignItems="center"
-           
-            
+            alignItems="center"  
             >
             <Grid item><Typography variant='h3' sx={{ml:2}}>{i18next.t(title)}</Typography></Grid>
+            {defaultMode && defaultMode==="List"?<></>:<>
             <Grid item>
                 <ButtonGroup>
                     <IconButton color={mode==="Grid"?"primary":""} onClick={HandelGridClick}>
@@ -68,7 +113,9 @@ export const ResourcesNetflixGrid = (props) =>{
                     </IconButton>
                 </ButtonGroup>
             </Grid>
+            </>}
         </Grid>
+        
             {mode!=="List"?
                 <>
                 
@@ -86,7 +133,13 @@ export const ResourcesNetflixGrid = (props) =>{
                         return (
                             <React.Fragment key={index}>
                             <Grid item sx={{mb:2}} >
-                                <EduSourceList edusource= {edusource} newWidth={newWidth} />                                   
+                                <EduSourceList edusource= {edusource} newWidth={newWidth} />
+                                {defaultMode && defaultMode==="List"?<>
+                                    <ButtonGroup >
+                                        <Button onClick={(e)=>{ editClickHandle(e, edusource)}} size="small" sx={{borderRadius :"15px", mt:1}}>{i18next.t("edit")}</Button>
+                                        <Button onClick={(e)=>{ deleteCliclHandle(e, edusource)}} size="small" sx={{borderRadius :"15px", mt:1}}>{i18next.t("delete")}</Button>
+                                    </ButtonGroup>
+                                </>:<></>}
                             </Grid>
                             </React.Fragment>
                         )
@@ -94,6 +147,31 @@ export const ResourcesNetflixGrid = (props) =>{
                 </Grid>
                 </>}
         </Grid>
+
+
+        {/* DELETE DIALOG */}
+
+
+        <Dialog
+            open={deleteDialog}
+            onClose={deleteDialogClose}
+            aria-labelledby="delete-dialog-title"
+            aria-describedby="delete-dialog-description"
+        >
+            <DialogTitle id="delete-dialog-title">
+                {i18next.t("Do you really want to delete this resource?")}
+            </DialogTitle>
+            <DialogContent>
+            <DialogContentText id="delete-dialog-description">
+                {i18next.t("DeleteInstrucctions")}
+            </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+            <Button onClick={deleteDialogClose}  autoFocus>{i18next.t("Disagree")}</Button>
+            <Button onClick={dangerouslyProceedToDelete}> {i18next.t("Agree")} </Button>
+            </DialogActions>
+        </Dialog>
+
         </>
     )
 }
