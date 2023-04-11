@@ -27,7 +27,7 @@ export const FilterMenu =(props) =>{
 
 
   //LANGUAGE FILTER
-  const [languageFilter, setLanguageFilter] = React.useState('ES');
+  const [languageFilter, setLanguageFilter] = React.useState('any');
   const [anchorElNavLanguage, setAnchorElNavLanguage] = React.useState(null);
   const openLanguageNav = Boolean(anchorElNavLanguage);
 
@@ -200,11 +200,11 @@ const resetFilters = (event) =>{
   return (
     <ThemeProvider theme={theme}>
             
-            <Button size='small' variant='contained' sx={{ borderRadius:"20px", width:130, mr:1, mb:1}} color='secondary' endIcon={<ArrowDropDownIcon />} onClick={handleOpenNavResourcesMenu}>
+            <Button size='small' variant='contained' sx={{ borderRadius:"20px", width:150, mr:1, mb:1}} color='secondary' endIcon={<ArrowDropDownIcon />} onClick={handleOpenNavResourcesMenu}>
                 {i18next.t(findLangFromCode(languageFilter))}
             </Button>
 
-            <Button size='small' variant='contained' sx={{ borderRadius:"20px", width:130, mr:1, mb:1}} color='secondary' endIcon={<ArrowDropDownIcon />} onClick={handleOpenNavTypeOfMenu}>
+            <Button size='small' variant='contained' sx={{ borderRadius:"20px", width:150, mr:1, mb:1}} color='secondary' endIcon={<ArrowDropDownIcon />} onClick={handleOpenNavTypeOfMenu}>
                 {i18next.t(typeOfFilter)}
             </Button>
 

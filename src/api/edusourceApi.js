@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { replaceSpacesWithUnderscores } from 'src/utils/stringOperations';
 
 const rootUrl = 'http://localhost:3001/v1';
 const edusourceUrl = rootUrl + '/edusource/';
@@ -6,6 +7,7 @@ const byLink = edusourceUrl + '/bylink';
 const byPromoter = edusourceUrl + '/bypromoter/';
 const valorationUrl = edusourceUrl + '/valoration';
 const byPromoterSeparated = edusourceUrl + '/sortedbypromoterid';
+const valorationMod = edusourceUrl + '/valorationMod';
 
 export const fetchEdusourceByLink = (link) =>{
     //console.log("FETCHING", link)
@@ -192,6 +194,72 @@ export const fetchValorationsSorted = (promoterId) =>{
             
         } catch (error) {
             console.log("HA HABIDO UN ERROR en fetchValorationsSorted",error);
+            reject(error.message);
+        }
+    })
+}
+
+export const searchInResources = (terms, languageFilter, categoriesFilter, levelFilter, themesFilter)=>{
+    var newUrl = edusourceUrl+"/search?terms="+terms;
+    if (!languageFilter || languageFilter!==""){
+        newUrl = newUrl + "&lang="+ languageFilter;
+    }
+
+    if (categoriesFilter && categoriesFilter!==""){
+        newUrl = newUrl + "&category="+ categoriesFilter;
+    }
+
+    if (levelFilter && levelFilter!==""){
+        newUrl = newUrl + "&level="+ levelFilter;
+    }
+
+    if (themesFilter && themesFilter!==""){
+        newUrl = newUrl + "&themes="+ themesFilter;
+    }
+
+
+    return new Promise( async(resolve, reject)=>{
+        try {
+            const res = await axios.get(newUrl);
+            resolve(res.data);
+            
+        } catch (error) {
+            console.log(error);
+            reject(error.message);
+        }
+    })
+}
+
+export const getResourcesOfCategory = (cat) =>{
+    return new Promise( async(resolve, reject)=>{
+        try {
+            const res = await axios.get(edusourceUrl+"category?category="+replaceSpacesWithUnderscores(cat));
+            console.log("RES IN GET CATEGORY", res.data)
+            resolve(res.data);
+            
+        } catch (error) {
+            console.log(error);
+            reject(error.message);
+        }
+    })
+}
+
+export const setAcceptedRejected = (edu_id, val_id, accepted, rejected)=>{
+    return new Promise( async(resolve, reject)=>{
+        const frmData = {
+            "edu_id":edu_id,
+            "val_id":val_id,
+            "accepted":accepted,
+            "rejected":rejected
+        }
+
+        try {
+            const res = await axios.patch(valorationMod, frmData);
+            console.log("UPDATED", res.data)
+            resolve(res.data);
+            
+        } catch (error) {
+            console.log(error);
             reject(error.message);
         }
     })

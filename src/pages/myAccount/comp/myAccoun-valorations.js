@@ -6,21 +6,20 @@ import {  useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import Loader from 'src/ui-component/Loader';
 import _ from 'lodash';
-import { userUpdate } from 'src/api/userApi';
-import { Valoration } from 'src/components/valoration';
+import { Valoration,ExtendedResourceValorations } from 'src/pages/myAccount/comp/valoration';
 import { themeOptions } from 'src/theme/theme';
 import { ValorationMeanIcon } from 'src/components/favorites';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { fetchValorationsSorted } from 'src/api/edusourceApi'
-import { ExtendedResourceValorations } from 'src/components/pageStruct/valorations';
+
 
 export const MyAccountValorations= (props) =>{
     const {user} = props;
     const [loadedUser, setLoadedUser] = useState(user);
     const [newWidth] = useOutletContext();
     const [openSnack, setOpenSnack] = useState(false);
-    const [edited, setEdited] = useState(false);
+   // const [edited, setEdited] = useState(false);
     const [valOpen, setValOpen]= useState(false);
     const [userValOpen, setUserValOpen] = useState(false);
     const [edusources, setEdusources] = useState();
@@ -105,12 +104,15 @@ export const MyAccountValorations= (props) =>{
             <Grid item xs={12} md={12}>
             <Typography variant='h2' color="secondary">{i18next.t("User Valorations")}</Typography>
             </Grid>
+
+            {loadedUser.alerts.user>0?<>
             <Grid item xs={12} md={12}>
                 <Typography variant='body2' color="primary"><i>{i18next.t("UserValorationInstrucctions")}</i></Typography>
             </Grid>
             <Grid item xs={12} md={12}>
                <Badge anchorOrigin={{vertical: 'top', horizontal: 'right' }} badgeContent={loadedUser.alerts.user} color='secondary'><Typography variant='h4'>{i18next.t("User Valuations pending acceptance")}: </Typography></Badge>
             </Grid>
+            </>:<></>}
                 
             <Grid item xs={12}  md={12}>
                 <Grid container spacing={{ xs: 2, md: 3 }} width={newWidth-32} >
@@ -172,13 +174,16 @@ export const MyAccountValorations= (props) =>{
             <Grid item xs={12} md={12}>
             <Typography variant='h2' color="secondary">{i18next.t("Resources Valorations")}</Typography>
             </Grid>
+            {loadedUser.alerts.resource>0?<>
             <Grid item xs={12} md={12}>
                 <Typography variant='body2' color="primary"><i>{i18next.t("ResourcesValorationInstrucctions")}</i></Typography>
             </Grid>
             {/* PENDING */}
+           
             <Grid item xs={12} md={12}>
                <Badge anchorOrigin={{vertical: 'top', horizontal: 'right' }} badgeContent={loadedUser.alerts.resource} color='secondary'><Typography variant='h4'>{i18next.t("Resource Valuations pending acceptance")}: </Typography></Badge>
             </Grid>
+            </>:<></>}
                 
             <Grid item xs={12}  md={12}>
                 <Grid container spacing={{ xs: 2, md: 3 }} width={newWidth-32} >

@@ -6,6 +6,7 @@ import { themeOptions } from 'src/theme/theme';
 import i18next from 'i18next';
 import { karmaLevel } from 'src/utils/karma';
 import { getHeadShot, getRightPicture } from 'src/utils/picUtils';
+import { replaceSpacesWithUnderscores } from 'src/utils/stringOperations';
 
 //TODO: Add link to Author Social Network
 
@@ -50,7 +51,7 @@ export const EdusourceHeader= (props) =>{
                     </Grid>
                     <Grid item>
                     <Typography variant="body1">
-                        {i18next.t("Category")}: <Link href={'/discipline/'+edusource.discipline}>{edusource.discipline}</Link> - ( 
+                        {i18next.t("Category")}: <Link href={'/discipline/'+ replaceSpacesWithUnderscores(edusource.discipline)}>{i18next.t(edusource.discipline)}</Link> - ( 
                         {edusource.theme?
                                 edusource.theme.map((tema, index)=>{
                                     

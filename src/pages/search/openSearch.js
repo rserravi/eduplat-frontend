@@ -14,6 +14,7 @@ import { searchInUser } from 'src/api/userApi';
 import { UserCard } from 'src/ui-component/cards/user/userCard';
 import { LocalBrowserHistory } from 'src/utils/searchHistory';
 import i18next from 'i18next';
+import { searchInResources } from 'src/api/edusourceApi';
 
 
 const theme = createTheme(themeOptions);
@@ -56,7 +57,7 @@ export const OpenSearch = () =>{
 
    //const [userLS, setUserLS] = useState(new LocalBrowserHistory("eduplat.u-search",5, selectedItem));
     const userLS = new LocalBrowserHistory("eduplat.u-search",5, selectedItem, setFlag);
-    const resourcesLS = new LocalBrowserHistory("eduplat.r-search",5);
+    const resourcesLS = new LocalBrowserHistory("eduplat.r-search",5, selectedItem, setFlag);
     const collectionsLS = new LocalBrowserHistory("eduplat.c-search",5);
 
     const OnSearchChange = (event) =>{
@@ -97,6 +98,9 @@ export const OpenSearch = () =>{
             default:
                 // RESOURCES
                 resourcesLS.add(searchValue);
+                if (searchValue!=="" || searchValue===undefined){
+                    resourcesLS.add(searchValue);
+                }
                 searchResources();
                 break;
         }
@@ -104,10 +108,17 @@ export const OpenSearch = () =>{
 
       }
     
-    const searchResources = () =>{
+    const searchResources = async () =>{
         //BUSCAR RECURSOS
-        setSerp(fakeLastResources)
-        //TODO
+        setSearching(true);
+        await searchInResources(searchValue, languageFilter, categoriesFilter, levelFilter, themesFilter).then((result)=>{
+            console.log("Resultado en Search Resources",result)
+            setSerp(result.result)
+        }).catch((error)=>{
+            console.log(error);
+        })
+        
+        setSearching(false);
     }
 
     const searchCollections = () =>{
@@ -200,6 +211,9 @@ export const OpenSearch = () =>{
                                         {typeOfFilter==="users"?<>
                                            <userLS.HistoryBar/>
                                         </>:<></>}
+                                        {typeOfFilter==="resources"?<>
+                                          <resourcesLS.HistoryBar />
+                                        </>:<></>                                        }
                                     </Grid>
                                         
                                 </Grid>    
@@ -211,7 +225,14 @@ export const OpenSearch = () =>{
                 {serp && serp!==null?<>
                 <Box sx={{width:newWidth}}>
                     {typeOfFilter==="resources"?
+                    serp.length>0?<>
                     <ResourcesNetflixGrid edusourceList={serp} title={i18next.t("Search results")} mt={2}/>
+                    </>:<>
+                         <Box sx={{ml:2, mt:2}} >
+                            <Typography variant='body1'><b>{i18next.t("No results")}</b> {i18next.t("Try another search or other filters")}</Typography>
+                            <Typography variant='body1'>{i18next.t("You can")} <b>{i18next.t("reset filters")}</b> {i18next.t("or try to search in")} <b>"{i18next.t("Any")}"</b> {i18next.t("Language")}</Typography>
+                        </Box>
+                    </>
                     :<></>}
                     {typeOfFilter==="users"?
                     <>
@@ -225,7 +246,7 @@ export const OpenSearch = () =>{
                           {serp.length===0?<>
                             <Box sx={{ml:2, mt:2}} >
                                 <Typography variant='body1'><b>{i18next.t("No results")}</b> {i18next.t("Try another search or other filters")}</Typography>
-                                <Typography variant='body1'>{i18next.t("You can")} <b>{i18next.t("reset filters")}</b> {i18next.t("or try to search in")} <b>{i18next.t('"Any"')}</b> {i18next.t("Language")}</Typography>
+                                <Typography variant='body1'>{i18next.t("You can")} <b>{i18next.t("reset filters")}</b> {i18next.t("or try to search in")} <b>"{i18next.t("Any")}"</b> {i18next.t("Language")}</Typography>
                             </Box>
                           </>:<></>}
                     </>:<></>}

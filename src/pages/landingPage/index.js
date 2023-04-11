@@ -10,7 +10,7 @@ import fakeLastResources from 'src/assets/fakeLists/lastResources'
 import fakeTagCloud from 'src/assets/fakeLists/fakeCloudTag';
 import { TagCloud } from 'react-tagcloud'
 import { ShareBarBig } from 'src/components/pageStruct/sharebar';
-import { fetchLastResources } from 'src/api/edusourceApi';
+import { fetchLastResources, getResourcesOfCategory } from 'src/api/edusourceApi';
 import { Box } from '@mui/system';
 import { useOutletContext } from 'react-router-dom';
 import i18next from 'i18next';
@@ -36,13 +36,29 @@ export const LandingPage = () =>{
   
     const [newWidth] = useOutletContext();
     const [lastResources, SetLastResources] = React.useState();
+    const [computerScience, setComputerScience]= React.useState();
 
     React.useEffect(()=>{
         if (!lastResources ||lastResources===undefined ||lastResources ===null){
             try {
                 fetchLastResources().then((response)=>{
+    
+                 SetLastResources(response.result.reverse())
                    
-                 SetLastResources(response.result)
+               }).catch(error=>{
+                   
+                console.log(error);
+               })
+               
+           } catch (error) {
+            console.log(error);
+           }
+        }
+        if (!computerScience ||computerScience===undefined ||computerScience ===null){
+            try {
+                getResourcesOfCategory("Computer Science").then((response)=>{
+    
+                 setComputerScience(response.result.reverse())
                    
                }).catch(error=>{
                    
@@ -141,7 +157,7 @@ export const LandingPage = () =>{
                   
                     <ResourcesNetflixGrid edusourceList={lastResources} title="Last Resources" mt={4} newWidth={newWidth}/> 
                   
-                    <ResourcesNetflixGrid edusourceList={fakeLastResources} title="Recently visited" newcolor="secondary.light" newWidth={newWidth}/>
+                    <ResourcesNetflixGrid edusourceList={computerScience} title="Computer Science" newcolor="secondary.light" newWidth={newWidth}/>
                 
                     {/* COPYRIGTH */}
                     <Grid item my={3}>

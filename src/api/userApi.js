@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { replaceSpacesWithUnderscores } from 'src/utils/stringOperations';
 
 const rootUrl = 'http://localhost:3001/v1';
 const newAccessJWTurl = rootUrl + "/tokens";
@@ -217,6 +218,26 @@ export const checkUserNameExists = (username)=>{
     })
  }
 
+ export const checkEmailExists = (email)=>{
+    return new Promise( async(resolve, reject)=>{
+        try {
+            const route = userUrl+"/checkUser?email="+email
+            console.log(route)
+            const res = await axios.get(route);
+            if (res.data.status==="success"){
+                resolve(true);
+            }
+            else {
+                resolve(false);
+            }
+            
+        } catch (error) {
+            console.log(error);
+            reject(error.message);
+        }
+    })
+ }
+
 export const fetchUserbyId = (userId) =>{
     return new Promise( async(resolve, reject)=>{
         try {
@@ -244,7 +265,8 @@ export const fetchUserByUsername = (username)=>{
 }
 
 export const searchInUser = (terms, languageFilter)=>{
-    var newUrl = userUrl+"/search?terms="+terms;
+    const newTerms = replaceSpacesWithUnderscores(terms);
+    var newUrl = userUrl+"/search?terms="+newTerms;
     if (!languageFilter || languageFilter!==""){
         newUrl = newUrl + "&lang="+ languageFilter;
     }

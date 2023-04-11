@@ -13,11 +13,17 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions } from 'src/theme/theme';
 import { Copyright } from 'src/components/pageStruct/copyright';
 import { strengthColor, strengthIndicator } from 'src/utils/password-strength';
-import { userGoogleRegistrationAPI, userFormRegistrationApi, checkUserNameExists } from 'src/api/userApi';
+import { userGoogleRegistrationAPI, userFormRegistrationApi, checkUserNameExists, checkEmailExists } from 'src/api/userApi';
 import { SET_AUTH_USER, SET_LOADING } from 'src/store/userSlice';
 import Logo from 'src/ui-component/Logo';
 import i18next from 'i18next';
@@ -43,6 +49,8 @@ export const RegisterPage = ({ ...others }) =>{
     const [googleError, setGoogleError]= useState('');
     const [errorMsg, setErrorMsg] = useState('');
     const [usernameExists, setUserNameExists] = useState(false);
+    const [emailExists, setEmailExists] = useState(false);
+    const [open, setOpen] = React.useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -60,6 +68,15 @@ export const RegisterPage = ({ ...others }) =>{
         setLevel(strengthColor(temp));
     };
 
+    const handleClickOpen = () => {
+        setOpen(true);
+      };
+    
+      const handleClose = () => {
+        setOpen(false);
+        navigate("/");
+      };
+
     const handleSubmit = async (event) => {
        // console.log("EN HANDLE SUBMINT", event);
         dispatch(SET_LOADING, true);
@@ -69,7 +86,7 @@ export const RegisterPage = ({ ...others }) =>{
             } else {
                // console.log(result.result);
                 dispatch(SET_AUTH_USER(result.result));
-                navigate("/dashboard");
+                setOpen(true);
             }
         }
         ).catch(error =>{
@@ -103,6 +120,14 @@ export const RegisterPage = ({ ...others }) =>{
         e.preventDefault();
         const exists = await checkUserNameExists(e.target.value);
         setUserNameExists(exists);
+        
+        
+    }
+    
+    const handleEmailBlur = async (e) =>{
+        e.preventDefault();
+        const exists = await checkEmailExists(e.target.value);
+        setEmailExists(exists);
         
         
     }
@@ -283,9 +308,10 @@ export const RegisterPage = ({ ...others }) =>{
                                                 <OutlinedInput
                                                     id="outlined-adornment-email-register"
                                                     type="email"
+                                                    required
                                                     value={values.email}
                                                     name="email"
-                                                    onBlur={handleBlur}
+                                                    onBlur={handleEmailBlur}
                                                     onChange={handleChange}
                                                     inputProps={{}}
                                                     sx={{borderRadius:5}}
@@ -293,6 +319,16 @@ export const RegisterPage = ({ ...others }) =>{
                                                 {touched.email && errors.email && (
                                                     <FormHelperText error id="standard-weight-helper-text--register">
                                                         {errors.email}
+                                                    </FormHelperText>
+                                                )}
+                                                 {emailExists && (
+                                                    <FormHelperText error id="standard-weight-helper-exists-text--register">
+                                                    {i18next.t("Emaillaredyregisteredindatabase")}
+                                                    </FormHelperText>
+                                                )}
+                                                {values.email==="" && (
+                                                    <FormHelperText error id="standard-weight-helper-empty-text--register">
+                                                    {i18next.t("Emailisrequired")}
                                                     </FormHelperText>
                                                 )}
                                                 
@@ -424,6 +460,25 @@ export const RegisterPage = ({ ...others }) =>{
                 </Box>
                 <Copyright sx={{ mt: 5 }}  short="true"/>
             </Container>
+
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                        {i18next.t("Your account is created. Welcome to Eduplat")}.
+                </DialogTitle>
+                <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                    {i18next.t("JoiningDialog")}
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}>{i18next.t("Accept")}</Button>
+                </DialogActions>
+            </Dialog>
         </ThemeProvider>
     );
 }

@@ -12,6 +12,15 @@ export const AboutUs = () =>{
         <React.Fragment>
              <ThemeProvider theme={theme}>
                 <CssBaseline />
+                ABOUT US
+                ABOUT US
+                ABOUT US
+                ABOUT US
+                ABOUT US
+                ABOUT US
+                ABOUT US
+                ABOUT US
+
             </ThemeProvider>
         </React.Fragment>
     )

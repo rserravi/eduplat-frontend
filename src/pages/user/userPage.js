@@ -18,7 +18,7 @@ import { NameForm } from 'src/components/form-components/name-comp';
 import { AboutForm } from 'src/components/form-components/aboutme';
 import { DescriptionForm } from 'src/components/form-components/description-comp';
 import { SocialRow } from 'src/ui-component/cards/user/socialRow';
-import { Valoration } from 'src/components/valoration';
+import { Valoration } from 'src/pages/myAccount/comp/valoration';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { customIcons, FavoriteIcon, Favorites, ValorationMeanIcon } from 'src/components/favorites';

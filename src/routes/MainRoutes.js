@@ -9,11 +9,15 @@ import { EventsPage } from 'src/pages/miscelanea/events';
 import { Volunteers } from 'src/pages/miscelanea/volunteers';
 import { UserPage } from 'src/pages/user/userPage';
 import { MyAccount } from 'src/pages/myAccount/myAccountPage';
+import { AboutUs } from 'src/pages/miscelanea/aboutus';
+import { Discipline } from 'src/pages/discipline';
 
 
 // project imports
 import MainLayout from '../layout/MainLayout';
 import Loadable from '../ui-component/Loadable';
+
+
 
 // dashboard routing
 //const Dashboard = Loadable(lazy(() => import('src/pages/dashboard')));
@@ -72,7 +76,15 @@ const MainRoutes = {
         {
             path: '/myaccount/:tab/',
             element: <MyAccount />
-        },   
+        },
+        {
+            path: '/discipline/:cat',
+            element: <Discipline />
+        },
+        {
+            path: '/aboutus',
+            element: <AboutUs />
+        }
 
     ]
 };

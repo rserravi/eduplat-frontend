@@ -21,7 +21,7 @@ export default function EduSourceCard(props) {
   const {edusource} = props;
   const [hovering, setHovering] = React.useState(false);
   const navigate = useNavigate();
-  const subh =   edusource.discipline.charAt(0).toUpperCase() + edusource.discipline.slice(1) + ",  " + shortDate(edusource.date);
+  const subh =   i18next.t(edusource.discipline)+ ",  " + shortDate(edusource.date);
 
   const visitPromoter = (event)=>{
     event.preventDefault();
