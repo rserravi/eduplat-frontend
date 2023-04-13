@@ -40,7 +40,7 @@ export const AlertsInBar = (props)=>{
   }
 
   const handleMessages = (events)=>{
-    navigate("/myaccount/messages")
+    navigate("/messages")
   }
 
   const open = Boolean(anchorEl);
