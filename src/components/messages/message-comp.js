@@ -7,10 +7,6 @@ import { Avatar, Badge, ButtonBase, Grid, Paper } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import ListItemText from '@mui/material/ListItemText';
-import ListItem from '@mui/material/ListItem';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import CloseIcon from '@mui/icons-material/Close';
@@ -37,6 +33,7 @@ const navigation = (payload) =>{
 export const ConversationComp = (props)=>{
 
     const {conversation, userId} = props;
+    // eslint-disable-next-line 
     const [converstationObj, setConversationObj]= useState(conversation);
     const [theOther, setTheOther] = useState();
     const [theOser, setTheUser] = useState();
@@ -99,7 +96,7 @@ export const ConversationComp = (props)=>{
             });
             setUnreaded(count);
         }
-    },[theOther, lastMessage,userId, converstationObj.members, converstationObj.messages, unreaded])
+    },[theOther, theOser, lastMessage,userId, converstationObj.members, converstationObj.messages, unreaded])
 
     const Message = (props)=>{
         const {message} = props;
