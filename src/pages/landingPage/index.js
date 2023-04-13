@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions } from 'src/theme/theme';
 import { ResourcesNetflixGrid } from 'src/components/resources/resources';
-import fakeLastResources from 'src/assets/fakeLists/lastResources'
+//import fakeLastResources from 'src/assets/fakeLists/lastResources'
 import fakeTagCloud from 'src/assets/fakeLists/fakeCloudTag';
 import { TagCloud } from 'react-tagcloud'
 import { ShareBarBig } from 'src/components/pageStruct/sharebar';

@@ -257,6 +257,7 @@
     "DeleteInstrucctions":"If you proceed to delete the resource, there will be no going back and it will also disappear from the collections, if it belongs to any",
     "Your account is created. Welcome to Eduplat":"Your account is created. Welcome to Eduplat",
     "JoiningDialog":"You need <b>to verify your email</b> to be able to share resources, contact other users and comment. Thanks for joining our community and for contributing to make knowledge accesible to anyone.",
-    "The valuation has been updated":"The valuation has been updated"
+    "The valuation has been updated":"The valuation has been updated",
+    "You have unreaded messages":"You have unreaded messages"
 
 }

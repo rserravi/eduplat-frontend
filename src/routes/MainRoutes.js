@@ -16,6 +16,7 @@ import { Discipline } from 'src/pages/discipline';
 // project imports
 import MainLayout from '../layout/MainLayout';
 import Loadable from '../ui-component/Loadable';
+import { Messages } from 'src/pages/messages/messagesPage';
 
 
 
@@ -84,6 +85,10 @@ const MainRoutes = {
         {
             path: '/aboutus',
             element: <AboutUs />
+        },
+        {
+            path: '/messages',
+            element: <Messages />
         }
 
     ]

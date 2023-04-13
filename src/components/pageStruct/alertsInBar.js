@@ -87,8 +87,8 @@ export const AlertsInBar = (props)=>{
                 <Button  variant={user.alerts.user===0?'text':'contained'}  color={user.alerts.user===0?'primary':'secondary'} size='small' sx={{mr:1, borderRadius:5}}>{user.alerts.user} </Button>{i18next.t("profile valorations")}
               </MenuItem>
               </Tooltip>
-              <Tooltip title={user.alerts.message===0?"":i18next.t("You have non readed messages")}>
-              <MenuItem onClick={handleClose}>
+              <Tooltip title={user.alerts.message===0?i18next.t("You have non readed messages"):i18next.t("You have unreaded messages")}>
+              <MenuItem onClick={handleMessages}>
                <Button variant={user.alerts.message===0?'text':'contained'}  color={user.alerts.message===0?'primary':'secondary'} size='small' sx={{mr:1, borderRadius:5}}> {user.alerts.message} </Button> {i18next.t("New Messages:")}
               </MenuItem>
               </Tooltip>

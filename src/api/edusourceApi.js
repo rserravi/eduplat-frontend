@@ -234,7 +234,7 @@ export const getResourcesOfCategory = (cat) =>{
     return new Promise( async(resolve, reject)=>{
         try {
             const res = await axios.get(edusourceUrl+"category?category="+replaceSpacesWithUnderscores(cat));
-            console.log("RES IN GET CATEGORY", res.data)
+            //console.log("RES IN GET CATEGORY", res.data)
             resolve(res.data);
             
         } catch (error) {
