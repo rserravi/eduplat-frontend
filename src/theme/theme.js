@@ -39,7 +39,8 @@ export const themeOptions = {
     background:{
         paper:  '#F3DFD2',
         default: '#fffbff',
-        secondary: '#cccacc'
+        secondary: '#cccacc',
+        terciary: '#FFEADB',
     },
     common: {
         black: '#000000',

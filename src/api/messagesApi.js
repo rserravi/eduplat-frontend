@@ -26,3 +26,32 @@ export const getMessages = userId =>{
         }
     })
 }
+
+export const sendMessage = (senderId, receiverId, message)=>{
+
+    const frmObj = {
+        "senderId": senderId,
+        "receiverId": receiverId,
+        "message": message
+    }
+    return new Promise( async(resolve, reject)=>{
+        try {
+            const res = await axios.post(conversationUrl, frmObj);
+            if(res){
+                //console.log(res.data);
+                if (res.data.status==="error"){
+                    reject(res.data.message)
+                }
+                resolve(res.data);
+            }
+            else {
+                console.log("NO EXISTE LA URL")
+            }
+            
+            
+        } catch (error) {
+            console.log("HA HABIDO UN ERROR en sendMessage",error);
+            reject(error.message);
+        }
+    })
+}

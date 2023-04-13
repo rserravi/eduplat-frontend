@@ -64,9 +64,9 @@ export const Messages= () =>{
             }
         }
        
-    },[dispatch])
+    },[dispatch, conversations, user._id])
 
-    if (user && user._id !="" ){
+    if (user && user._id !=="" ){
     return (
         <React.Fragment>
             <ThemeProvider theme={theme}>
@@ -85,14 +85,16 @@ export const Messages= () =>{
                 
         {/* MESSAGES VAL */}
                 
-        <Grid >
+        <Grid item>
             <Typography variant='h3' sx={{my:2}}>{i18next.t("Conversations")}</Typography>
         </Grid>
         {conversations && conversations.length >0?<>
             {conversations.map((conv, index)=>{
                 return (
                         <React.Fragment key={index}>
+                            <Grid item mb={1}>
                             <ConversationComp conversation={conv} userId={user._id} />
+                            </Grid>
                         </React.Fragment>
                 )
             })}

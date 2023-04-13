@@ -26,6 +26,7 @@ import i18next from 'i18next';
 import { karmaLevel, karmaPalettes } from 'src/utils/karma';
 import { PictureDialog } from 'src/components/form-components/image-comp';
 import { getHeadShot, getRightPicture } from 'src/utils/picUtils';
+import { sendMessage } from 'src/api/messagesApi';
 
 const theme = createTheme(themeOptions);
 var newMaxWidth  = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -61,6 +62,8 @@ export const UserPage = () =>{
     const [openHeaderPicDialog, setOpenHeaderPicDialog]= useState(false);
     const [openProfilePicDialog, setOpenProfilePicDialog]= useState(false);
     const [openValorationDialog, setOpenValorationDialog]= useState(false);
+    const [openSendAMessageDialog, setOpenSendAMessageDialog] = useState(false);
+    const [toSendMessage, setToSendMessage] = useState("");
     const [valOpen, setValOpen] = useState(true);
     const [activityOpen, setActivityOpen] = useState(true);
     const [openSnack, setOpenSnack] = useState(false);
@@ -86,8 +89,32 @@ export const UserPage = () =>{
 
     //DIALOGS OPEN CLOSE FUNCTIONS
 
+    const handleSendAMssageDialogOpen = ()=>{
+        setOpenSendAMessageDialog(true)
+    }
+
+    const handleSendAMssageDialogClose = ()=>{
+        setOpenSendAMessageDialog(false)
+    }
+
+    const handleSendAMssageDialogAccept = async()=>{
+        console.log(toSendMessage);
+        await sendMessage(user._id, loadedUser._id, toSendMessage).then((res)=>{
+            if (res.status==="success"){
+                handleSendAMssageDialogClose()
+                setSeverity("success")
+                setMessage("Message sent correctyly")
+                setOpenSnack(true);
+            }
+        })
+    }
+
     const handleValorationDialogOpen = ()=>{
         setOpenValorationDialog(true)
+    }
+
+    const handleMessageChange = (event)=>{
+        setToSendMessage(event.target.value);
     }
 
     const handleValorationDialogAccept = async (status, message)=>{
@@ -394,7 +421,9 @@ export const UserPage = () =>{
                             backgroundRepeat:"no-repeat",
                             backgroundPositionY: "center",
                             height: newWidth<500?150:280,
-                            borderRadius:"5px 5px 0 0"
+                            borderRadius:"5px 5px 0 0",
+                            
+                        
                         }}>
 
                              {/* <Image alt='user' src={loadedUser.picture.fileName?loadedUser.picture.fileName:"https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"} height={100} width={125} duration={0}  */}
@@ -473,8 +502,8 @@ export const UserPage = () =>{
                                 mx:1,
                         }} /> 
                    </Grid>
-                    
-                    <Button startIcon={<SendIcon />} variant='contained' sx={{
+                   {loadedUser.username !== user.username?<>
+                    <Button onClick={handleSendAMssageDialogOpen } startIcon={<SendIcon />} variant='contained' sx={{
                         backgroundColor:palette.secondaryColor?palette.secondaryColor:"#b3b8cd",
                         borderRadius:"20px",
                         m:4,
@@ -500,6 +529,7 @@ export const UserPage = () =>{
                     }}>
                         {i18next.t("More")}...
                     </Button>
+                    </>:<><div style={{margin:4}}>&nbsp;</div></>}
                     
                 </Container>
 
@@ -772,6 +802,31 @@ export const UserPage = () =>{
                     <Button onClick={handleValorationDialogClose}>{i18next.t("Cancel")}</Button>
                     </DialogActions>
                 </Dialog>
+
+                {/* SEND A MESSAGE*/}
+                <Dialog open={openSendAMessageDialog} >
+                    <DialogTitle>{i18next.t("Send a message to")} @{loadedUser.username}</DialogTitle>
+                    <DialogContent>
+                    <TextField
+                        autoFocus
+                        name='message'
+                        margin="dense"
+                        id="name"
+                        multiline
+                        fullWidth
+                        rows={8}
+                        variant="outlined"
+                        sx={{backgroundColor: 'background.terciary'}}
+                        onChange={handleMessageChange}
+                    />
+                    </DialogContent>
+                    <DialogActions>
+                    <Button onClick={handleSendAMssageDialogAccept}>{i18next.t("Accept")}</Button>
+                    <Button onClick={handleSendAMssageDialogClose}>{i18next.t("Cancel")}</Button>
+                    </DialogActions>
+                </Dialog>
+
+
 
                 <PictureDialog
                     user={user}
