@@ -90,7 +90,14 @@ export const UserPage = () =>{
     //DIALOGS OPEN CLOSE FUNCTIONS
 
     const handleSendAMssageDialogOpen = ()=>{
-        setOpenSendAMessageDialog(true)
+        if (user.username==="" || user.username===null || user.username===undefined){
+            setSeverity("error")
+                setMessage("You have to register and log to send messages")
+                setOpenSnack(true);
+        }
+        else{
+            setOpenSendAMessageDialog(true)
+        }
     }
 
     const handleSendAMssageDialogClose = ()=>{
