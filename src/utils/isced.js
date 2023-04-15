@@ -107,7 +107,7 @@ export const categoriesList = [
     },
     {
         key:7,
-        label: "Personal Development",
+        label: "    ",
         desc: "Personal Development",
         tags: ["Personal Transformation","Personal Productivity", "Leadership", "Career Development",
             "Parenting", "Relationships", "Hapiness", "Religion", "Spirituality", "Personal Brand", 

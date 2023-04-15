@@ -74,9 +74,11 @@ export const ConversationComp = (props)=>{
                 console.log(member.userId, userId)
                 if (member.userId !== userId){
                     setTheOther(member);
+                    console.log("THE OTHER", member)
                 }
                 else {
                     setTheUser(member);
+                    console.log("THE USER", member)
                 }
 
             });

@@ -10,6 +10,8 @@ import Loader from 'src/ui-component/Loader';
 import { MyAccountSetup } from './comp/myAccount-setup';
 import { MyAccountValorations } from './comp/myAccoun-valorations';
 import { MyAccountResources } from './comp/myAccount-resources';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const theme = createTheme(themeOptions);
 
@@ -18,12 +20,14 @@ export const MyAccount = () =>{
     const {tab} = useParams();
     const [selected, setSelected] = React.useState(tab)
     const user = useSelector(state => state.user) 
+    const navigate = useNavigate();
         
 
     const selectTab = (event, value) =>{
         
         setSelected(value);
     }
+
 
     if (user && user._id!==""){
     return (

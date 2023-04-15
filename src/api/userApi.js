@@ -145,7 +145,7 @@ export const fetchUser = () =>{
         try {
 
             const accessJWT = sessionStorage.getItem("accessJWT");
-            //console.log("ACCESSJWT iN FETCHUSER",accessJWT);
+            console.log("ACCESSJWT iN FETCHUSER",accessJWT);
             if (!accessJWT){
                 reject("Token not found!");
             }

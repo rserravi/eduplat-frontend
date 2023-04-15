@@ -1,4 +1,4 @@
-import { Box,   CssBaseline, Grid, InputAdornment, Skeleton, TextField, Typography } from '@mui/material';
+import { Box,   CssBaseline, Grid, IconButton, InputAdornment, Skeleton, TextField, Typography } from '@mui/material';
 import * as React from 'react'
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -201,7 +201,9 @@ export const OpenSearch = () =>{
                                     InputProps={{
                                         endAdornment: (
                                           <InputAdornment position="end">
+                                            <IconButton onClick={OnSearchClick}>
                                             <SearchIcon color='secondary' />
+                                            </IconButton>
                                           </InputAdornment>
                                         ),
                                       }}

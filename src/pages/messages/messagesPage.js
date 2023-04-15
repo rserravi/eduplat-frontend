@@ -11,6 +11,7 @@ import { themeOptions } from 'src/theme/theme';
 import { useSelector } from 'react-redux';
 import { SET_CONVERSATIONS } from 'src/store/convesationSlice';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { getMessages } from 'src/api/messagesApi';
 import { ConversationComp } from 'src/components/messages/message-comp';
 
@@ -19,11 +20,11 @@ const theme = createTheme(themeOptions);
 
 export const Messages= () =>{
     const user = useSelector(state => state.user)
-    //const [loadedUser, setLoadedUser] = useState(user);
     const [newWidth] = useOutletContext();
     const [openSnack, setOpenSnack] = useState(false);
     const [conversations, setConversation ]= useState(useSelector(state=> state.conversation));
     const dispatch = useDispatch();
+    const navigate = useNavigate()
   
 
     //SNACK
@@ -43,6 +44,8 @@ export const Messages= () =>{
 
     
     useEffect(()=>{
+        
+
        // console.log("Messages useEffect")
         if (!conversations || conversations === undefined || conversations.length===0){
             try {
@@ -64,7 +67,7 @@ export const Messages= () =>{
             }
         }
        
-    },[dispatch, conversations, user._id])
+    },[dispatch, conversations])
 
     if (user && user._id !=="" ){
     return (

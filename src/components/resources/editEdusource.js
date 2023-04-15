@@ -32,6 +32,7 @@ import _ from 'lodash';
 import { getRightPicture } from 'src/utils/picUtils';
 import Loader from 'src/ui-component/Loader';
 import FileResizer from 'react-image-file-resizer';
+import { useSelector } from 'react-redux';
 
 
 const theme = createTheme(themeOptions);
@@ -39,6 +40,7 @@ const theme = createTheme(themeOptions);
 export const EditEdusource= (props) =>{
     const {editUrl} = useParams();
     const [newWidth] = useOutletContext();
+    const user = useSelector(state => state.user)
 
     const [imageSelectorOpen, setImageSelectorOpen] = useState(false);
     const [categoriesDialog, setCategoriesDialog]= React.useState(false)
@@ -233,6 +235,7 @@ export const EditEdusource= (props) =>{
     
 
     useEffect(()=>{
+
         if (!editedEdu || editedEdu===undefined || editedEdu===null){
             const fetchData = async () =>{
                 await fetchEdusourceByLink(editUrl).then((data)=>{
@@ -408,7 +411,8 @@ export const EditEdusource= (props) =>{
                                                 })}
                                     </TextField>
                                 </Grid>
-    
+                              {themesFilter===undefined || themesFilter ===null?<></>:
+                              <>
                                 <Grid item xs={4} sm={4}>
                                     <TextField
                                         label ={i18next.t("Themes")}
@@ -434,6 +438,7 @@ export const EditEdusource= (props) =>{
                                         })}
                                     </TextField>
                                 </Grid>
+                                </>}
                                 <Grid item xs={8} sm={8}>
                                     <TextField
                                         label = {i18next.t("Add free labels")}

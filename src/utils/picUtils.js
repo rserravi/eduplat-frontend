@@ -1,3 +1,8 @@
+import * as React from 'react'
+import FileResizer from 'react-image-file-resizer';
+
+
+
 export const getHeadShot = (user)=>{
     var pic = "";
    
@@ -5,10 +10,12 @@ export const getHeadShot = (user)=>{
         if (user.picture.fileName !==null ||user.picture.fileName !==undefined || user.picture.fileName !==""){
             pic = user.picture.fileName
         }
-       
     }
     else {
-        pic = user.picture.file;
+       //console.log("TIPO DE OBJETO", typeof user.picture.file)
+        
+         pic = user.picture.file;
+        
     }
     if (pic===""){
         pic = "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"
@@ -18,6 +25,8 @@ export const getHeadShot = (user)=>{
 
     return pic;
 }
+
+
 
 export const getRightPicture = (pictureObj)=>{
     var pic = "";
@@ -29,11 +38,12 @@ export const getRightPicture = (pictureObj)=>{
        
     }
     else {
+      //  console.log(typeof pictureObj.file)
         pic = pictureObj.file;
     }
    
 
-   // console.log("PICTURE EN getHeadShot",pic)
+   //console.log("PICTURE EN getHeadShot",pic)
 
     return pic;
 }

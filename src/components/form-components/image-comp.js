@@ -20,6 +20,7 @@ export const PictureDialog = (props) => {
     const [imageInDiag, setImageInDiag]= React.useState(picture);
   
     const handleClose = async () => {
+        console.log("IMAGEN SUBIDA", imageInDiag)
       const frmData = {
         "_id": user._id,
         "picture":{
@@ -75,10 +76,12 @@ export const PictureDialog = (props) => {
 
     const getWebcamShot = ()=>{
         if (!webcamShow){
+            setImageInDiag(null);
             setWebcamShow(true);
     }
         else {
             const image = capture();
+            console.log("IMAGEN EN WEBCAM",image)
             setImageInDiag(image);
             setWebcamShow(false);
         }
@@ -111,7 +114,7 @@ export const PictureDialog = (props) => {
         >
            
             <Grid item xs={12} sm={12} md={12} >
-                <ButtonBase height="150" width="150" sx={{m:2}}>
+                <ButtonBase height="150" width="150" sx={{m:2}} onClick={webcamShow?getWebcamShot:null}>
                     
                     {webcamShow ? <Webcam
                         audio={false}
@@ -151,7 +154,8 @@ export const PictureDialog = (props) => {
         </Grid>
         </DialogContent>
         <DialogActions>
-          <Button variant='contained' sx={{borderRadius:"20px"}} onClick={handleClose} autoFocus>{i18next.t("Accept")}</Button>
+          
+          <Button disabled={!imageInDiag || imageInDiag===undefined ||imageInDiag===null} variant='contained' sx={{borderRadius:"20px"}} onClick={handleClose} autoFocus>{i18next.t("Accept")}</Button>
           <Button variant='contained' sx={{borderRadius:"20px"}} onClick={handleCancel} >{i18next.t("Cancel")}</Button>
         </DialogActions>
     </Dialog>
