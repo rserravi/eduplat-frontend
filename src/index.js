@@ -4,7 +4,6 @@ import './index.css';
 import App from './App';
 import { store } from './store';
 import { Provider } from 'react-redux';
-import { useSelector } from 'react-redux'
 import {getBrowserLocales} from './utils/locales'
 
 // import i18n (needs to be bundled ;)) 
