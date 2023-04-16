@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const rootUrl = 'http://15.237.107.238:3001/api/v1';
+const rootUrl = 'http://localhost:3001/v1';
 const scrapUrl = rootUrl + "/scrap";
 
 export const scrapping = (url) => {
