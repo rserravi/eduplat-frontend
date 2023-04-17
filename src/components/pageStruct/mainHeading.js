@@ -2,7 +2,6 @@ import * as React from 'react';
 import { fetchUser } from 'src/api/userApi';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from "react-router-dom";
 import { SET_AUTH_USER } from 'src/store/userSlice';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -15,7 +14,6 @@ import HeaderMenu from 'src/menu-items/headerMenu';
 import { SearchInBar } from './searchInBar';
 import { UserMenu } from './userMenu';
 import { AlertsInBar } from './alertsInBar';
-import i18next from 'i18next';
 import { MessagesInBar } from '../messages/messages-inBar';
 
 
@@ -60,7 +58,7 @@ function MainHeader() {
             if(!user ||user._id===""){
                 const loadedUser =  loadUser()
                
-                //console.log(loadedUser)
+                console.log(loadedUser)
             }
         }
         fetchData()
@@ -93,7 +91,7 @@ function MainHeader() {
             {/* FOR BROWSER AND MOBLIE */}
 
           <SearchInBar />
-          <MessagesInBar />
+          <MessagesInBar user={user} />
           <AlertsInBar user={user} />
           <UserMenu />
         </Toolbar>

@@ -1,19 +1,21 @@
 import * as React from 'react'
 import { isBrowser } from 'react-device-detect';
-import CssBaseline from '@mui/material/CssBaseline';
+//import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions } from 'src/theme/theme';
 import { ResourcesNetflixGrid } from 'src/components/resources/resources';
 //import fakeLastResources from 'src/assets/fakeLists/lastResources'
-import fakeTagCloud from 'src/assets/fakeLists/fakeCloudTag';
+//import fakeTagCloud from 'src/assets/fakeLists/fakeCloudTag';
 import { TagCloud } from 'react-tagcloud'
 import { ShareBarBig } from 'src/components/pageStruct/sharebar';
 import { fetchLastResources, getResourcesOfCategory } from 'src/api/edusourceApi';
 import { Box } from '@mui/system';
 import { useOutletContext } from 'react-router-dom';
 import i18next from 'i18next';
+import { useNavigate } from 'react-router-dom';
+import { replaceSpacesWithUnderscores } from 'src/utils/stringOperations';
 
 
 const theme = createTheme(themeOptions);
@@ -31,12 +33,30 @@ const colorOptions = {
     hue: themeOptions.palette.secondary.main
   }
 
+const getCategoriesCloud = (resources) =>{
+    const counts = {};
+
+    for (const item of resources) {
+      const discipline = item.discipline;
+      if (discipline in counts) {
+        counts[discipline]++;
+      } else {
+        counts[discipline] = 1;
+      }
+    }
+
+    const disciplineCounts = Object.keys(counts).map(key => ({ value: key, count: counts[key] }))
+    return disciplineCounts;
+}
+
+
 export const LandingPage = () =>{
     
-  
+    const [categoriesCloud, setCategoriesCloud] = React.useState();
     const [newWidth] = useOutletContext();
     const [lastResources, SetLastResources] = React.useState();
     const [computerScience, setComputerScience]= React.useState();
+    const navigate = useNavigate();
 
     React.useEffect(()=>{
         if (!lastResources ||lastResources===undefined ||lastResources ===null){
@@ -44,7 +64,7 @@ export const LandingPage = () =>{
                 fetchLastResources().then((response)=>{
     
                  SetLastResources(response.result.reverse())
-                   
+                 setCategoriesCloud(getCategoriesCloud(response.result))  
                }).catch(error=>{
                    
                 console.log(error);
@@ -69,7 +89,8 @@ export const LandingPage = () =>{
             console.log(error);
            }
         }
-    },[])
+        
+    },[computerScience, lastResources])
 
 
     return (
@@ -143,16 +164,18 @@ export const LandingPage = () =>{
                     alignItems="center"
                     >
                      {/* TAGCLOUD */}
-
+                    {categoriesCloud?<>
                      <Grid item xs={5} backgroundColor= '#ffffff88' sx={{mt:4}} >
                                 <TagCloud
                                         minSize={10}
                                         maxSize={42}
                                         colorOptions= {colorOptions}
-                                        tags={fakeTagCloud}
-                                        onClick={tag => alert(`'${tag.value}' was selected!`)}
+                                        tags={categoriesCloud}
+                                       //onClick={tag => alert(`'${tag.value}' was selected!`)}
+                                        onClick={tag => navigate("/discipline/"+ replaceSpacesWithUnderscores(tag.value))}
                                     />
                             </Grid> 
+                            </>:<></>}
                     {/* RESOURCES GRID */}
                   
                     <ResourcesNetflixGrid edusourceList={lastResources} title="Last Resources" mt={4} newWidth={newWidth}/> 
@@ -164,9 +187,6 @@ export const LandingPage = () =>{
                     <ShareBarBig />
                     </Grid>
                    
-                    <Grid item>
-                   
-                    </Grid>
                 </Grid>
             </Box>
             </ThemeProvider>

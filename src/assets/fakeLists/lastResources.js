@@ -13,7 +13,7 @@ const fakeLastResources = [
             }
         },
         "date":"15/09/2020",
-        "discipline":"Ciencias",
+        "discipline":"Informática",
         "description":"Interesante experimento sencillo pero a la vez sorprendente. Con tan solo una lata y un poco de agua podremos hacer el impresionante truco de la lata equilibrista.",
         "picture":{"fileName":"http://4.bp.blogspot.com/-17TwwId1AVo/Udqo-w8RZbI/AAAAAAAAAdE/2x4Zxmbzf48/s1600/centro+de+gravedad.jpg"},
         "theme":["#fisica","#newton","#experimentos_faciles"],
@@ -73,7 +73,7 @@ const fakeLastResources = [
             }
         },
         "date":"15/09/2020",
-        "discipline":"Ciencias",
+        "discipline":"Artes",
         "description":"Interesante experimento sencillo pero a la vez sorprendente. Con tan solo una lata y un poco de agua podremos hacer el impresionante truco de la lata equilibrista.",
         "picture": {"fileName":"http://4.bp.blogspot.com/-17TwwId1AVo/Udqo-w8RZbI/AAAAAAAAAdE/2x4Zxmbzf48/s1600/centro+de+gravedad.jpg" },
         "theme":["#fisica","#newton","#experimentos_faciles"],
