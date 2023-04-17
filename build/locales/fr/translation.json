@@ -257,6 +257,9 @@
     "DeleteInstrucctions":"Si vous procédez à la suppression de la ressource, il n'y aura pas de retour en arrière et elle disparaîtra également des collections, si elle en fait partie.",
     "Your account is created. Welcome to Eduplat":"Votre compte est créé. Bienvenue sur Eduplat",
     "JoiningDialog":"Vous devez <b>vérifier votre email</b> pour pouvoir partager des ressources, contacter d'autres utilisateurs et commenter. Merci de rejoindre notre communauté et de contribuer à rendre la connaissance accessible à tous.",
-    "The valuation has been updated":"L'évaluation a été mise à jour"    
-
+    "The valuation has been updated":"L'évaluation a été mise à jour",
+    "About us text": "EduPlat.org et la Foire aux ressources éducatives sont promus sous l'égide de l'association à but non lucratif BienesDar. Sa mission est d'améliorer le bien-être de la société en partageant des activités, des ressources, des compétences et des connaissances. Depuis la fin de 2021, nous bénéficions de la collaboration de nombreuses institutions, parmi lesquelles nous souhaitons mettre en avant l'Union européenne 🇪🇺, qui a cofinancé le projet et facilité la création d'un consortium formé de 4 partenaires : l'Instituto Duarte de Lemos (🇵🇹Portugal), l'Institut européen pour le développement local (🇬🇷Grèce), l'Associazione InCo (🇮🇹Italie) et BienesDar (🇪🇸Espagne).",
+    "Organized by":"Organisé par",
+    "Promoted by":"Promu par",
+    "Subsidized by":"Subventionné par"
 }

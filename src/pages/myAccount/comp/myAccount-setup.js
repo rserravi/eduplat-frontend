@@ -113,7 +113,7 @@ export const MyAccountSetup = (props) =>{
       };
 
     //console.log(loadedUser);
-    if (loadedUser && loadedUser._id !=""){
+    if (loadedUser && loadedUser._id !==""){
     return (
         <>
          <Box
@@ -130,7 +130,7 @@ export const MyAccountSetup = (props) =>{
                 <Alert sx={{mb:2}} severity={!edited?"info":"warning"}>{!edited?i18next.t("Without changes"):i18next.t("You need to save changes")}</Alert>            
             </Grid>
         </Grid>
-        
+
         {/* PRIVACITY */}
 
         <Grid container spacing={{ xs: 2, md: 3 }} width={newWidth-32} >

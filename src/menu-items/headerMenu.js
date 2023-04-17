@@ -60,7 +60,8 @@ function HeaderMenu(props) {
   }
 
   const handelClickEvents = (event) =>{
-    navigate("/events");
+   // navigate("/events");
+   window.open("https://eduplat.org/es/feriarecursoseducativos/","_blank")
   }
 
   const handelClickAboutUs = (event) =>{
@@ -68,11 +69,13 @@ function HeaderMenu(props) {
   }
 
   const handelClickVolunteers = (event) =>{
-    navigate("/volunteers");
+    //navigate("/volunteers");
+    window.open("https://eduplat.org/es/colaborar/", "_blank")
   }
 
   const handelClickConnect= (event) =>{
-    navigate("/connect");
+    //navigate("/connect");
+    window.open("https://eduplat.org/es/contacto/", "_blank")
   }
 
   const handleClickCreateResource = (event)=>{

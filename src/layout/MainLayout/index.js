@@ -32,7 +32,7 @@ const MainLayout = () => {
    
     return(
         <ThemeProvider theme={themeOptions} >
-            <Box sx={{ display: 'flex', width:newWidth }}>
+            <Box sx={{ display: 'flex', width:newWidth, ml:-3 }}>
                 <CssBaseline />
                
                 <Box

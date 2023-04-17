@@ -9,6 +9,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import InfoIcon from '@mui/icons-material/Info';
 import i18next from 'i18next';
 import { karmaLevel } from 'src/utils/karma';
+import { UserCard } from 'src/ui-component/cards/user/userCard';
 
 
 const theme = createTheme(themeOptions);
@@ -54,7 +55,7 @@ export const AlertsInBar = (props)=>{
     <React.Fragment>
       <ThemeProvider theme={theme}>
         <IconButton  aria-describedby ={id} color="inversecommon"  onClick = {handleClick}>
-        <Badge badgeContent={user.alerts.total} color="secondary">
+        <Badge badgeContent={user.alerts.total - user.alerts.message} color="secondary">
           <NotificationsIcon fontSize="medium"/>
           </Badge>
         </IconButton>

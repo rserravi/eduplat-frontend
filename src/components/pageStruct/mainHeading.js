@@ -16,6 +16,7 @@ import { SearchInBar } from './searchInBar';
 import { UserMenu } from './userMenu';
 import { AlertsInBar } from './alertsInBar';
 import i18next from 'i18next';
+import { MessagesInBar } from '../messages/messages-inBar';
 
 
 // ==============================|| MAIN HEADER ||============================== //
@@ -92,6 +93,7 @@ function MainHeader() {
             {/* FOR BROWSER AND MOBLIE */}
 
           <SearchInBar />
+          <MessagesInBar />
           <AlertsInBar user={user} />
           <UserMenu />
         </Toolbar>

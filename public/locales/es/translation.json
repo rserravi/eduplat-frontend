@@ -257,5 +257,9 @@
     "DeleteInstrucctions":"Si procedes a borrar el recurso, no habrá marcha atrás y desaparecerá también de las colecciones, si pertenece a alguna.",
     "Your account is created. Welcome to Eduplat":"Tu cuenta ha sido creada. Bienvenido a Eduplat",
     "JoiningDialog":"Necesitas <b>verificar tu correo electrónico</b> para poder compartir recursos, contactar a otros usuarios y comentar. Gracias por unirte a nuestra comunidad y por contribuir a que el conocimiento sea accesible a todos.",
-    "The valuation has been updated":"La valoración se ha actualizado"
+    "The valuation has been updated":"La valoración se ha actualizado",
+    "About us text": "EduPlat.org y la Feria de Recursos Educativos son promovidos bajo el paraguas de la asociación sin fines de lucro BienesDar. Su misión es mejorar el bienestar de la sociedad compartiendo actividades, recursos, habilidades y conocimientos. Desde finales de 2021, contamos con la colaboración de numerosas instituciones, entre las que queremos destacar la Unión Europea 🇪🇺, que ha cofinanciado el proyecto y facilitado la creación de un consorcio formado por 4 socios: Instituto Duarte de Lemos (🇵🇹Portugal), European Institute for Local Development (🇬🇷Grecia), Associazione InCo (🇮🇹Italia) y BienesDar (🇪🇸España).",
+    "Organized by":"Organizado por",
+    "Promoted by":"Promovido por",
+    "Subsidized by":"Subvencionado por"
 }

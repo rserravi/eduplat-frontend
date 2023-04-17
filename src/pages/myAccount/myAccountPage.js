@@ -1,4 +1,4 @@
-import { Box, CssBaseline, Grid, Button, ButtonGroup, Typography, Divider } from '@mui/material';
+import { CssBaseline, Grid, Button, Typography, Divider } from '@mui/material';
 import * as React from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions } from 'src/theme/theme';
@@ -10,8 +10,7 @@ import Loader from 'src/ui-component/Loader';
 import { MyAccountSetup } from './comp/myAccount-setup';
 import { MyAccountValorations } from './comp/myAccoun-valorations';
 import { MyAccountResources } from './comp/myAccount-resources';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+
 
 const theme = createTheme(themeOptions);
 
@@ -20,8 +19,7 @@ export const MyAccount = () =>{
     const {tab} = useParams();
     const [selected, setSelected] = React.useState(tab)
     const user = useSelector(state => state.user) 
-    const navigate = useNavigate();
-        
+   
 
     const selectTab = (event, value) =>{
         
@@ -86,14 +84,7 @@ export const MyAccount = () =>{
                             {selected==='collections'?<u>{i18next.t("Collections")}</u>:i18next.t("Collections")}
                         </Button>
                     </Grid>
-                    <Grid item >
-                        <Button 
-                            color={selected==='messages'?'secondary':'primary'} 
-                            onClick={(event)=>{selectTab(event, "messages")}} 
-                            sx={{ borderRadius:5, mt:1 }}> 
-                            {selected==='messages'?<u>{i18next.t("Messages")}</u>:i18next.t("Messages")}
-                        </Button>
-                    </Grid>
+                    
                </Grid>
                <Divider />
                 {/* <Box

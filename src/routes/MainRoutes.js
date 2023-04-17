@@ -1,4 +1,4 @@
-import { lazy } from 'react';
+//import { lazy } from 'react';
 import { CreateCollection } from 'src/collections/createCollection';
 import { CreateEdusource } from 'src/components/resources/createEdusource';
 import { EditEdusource } from 'src/components/resources/editEdusource';
@@ -15,7 +15,7 @@ import { Discipline } from 'src/pages/discipline';
 
 // project imports
 import MainLayout from '../layout/MainLayout';
-import Loadable from '../ui-component/Loadable';
+//import Loadable from '../ui-component/Loadable';
 import { Messages } from 'src/pages/messages/messagesPage';
 
 
@@ -60,7 +60,7 @@ const MainRoutes = {
         },
         {
             path: '/aboutus',
-            element: <EventsPage />
+            element: <AboutUs />
         },
         {
             path: '/volunteers',
