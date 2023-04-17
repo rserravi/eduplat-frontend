@@ -19,6 +19,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
+
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions } from 'src/theme/theme';
 import { Copyright } from 'src/components/pageStruct/copyright';
@@ -36,6 +37,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
+import _ from 'lodash';
 
 
 const theme = createTheme(themeOptions);
@@ -74,7 +76,7 @@ export const RegisterPage = ({ ...others }) =>{
     
       const handleClose = () => {
         setOpen(false);
-        navigate("/");
+        navigate("/login");
       };
 
     const handleSubmit = async (event) => {
@@ -85,7 +87,19 @@ export const RegisterPage = ({ ...others }) =>{
                 setErrorMsg(result.message);
             } else {
                // console.log(result.result);
-                dispatch(SET_AUTH_USER(result.result));
+               const alerts={
+                    user: 0,
+                    resource: 0,
+                    message: 0,
+                    promo: 0,
+                    recomandation: 0,
+                }
+               
+               const newUser = _.cloneDeep(result.result)
+               newUser.alerts = alerts;
+               console.log(newUser)
+               
+                //dispatch(SET_AUTH_USER(newUser));
                 setOpen(true);
             }
         }
@@ -105,8 +119,8 @@ export const RegisterPage = ({ ...others }) =>{
                 
             } else {
                 //console.log(result.result);
-                dispatch(SET_AUTH_USER(result.result));
-                navigate("/dashboard");
+               //dispatch(SET_AUTH_USER(result.result));
+                navigate("/login");
             }
         }
         ).catch(error =>{
