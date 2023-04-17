@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { replaceSpacesWithUnderscores } from 'src/utils/stringOperations';
 
-//const rootUrl = 'http://13.39.99.41/api/v1'
-const rootUrl = 'http://localhost:3001/v1'
+const rootUrl = 'http://13.39.99.41/api/v1'
+//const rootUrl = 'http://localhost:3001/v1'
 const newAccessJWTurl = rootUrl + "/tokens";
 const userUrl = rootUrl + '/user';
 const googleRegisterUrl = userUrl + '/google-registration';
