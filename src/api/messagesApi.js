@@ -56,3 +56,32 @@ export const sendMessage = (senderId, receiverId, message)=>{
         }
     })
 }
+
+export const markAsReadedConversation = (conversationId, userId) =>{
+    console.log("en MARK AS READED")
+    return new Promise( async(resolve, reject)=>{
+        const frmObj = {
+            "conversationId": conversationId,
+            "userId": userId
+        }
+        try {
+            const res = await axios.patch(conversationUrl, frmObj);
+            if(res){
+                console.log("RESDATA EN AXIOS",res.data);
+                if (res.data.status==="error"){
+                    reject(res.data.message)
+                }
+                resolve(res.data);
+            }
+            else {
+                console.log("ERROR EN AXIOS")
+            }
+            
+            
+        } catch (error) {
+            console.log("HA HABIDO UN ERROR en markAsReadedConversation",error);
+            reject(error.message);
+        }
+    })
+
+}

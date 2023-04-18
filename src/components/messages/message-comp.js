@@ -16,7 +16,11 @@ import { getHeadShot } from 'src/utils/picUtils';
 import { shortDate } from 'src/utils/dateUtils';
 import { useOutletContext } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
-import { sendMessage } from 'src/api/messagesApi';
+import { useDispatch } from 'react-redux';
+import { markAsReadedConversation, sendMessage } from 'src/api/messagesApi';
+import _ from 'lodash';
+import { MARK_CONVERSATION_AS_READED } from 'src/store/convesationSlice';
+
 
 //const theme = createTheme(themeOptions);
 
@@ -32,7 +36,7 @@ const navigation = (payload) =>{
 
 export const ConversationComp = (props)=>{
 
-    const {conversation, userId} = props;
+    const {conversation, userId, reloadConv} = props;
     // eslint-disable-next-line 
     const [converstationObj, setConversationObj]= useState(conversation);
     const [theOther, setTheOther] = useState();
@@ -42,16 +46,40 @@ export const ConversationComp = (props)=>{
     const [unreaded, setUnreaded] = useState();
     const [open, setOpen] = React.useState(false);
 
+    const dispatch = useDispatch();
+
     const initialValues = {
         message: '',
       };
 
-    const handleClickOpen = () => {
+    const handleClickOpen = async (event) => {
+        
         setOpen(true);
+        //MARCAR COMO LEIDOS
+        var newConversation = _.cloneDeep(converstationObj);
+        for (let i = 0; i < newConversation.messages.length; i++) {
+            newConversation.messages[i].readed = true;
+        }
+        setConversationObj(newConversation);
+        await markAsReadedConversation(converstationObj._id, theOser.userId).then((result)=>{
+            if (result.status==="success" || result.status==="succes") {
+                dispatch(MARK_CONVERSATION_AS_READED({"conversationId":converstationObj._id, "userId":theOser.userId}))
+                console.log(result);
+            }
+            else {
+                console.log("Error updating messages")
+            }
+        })
+       
+       
+
       };
+
     
     const handleClose = () => {
         setOpen(false);
+        //window.location.reload();
+        reloadConv();
 
       };
 
@@ -71,28 +99,28 @@ export const ConversationComp = (props)=>{
         if (theOther==="" || theOther===null || theOther === undefined ||theOser==="" || theOser===null || theOser === undefined ){
             console.log("USE EFFECT")
             converstationObj.members.forEach(member => {
-                console.log(member.userId, userId)
+              //  console.log(member.userId, userId)
                 if (member.userId !== userId){
                     setTheOther(member);
-                    console.log("THE OTHER", member)
+                //    console.log("THE OTHER", member)
                 }
                 else {
                     setTheUser(member);
-                    console.log("THE USER", member)
+                   console.log("THE USER", member)
                 }
 
             });
         }
 
         if (lastMessage==="" || lastMessage===null || lastMessage === undefined){
-            console.log("LAST MESSAGE", converstationObj.messages[converstationObj.messages.length-1])
+            //console.log("LAST MESSAGE", converstationObj.messages[converstationObj.messages.length-1])
             setLastMessage(converstationObj.messages[converstationObj.messages.length-1])
         }
 
         if (unreaded===null || unreaded === undefined){
             var count = 0
             converstationObj.messages.forEach(mess => {
-                if (!mess.readed){
+                if (!mess.readed && mess.senderId!==userId){
                     count++;
                 }
             });

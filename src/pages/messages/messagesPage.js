@@ -9,7 +9,7 @@ import _ from 'lodash';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions } from 'src/theme/theme';
 import { useSelector } from 'react-redux';
-import { SET_CONVERSATIONS } from 'src/store/convesationSlice';
+import { GET_CONVERSATIONS, SET_CONVERSATIONS } from 'src/store/convesationSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getMessages } from 'src/api/messagesApi';
@@ -23,6 +23,7 @@ export const Messages= () =>{
     const [newWidth] = useOutletContext();
     const [openSnack, setOpenSnack] = useState(false);
     const [conversations, setConversation ]= useState(useSelector(state=> state.conversation));
+    const [fire, setFire] =useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate()
   
@@ -42,12 +43,17 @@ export const Messages= () =>{
         setOpenSnack(false);
       };
 
+    const reloadConv = () =>{
+        setConversation(dispatch(GET_CONVERSATIONS()))
+        setFire(true);
+    }
+
     
     useEffect(()=>{
         
 
        // console.log("Messages useEffect")
-        if (!conversations || conversations === undefined || conversations.length===0){
+        if (!conversations || conversations === undefined || conversations.length===0 || fire){
             try {
                 //console.log("GETTTING.")
                 getMessages(user._id)
@@ -58,6 +64,7 @@ export const Messages= () =>{
                         dispatch(SET_CONVERSATIONS(result.conversation));
                         setConversation(result.conversation)
                     }
+                    setFire(false);
     
                 }).catch((err)=>{
                     console.error(err);
@@ -96,7 +103,7 @@ export const Messages= () =>{
                 return (
                         <React.Fragment key={index}>
                             <Grid item mb={1}>
-                            <ConversationComp conversation={conv} userId={user._id} />
+                            <ConversationComp conversation={conv} userId={user._id} reloadConv={reloadConv}/>
                             </Grid>
                         </React.Fragment>
                 )
