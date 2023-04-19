@@ -1,12 +1,12 @@
 import * as React from 'react'
-import { Badge, Button, ButtonGroup, Container,  Link, Paper, TextField, Typography } from '@mui/material'
+import { Badge, Button, Container,  Paper, TextField, Typography } from '@mui/material'
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { createTheme } from '@mui/material/styles';
-import { themeOptions } from 'src/theme/theme';
+//import { createTheme } from '@mui/material/styles';
+//import { themeOptions } from 'src/theme/theme';
 import { useSelector } from 'react-redux';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
@@ -14,11 +14,12 @@ import { ResourceValorations } from '../pageStruct/valorations';
 import { Box } from '@mui/system';
 import { customIcons, FavoriteIcon, Favorites, ValorationMeanIcon } from '../favorites';
 import i18next from 'i18next';
-import { addValoration, changeValoration, findValoration } from 'src/api/edusourceApi';
+import { addValoration, changeValoration, } from 'src/api/edusourceApi';
 import { shortDate } from 'src/utils/dateUtils';
+import { YoutubeLinkToIframeLink } from 'src/utils/stringOperations';
 
 
-const theme = createTheme(themeOptions);
+//const theme = createTheme(themeOptions);
 
 export const EdusourceBody= (props) =>{
     const user = useSelector(state => state.user)
@@ -199,7 +200,7 @@ export const EdusourceBody= (props) =>{
                     <>
                     <Container sx={{mt:2}}>
                         <div style={{videoWrapper}}>
-                            <iframe src={edusource.link} style={videoIframe} allowFullScreen frameBorder={"0"} allow={"autoplay"} title={"YOUTUBE"}/>
+                            <iframe src={YoutubeLinkToIframeLink(edusource.link)} style={videoIframe} allowFullScreen frameBorder={"0"} allow={"autoplay"} title={"YOUTUBE"}/>
                         </div>
                     </Container>
                     </>
@@ -222,7 +223,6 @@ export const EdusourceBody= (props) =>{
                     </div>
                     </Paper>
                 )
-                break;
         }  
     }
 
@@ -241,7 +241,7 @@ export const EdusourceBody= (props) =>{
             <Button variant='outlined' onClick={visitResource} endIcon={<ArrowCircleRightIcon />} sx={{ borderRadius:"20px", mr:1, mt:1}}>{i18next.t("Visit")}</Button>
             <Button variant={showing?'contained':'outlined'} onClick={showEdusource} endIcon={<VisibilityIcon />} sx={{ borderRadius:"20px", mr:1, mt:1}}>{i18next.t("Show")}</Button>
             {acceptedValorations()>0?<Button variant={valorationsShow?'contained':'outlined'} onClick={showValorations} endIcon={<Badge badgeContent={acceptedValorations()} color="primary"><ValorationMeanIcon valorations={edusource.valorations} /> </Badge>} sx={{ borderRadius:"20px", mt:1}}>{i18next.t("Comments")}</Button>:<></>}
-            {edusource.valorations.length===0?<Button sx={{ml:2, mt:1}}>{i18next.t("Be the first to value this resource")}</Button>:<></>}
+            
         </Box>
         
         {showing?<>

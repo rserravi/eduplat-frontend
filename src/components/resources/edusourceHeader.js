@@ -7,15 +7,12 @@ import i18next from 'i18next';
 import { karmaLevel } from 'src/utils/karma';
 import { getHeadShot, getRightPicture } from 'src/utils/picUtils';
 import { replaceSpacesWithUnderscores } from 'src/utils/stringOperations';
+import { getIscedFromCode } from 'src/utils/isced';
 
 //TODO: Add link to Author Social Network
 
 export const EdusourceHeader= (props) =>{
     const {edusource, promoter, newWidth} = props;
-
-    const visitAutor= (e)=>{
-        console.log("VISIT", e.target.textContent)
-    }
 
 
     if (newWidth>500){
@@ -45,32 +42,40 @@ export const EdusourceHeader= (props) =>{
  
                     <Grid container alignItems="flex-end">
                         <Avatar alt={promoter.firstname + " " + promoter.lastname} src={getHeadShot(promoter)}  sx={{ width: 24, height: 24 }} />
-                        <Typography variant="body1" onClick={visitAutor}>
+                        <Typography variant="body1">
                             <Link href={"/user/" + promoter.username} > @{promoter.username}</Link>, {i18next.t("level")}: <i style={{color:themeOptions.palette.primary.main}}>{karmaLevel(promoter.karma)}</i>, {i18next.t("karma")}: <i style={{color:themeOptions.palette.primary.main}}>{promoter.karma}</i>
                         </Typography>
                     </Grid>
-                    <Grid item>
-                    <Typography variant="body1">
-                        {i18next.t("Category")}: <Link href={'/discipline/'+ replaceSpacesWithUnderscores(edusource.discipline)}>{i18next.t(edusource.discipline)}</Link> - ( 
-                        {edusource.theme?
-                                edusource.theme.map((tema, index)=>{
-                                    
-                                    return(<React.Fragment key={index}><i><Link href={"/theme/" + tema}> #{tema} </Link></i></React.Fragment>)
-                                })
-                            :<></>}
-                        )
-                    </Typography>
-                    </Grid>
+                        <Grid item>
+                        <Typography variant="body1">
+                            {i18next.t("Category")}: <Link href={'/discipline/'+ replaceSpacesWithUnderscores(edusource.discipline)}>{i18next.t(edusource.discipline)}</Link> - ( 
+                            {edusource.theme?
+                                    edusource.theme.map((tema, index)=>{
+                                        
+                                        return(<React.Fragment key={index}><i><Link href={"/theme/" + tema}> #{tema}</Link></i> </React.Fragment>)
+                                    })
+                                :<></>}
+                            )
+                        </Typography>
+                        </Grid>
+                        <Grid item>
                     <Typography variant="body1">
                         {i18next.t("Authors")}: 
                         {edusource.autors.map((autor, index)=>{
                             return (<React.Fragment key={index}>
-                                    &nbsp; <Link  href='/'>@{autor.autorName}</Link>
+                                    &nbsp; <i>{autor.autorName}</i>
                                     </React.Fragment>
                             )
-                        })}
-                        
+                        })} 
+                        &nbsp; &nbsp;
+                        {edusource.level && edusource.level !==undefined && edusource.level!==null?<>
+                        {i18next.t("Level")} <i><Link href={"/level/" + edusource.level }>{i18next.t(getIscedFromCode(edusource.level))}</Link></i>
+                        </>:
+                        <>
+                        {i18next.t("Level")} <i>{i18next.t("Not Specified")}</i>
+                        </>} 
                     </Typography>
+                    </Grid>
                     <Typography>
                         <i>
                     {longDate(edusource.date)}
@@ -117,7 +122,7 @@ export const EdusourceHeader= (props) =>{
                             <Avatar alt={promoter.firstname + " " + promoter.lastname} src={getHeadShot(promoter)}  sx={{ width: 24, height: 24 }} />
                             </Grid>
                             <Grid item sx={{mr:1}}>
-                            <Typography variant="body1" onClick={visitAutor}>
+                            <Typography variant="body1">
                                 <Link href={"/user/" + promoter.username} > @{promoter.username}</Link> 
                             </Typography>
                             </Grid>
@@ -145,7 +150,7 @@ export const EdusourceHeader= (props) =>{
                         {i18next.t("Authors")}: 
                         {edusource.autors.map((autor, index)=>{
                             return (<React.Fragment key={index}>
-                                    &nbsp; <Link  href='/'>@{autor.autorName}</Link>
+                                    &nbsp; <Link  href=''>@{autor.autorName}</Link>
                                     </React.Fragment>
                             )
                         })}

@@ -3,8 +3,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions } from 'src/theme/theme';
 import { useState, useEffect } from 'react';
 import { useOutletContext, useParams } from 'react-router-dom';
-import { categoriesList } from 'src/utils/isced';
-import { arrayFromString, strToArray } from 'src/utils/stringOperations';
+import { categoriesList, iscedList } from 'src/utils/isced';
+import { arrayFromString } from 'src/utils/stringOperations';
 import { getTagsFromCategory } from 'src/utils/isced';
 import { languagesCodes } from 'src/utils/countries';
 import { useNavigate } from 'react-router-dom';
@@ -32,7 +32,7 @@ import _ from 'lodash';
 import { getRightPicture } from 'src/utils/picUtils';
 import Loader from 'src/ui-component/Loader';
 import FileResizer from 'react-image-file-resizer';
-import { useSelector } from 'react-redux';
+//import { useSelector } from 'react-redux';
 
 
 const theme = createTheme(themeOptions);
@@ -40,7 +40,7 @@ const theme = createTheme(themeOptions);
 export const EditEdusource= (props) =>{
     const {editUrl} = useParams();
     const [newWidth] = useOutletContext();
-    const user = useSelector(state => state.user)
+    //const user = useSelector(state => state.user)
 
     const [imageSelectorOpen, setImageSelectorOpen] = useState(false);
     const [categoriesDialog, setCategoriesDialog]= React.useState(false)
@@ -79,6 +79,8 @@ export const EditEdusource= (props) =>{
 
     const UpdateResource = async (event) =>{
        event.preventDefault();
+       
+
         await updateTheResource(editedEdu).then(result=>{
             if (result.status==='error'){
                 
@@ -181,7 +183,7 @@ export const EditEdusource= (props) =>{
         event.preventDefault();
         setFreeLabels(event.target.value);
         var oldValues = _.cloneDeep(editedEdu)
-        oldValues.theme[0] = themes+","+event.target.value;
+        oldValues.theme = arrayFromString(themes+","+event.target.value,",")
         setEditedEdu(oldValues);
         setEdited(true);
         
@@ -191,7 +193,7 @@ export const EditEdusource= (props) =>{
         event.preventDefault();
         setThemes(event.target.value)
         var oldValues = _.cloneDeep(editedEdu)
-        oldValues.theme[0] = event.target.value+","+freeLabels;
+        oldValues.theme = arrayFromString(event.target.value+","+freeLabels,",");
         setEditedEdu(oldValues);
         setEdited(true);
 
@@ -201,26 +203,35 @@ export const EditEdusource= (props) =>{
     const handleSelectLang = (event, code)=>{
         event.preventDefault();
         var oldValues = _.cloneDeep(editedEdu)
-        oldValues.language = event.target.value;
+        oldValues.language = code
         setEditedEdu(oldValues);
         setEdited(true);
         
     }
 
-    const getFreeLabels = (initialStr)=>{
+    const handleSelectLevel = (event, code)=>{
+        event.preventDefault();
+        var oldValues = _.cloneDeep(editedEdu)
+        oldValues.level = code;
+        setEditedEdu(oldValues);
+        setEdited(true);
+        //console.log(oldValues)
         
-        var strResult =""
-        var strArr = arrayFromString(initialStr, ",");
-        //console.log("STRARRA EN GETFREELABELS", strArr);
-        for (let index = 1; index < strArr.length; index++) {
-            if (index= strArr.length-1){
-                strResult+=strArr[index]    
-            }
-            else {
-            strResult+=strArr[index] + ","
-            }
-            
+    }
+
+    const getFreeLabels = (arr)=>{
+
+        
+        var sliced = arr.slice(1)
+        var strResult=""
+        if (sliced.length>1){
+            strResult = sliced.join(',')
         }
+        else{
+            strResult = sliced[0];
+        } 
+
+
         return strResult;
     }
 
@@ -245,7 +256,7 @@ export const EditEdusource= (props) =>{
                         setUrlData({images:{}})
                         setThemesFilter(proposedTagsFinder(data.result.discipline))
                         setThemes(arrayFromString(data.result.theme[0],",")[0])
-                        setFreeLabels(getFreeLabels(data.result.theme[0]))
+                        setFreeLabels(getFreeLabels(data.result.theme))
                     }
 
                 }).catch((error)=>{
@@ -255,7 +266,7 @@ export const EditEdusource= (props) =>{
             fetchData();
         }
        
-    },[])
+    },[editUrl, editedEdu])
 
     if (editedEdu){
         return(
@@ -351,6 +362,8 @@ export const EditEdusource= (props) =>{
                                         },}}
                                     />
                                 </Grid>
+
+  {/* LANGUAGE IDIOMA */}
                                 <Grid item xs={2} sm={2}>
                                     <TextField
                                         label ={i18next.t("Language")}
@@ -365,13 +378,49 @@ export const EditEdusource= (props) =>{
                                     >
                                          {languagesCodes.map((option)=>{
                                             return(
-                                            <MenuItem onClick={(e)=>{handleSelectLang(e, option.code)}}  key={option.code} value={option.code+""}>{i18next.t(option.label)}</MenuItem>
+                                                <MenuItem onClick={(e)=>{handleSelectLang(e, option.code)}}  key={option.code} value={option.code+""}>{i18next.t(option.label)}</MenuItem>
                                             )
                                         })} 
                                         <Divider />
                                         <MenuItem onClick={(e)=>{handleSelectLang(e, "any")}}  key="any">{i18next.t("Any")}</MenuItem>
                                     </TextField>
                                 </Grid>
+
+                                <Grid item xs={6} sm={6}>
+                                <TextField
+                                    label ={i18next.t("Author")}
+                                    fullWidth
+                                    defaultValue={editedEdu.autors[0].autorName}
+                                    sx={{ mt:1,
+                                        '& fieldset': {
+                                        borderRadius: '20px',
+                                    },}}
+                                />
+                                </Grid>
+
+                                <Grid item xs={6} sm={6}>
+                                    <TextField
+                                        label ={i18next.t("level")}
+                                        fullWidth
+                                        select
+                                        defaultValue={editedEdu.level}
+                                        sx={{ 
+                                            mt:1,
+                                            '& fieldset': {
+                                            borderRadius: '20px',
+                                        },}}
+                                    >
+                                        <Button onClick={handleCategoriesDialogClick} variant='text'>*{i18next.t("ISCED Levels")}</Button>
+                                        {iscedList.map((option)=>{
+                                            return(
+                                            <MenuItem onClick={(e)=>{handleSelectLevel(e, option.label)}}  key={option.key} value={option.label+""}>{i18next.t(option.desc)}</MenuItem>
+                                            )
+                                        })} 
+                                    
+                                    </TextField>
+                                </Grid>
+                                
+
                                 <Grid item xs={12} sm={12}>
                                     <TextField
                                         label ={i18next.t("Description")}
@@ -405,7 +454,7 @@ export const EditEdusource= (props) =>{
                                                 {categoriesList.map((cat)=>{
                                                     return(
                                                         <MenuItem key={cat.key} value={cat.label+""}>
-                                                            {cat.label}
+                                                            {i18next.t(cat.label)}
                                                         </MenuItem>
                                                         )
                                                 })}
@@ -415,13 +464,13 @@ export const EditEdusource= (props) =>{
                               <>
                                 <Grid item xs={4} sm={4}>
                                     <TextField
-                                        label ={i18next.t("Themes")}
+                                        label ={i18next.t("Subcathegory")}
                                         fullWidth
                                         select
                                         rows={newWidth>500?4:7}
-                                        helperText={i18next.t("Please select a theme")}
-                                        disabled={editedEdu.discipline==""}
-                                        defaultValue={arrayFromString(editedEdu.theme[0],",")[0]}
+                                        helperText={i18next.t("Please select a subcathegory")}
+                                        disabled={editedEdu.discipline===""}
+                                        defaultValue={editedEdu.theme[0]}
                                         onChange={themesChange}
                                         sx={{ mt:1,
                                             '& fieldset': {
@@ -432,7 +481,7 @@ export const EditEdusource= (props) =>{
                                         {themesFilter.map((cat, index)=>{
                                             return(
                                                 <MenuItem key={index} value={cat}>
-                                                    {cat}
+                                                    {i18next.t(cat)}
                                                 </MenuItem>
                                                 )
                                         })}
@@ -443,7 +492,7 @@ export const EditEdusource= (props) =>{
                                     <TextField
                                         label = {i18next.t("Add free labels")}
                                         helperText={i18next.t("Add free themes/labels/hashtags separated by comma")}
-                                        defaultValue={getFreeLabels(editedEdu.theme[0])}
+                                        defaultValue={getFreeLabels(editedEdu.theme)}
                                         onChange={freeLabelsChange}
                                         fullWidth
                                         sx={{ mt:1,
@@ -485,9 +534,7 @@ export const EditEdusource= (props) =>{
                                                         style={{borderRadius:10, borderColor:"#000000",
     
                                                             }}
-    
-                                                    
-                                                            
+               
                                                     />
                                                 </ImageListItem>
                                             )
@@ -516,7 +563,7 @@ export const EditEdusource= (props) =>{
                         </Box>
                         
                                 
-                        {/* DIALOG FOR CATERGORIES EXPLANATION */}
+                        {/* DIALOG FOR ISCED EXPLANATION */}
                         <Dialog
                             open={categoriesDialog}
                             onClose={handleCategoriesDialogClick}

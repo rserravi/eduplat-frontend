@@ -245,6 +245,36 @@ export const getResourcesOfCategory = (cat) =>{
     })
 }
 
+
+export const getResourcesOfTheme = (thm) =>{
+    return new Promise( async(resolve, reject)=>{
+        try {
+            const res = await axios.get(edusourceUrl+"theme?theme="+replaceSpacesWithUnderscores(thm));
+            //console.log("RES IN GET THEM", res.data)
+            resolve(res.data);
+            
+        } catch (error) {
+            console.log(error);
+            reject(error.message);
+        }
+    })
+}
+
+
+export const getResourcesOfLevel = (level) =>{
+    return new Promise( async(resolve, reject)=>{
+        try {
+            const res = await axios.get(edusourceUrl+"level?level="+level);
+            //console.log("RES IN GET THEM", res.data)
+            resolve(res.data);
+            
+        } catch (error) {
+            console.log(error);
+            reject(error.message);
+        }
+    })
+}
+
 export const setAcceptedRejected = (edu_id, val_id, accepted, rejected)=>{
     return new Promise( async(resolve, reject)=>{
         const frmData = {

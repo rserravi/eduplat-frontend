@@ -17,6 +17,8 @@ import { Discipline } from 'src/pages/discipline';
 import MainLayout from '../layout/MainLayout';
 //import Loadable from '../ui-component/Loadable';
 import { Messages } from 'src/pages/messages/messagesPage';
+import { ThemePage } from 'src/pages/themePage';
+import { LevelPage } from 'src/pages/levelPage';
 
 
 
@@ -81,6 +83,14 @@ const MainRoutes = {
         {
             path: '/discipline/:cat',
             element: <Discipline />
+        },
+        {   
+            path: 'theme/:thm',
+            element: <ThemePage />
+        },
+        {   
+            path: 'level/:level',
+            element: <LevelPage />
         },
         {
             path: '/aboutus',

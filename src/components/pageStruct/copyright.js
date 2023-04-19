@@ -111,7 +111,7 @@ export const Copyright = (props)=> {
                             </Link>
                         </Grid>
                         <Grid item>
-                            <Link href='/events' underline="hover">
+                            <Link href='https://eduplat.org/es/feriarecursoseducativos/' underline="hover">
                             <Typography>{i18next.t("Events")}</Typography>
                             </Link>
                         </Grid>

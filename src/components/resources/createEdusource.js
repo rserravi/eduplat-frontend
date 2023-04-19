@@ -1,14 +1,14 @@
 import * as React from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions } from 'src/theme/theme';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { scrapping } from 'src/api/scrapApi';
 import { categoriesList } from 'src/utils/isced';
 import { getTagsFromCategory } from 'src/utils/isced';
 import { languagesCodes } from 'src/utils/countries';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 
 
@@ -29,6 +29,8 @@ import {Image} from 'mui-image';
 import { createResource } from 'src/api/edusourceApi';
 import { getResourceUrlFromTitle, setPictureInResource } from 'src/utils/resourceUtils';
 import i18next from 'i18next';
+import { iscedList } from 'src/utils/isced';
+import { arrayFromString } from 'src/utils/stringOperations';
 
 
 const theme = createTheme(themeOptions);
@@ -45,6 +47,7 @@ export const CreateEdusource= ({ ...others }) =>{
     const [freeLabels, setFreeLabels]= useState();
     const [themesFilter, setThemesFilter] = React.useState([]);
     const [authors, setAuthors]= useState();
+    const [level, setLevel]= useState();
     const [error, setError] = useState();
     const [imageSelectorOpen, setImageSelectorOpen] = useState(false);
     const [categoriesDialog, setCategoriesDialog]= React.useState(false)
@@ -71,6 +74,7 @@ export const CreateEdusource= ({ ...others }) =>{
                 setLinkType(data.result.linktype);
                 setLanguage(data.result.language);
                 setFreeLabels(data.result.keywords);
+                setAuthors(data.result.authors)
             }
             else {
                 setError(data.message)
@@ -80,6 +84,7 @@ export const CreateEdusource= ({ ...others }) =>{
         })
         //Check url
         //Get data
+        
       
     };
 
@@ -89,14 +94,15 @@ export const CreateEdusource= ({ ...others }) =>{
             "resourceURL": getResourceUrlFromTitle(title),
             "promoterId": user._id,
             "autors":{
-               "autorName":"Rubotic",
+               "autorName":authors,
                "autorSocial":{
                   "media":"Instagram",
-                  "user": "@rubotic"
+                  "user": ""
                }
             },
             "discipline": discipline,
-            "theme": themes + "," + freeLabels,
+            "level": level,
+            "theme": arrayFromString(themes + "," + freeLabels,","),
             "type": linktype,
             "link": url,
             "linktype": linktype,
@@ -127,19 +133,21 @@ export const CreateEdusource= ({ ...others }) =>{
     }
 
     const SaveAndAnother = async (event) =>{
+     
         const frmData = {
             "title": title, 
             "resourceURL": getResourceUrlFromTitle(title),
             "promoterId": user._id,
             "autors":{
-               "autorName":"Rubotic",
+               "autorName":authors,
                "autorSocial":{
                   "media":"Instagram",
-                  "user": "@rubotic"
+                  "user": ""
                }
             },
             "discipline": discipline,
-            "theme": themes + "," + freeLabels,
+            "level": level,
+            "theme": arrayFromString(themes + "," + freeLabels,","),
             "type": linktype,
             "link": url,
             "linktype": linktype,
@@ -158,7 +166,7 @@ export const CreateEdusource= ({ ...others }) =>{
             if (result.status==='error'){
                 setErrorMsg(result.message);
             } else {
-               // console.log(result.result);
+               console.log(result.result);
                resetEverything();
                window.location.reload(false);
             }
@@ -182,6 +190,7 @@ export const CreateEdusource= ({ ...others }) =>{
         setAuthors(null)
         setLanguage(null)
         setLinkType(null);
+        setLevel(null);
     }
     
     const CancelClick = (event)=>{
@@ -207,7 +216,7 @@ export const CreateEdusource= ({ ...others }) =>{
 
     const proposedTagsFinder = (category)=>{
         const themesString= getTagsFromCategory(category);
-        console.log(themesString);
+        //console.log(themesString);
         return themesString;
     }
 
@@ -215,7 +224,7 @@ export const CreateEdusource= ({ ...others }) =>{
         event.preventDefault();
         setDiscipline(event.target.value);
         const arr= proposedTagsFinder(event.target.value);
-        console.log(arr)
+        //console.log(arr)
         setThemesFilter(arr);
       
     }
@@ -236,6 +245,11 @@ export const CreateEdusource= ({ ...others }) =>{
         setLanguage(code);
         
       }
+    const handleSelectLevel = (event, code)=>{
+        event.preventDefault();
+        console.log(code);
+        setLevel(code);
+    }
 
    
     return(
@@ -351,6 +365,9 @@ export const CreateEdusource= ({ ...others }) =>{
                                     },}}
                                 />
                             </Grid>
+
+                                    {/* LANGUAGE IDIOMA */}
+
                             <Grid item xs={2} sm={2}>
                                 <TextField
                                     label ={i18next.t("Language")}
@@ -365,13 +382,48 @@ export const CreateEdusource= ({ ...others }) =>{
                                 >
                                      {languagesCodes.map((option)=>{
                                         return(
-                                        <MenuItem onClick={(e)=>{handleSelectLang(e, option.code)}}  key={option.code}>{i18next.t(option.label)}</MenuItem>
+                                        <MenuItem onClick={(e)=>{handleSelectLang(e, option.code)}}  key={option.code} value={option.code+""}>{i18next.t(option.label)}</MenuItem>
                                         )
                                     })} 
                                     <Divider />
-                                    <MenuItem onClick={(e)=>{handleSelectLang(e, "any")}}  key="any">{i18next.t("Any")}</MenuItem>
+                                    <MenuItem onClick={(e)=>{handleSelectLang(e, "any")}}  key="any" value="any">{i18next.t("Any")} </MenuItem>
                                 </TextField>
                             </Grid>
+                            
+                            <Grid item xs={6} sm={6}>
+                                <TextField
+                                    label ={i18next.t("Author")}
+                                    fullWidth
+                                    defaultValue={authors}
+                                    sx={{ mt:1,
+                                        '& fieldset': {
+                                        borderRadius: '20px',
+                                    },}}
+                                />
+                            </Grid>
+
+                            <Grid item xs={6} sm={6}>
+                                <TextField
+                                    label ={i18next.t("level")}
+                                    fullWidth
+                                    select
+                                    defaultValue={level}
+                                    sx={{ 
+                                        mt:1,
+                                        '& fieldset': {
+                                        borderRadius: '20px',
+                                    },}}
+                                >
+                                     <Button onClick={handleCategoriesDialogClick} variant='text'>*{i18next.t("ISCED Levels")}</Button>
+                                     {iscedList.map((option)=>{
+                                        return(
+                                        <MenuItem onClick={(e)=>{handleSelectLevel(e, option.label)}}  key={option.key} value={option.label+""}>{i18next.t(option.desc)}</MenuItem>
+                                        )
+                                    })} 
+                                   
+                                </TextField>
+                            </Grid>
+
                             <Grid item xs={12} sm={12}>
                                 <TextField
                                     label ={i18next.t("Description")}
@@ -400,11 +452,11 @@ export const CreateEdusource= ({ ...others }) =>{
                                         borderRadius: '20px',
                                     },}}
                                 >
-                                        <Button onClick={handleCategoriesDialogClick} variant='text'>*{i18next.t("Categories Explanation")}</Button>
+                                       
                                             {categoriesList.map((cat)=>{
                                                 return(
                                                     <MenuItem key={cat.key} value={cat.label}>
-                                                        {cat.label}
+                                                        {i18next.t(cat.label)}
                                                     </MenuItem>
                                                     )
                                             })}
@@ -413,12 +465,12 @@ export const CreateEdusource= ({ ...others }) =>{
 
                             <Grid item xs={4} sm={4}>
                                 <TextField
-                                    label ={i18next.t("Themes")}
+                                    label ={i18next.t("Subcathegory")}
                                     fullWidth
                                     select
                                     rows={newWidth>500?4:7}
-                                    helperText={i18next.t("Please select a theme")}
-                                    disabled={discipline==""}
+                                    helperText={i18next.t("Please select a subcathegory")}
+                                    disabled={discipline===""}
                                     onChange={themesChange}
                                     sx={{ mt:1,
                                         '& fieldset': {
@@ -429,7 +481,7 @@ export const CreateEdusource= ({ ...others }) =>{
                                     {themesFilter.map((cat, index)=>{
                                         return(
                                             <MenuItem key={index} value={cat}>
-                                                {cat}
+                                                {i18next.t(cat)}
                                             </MenuItem>
                                             )
                                     })}

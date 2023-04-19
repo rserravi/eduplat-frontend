@@ -54,123 +54,72 @@ export const iscedList = [
 export const categoriesList = [
     {
         key:0,
-        label: "Data Science",
-        desc: "Data Science",
-        tags: ["Big Data", "Binomial Distribution", "Business Intelligence","C++",        
-            "Convolutional Neural Network", "Data Analytics" ,"Data Engineering",
-            "Data Management","Data Mining", "Data Visualization","Databases",
-            "Deep Learning", "Excel", "Google Power Searching", "IBM Watson", "Image Analysis",       
-            "Image Processing", "Inference", "Keras","Machine Learning","Marketing Analytics",
-            "Natural Language Processing","Neural Network", "NoSQL","NumPy","pandas","Power BI",        
-            "Predictive Analytics","PyTorch", "R Programming", "Regression", "Relational Databases",              
-            "Simulation","SQL","Statistics", "Stochastic Processes", "Technical Analysis",  
-            "TensorFlow","TinyML"
+        label: "Arts",
+        desc: "Arts",
+        tags: ["Animation", "Architecture", "Basket weaving", "Calligraphy", "Cartooning", "Ceramics", "Character design", "Collage", "Comic book art", "Conceptual art", "Crocheting", "Dance", "Digital art", "Drawing", "Embroidery", "Fashion design", "Film", "Furniture design", "Graffiti art", "Glassblowing", "Illustration", "Installation art", "Jewelry making", "Knitting", "Literature", "Metalworking", "Mixed media", "Mosaic art", "Music", "Origami", "Painting", "Performance art", "Photography", "Poetry", "Pottery", "Printmaking", "Quilting", "Sculpture", "Street art", "Storyboarding", "Tattoo art", "Textile arts", "Theater", "Weaving", "Woodworking"
         ],
     },
     {
         key:1,
-        label: "Business",
-        desc: "Business",
-        tags: ["Entrepreneurship", "Business Comunication","Management", "Sales", "Business Strategy",
-            "Operations", "Project Management", "Business law", "Business Intelligence", "Human Resources",
-            "Industry", "E-Commerce", "Accounting", "Agile", "Crisis Resource Management",
-            "Finance", "Marketing", "Grow Marketing", "Intellectual Property", "Negotiations", "Branding",
-            "Leadership", "Lean", "Public speaking", "Remote work", "Storytelling", "Workplace Wellness",
-            "Real Estate"
+        label: "ICT",
+        desc: "ICT",
+        tags: ["Computer Science", "Software Engineering", "Database Management", "Information Systems", "Computer Networking", "Cybersecurity", "Artificial Intelligence", "Data Science", "Big Data Analytics", "Cloud Computing", "Internet of Things (IoT)", "Web Development", "Mobile Application Development", "Virtual Reality (VR)", "Augmented Reality (AR)", "User Experience (UX) Design", "Human-Computer Interaction (HCI)", "Digital Marketing", "E-commerce", "Project Management", "Information Architecture", "Content Strategy", "Technical Writing", "Computer Graphics", "Computer Vision", "Natural Language Processing (NLP)", "Machine Learning", "Blockchain", "Quantum Computing"
         ]
     },
     {
         key:2,
-        label: "Computer Science",
-        desc: "Computer Science",
+        label: "Languages",
+        desc: "Languages",
+        tags:["American Sign Language (ASL)", "Arabic", "Basque", "Bengali","Catalan", "Danish", "Dutch", "English", "Esperanto", "Finnish", "French", "Galician", "German", "Greek", "Hebrew", "Hindi", "Indonesian", "Italian", "Japanese", "Korean", "Latin", "Malayalam", "Mandarin", "Norwegian", "Portuguese", "Punjabi", "Russian", "Spanish", "Swahili", "Swedish", "Tagalog", "Tamil", "Telugu", "Thai", "Turkish", "Urdu", "Vietnamese", "Zulu"
+        ]
     },
     {
         key:3,
-        label: "Information Technology",
-        desc: "Information Technology",
+        label: "Maths",
+        desc: "Maths",
+        tags: ["Abstract algebra", "Algebra", "Calculus", "Combinatorics", "Control theory", "Differential equations", "Field theory", "Functional analysis", "Game theory", "Geometry", "Graph theory", "Group theory", "Information theory", "Linear algebra", "Logic", "Number theory", "Numerical analysis", "Optimization", "Probability theory", "Ring theory", "Set theory", "Statistics", "Topology", "Trigonometry"
+        ]
     },
     {
         key:4,
-        label: "Language Learning",
-        desc: "Language Learning",
+        label: "Natural Sciences",
+        desc: "Natural Sciences",
+        tags: ["Astronomy", "Biology", "Chemistry", "Earth science", "Ecology", "Environmental science", "Geology", "Meteorology", "Physics", "Zoology"
+        ]
     },
     {
         key:5,
-        label: "Health and Nutrition",
-        desc: "Health and Nutrition",
+        label: "Social Sciences",
+        desc: "Social Sciences",
+        tags:["Anthropology", "Archaeology", "Communication studies", "Criminology", "Demography", "Economics", "Geography", "History", "International relations", "Linguistics", "Law", "Library science", "Pedagogy", "Political science", "Psychology", "Sociology", "Social work"
+        ]
     },
     {
         key:6,
-        label: "Fitness and Sport",
-        desc: "Fitness and Sport",
+        label: "Health",
+        desc: "Health",
+        tags:["Acupuncture", "Art therapy", "Aromatherapy", "Ayurvedic medicine", "Behavioral health", "Cardiology", "Chiropractic", "Clinical nutrition", "Dietetics", "Drama therapy", "Endocrinology", "Exercise physiology", "Gastroenterology", "Geriatrics", "Gynecology", "Herbal medicine", "Homeopathy", "Massage therapy", "Meditation", "Music therapy", "Naturopathy", "Nephrology", "Neurology", "Nutrition", "Occupational therapy", "Oncology", "Pediatrics", "Physical therapy", "Psychiatry", "Psychology", "Public health nutrition", "Reflexology", "Respiratory therapy", "Speech therapy", "Sports medicine", "Sports nutrition", "Traditional Chinese medicine", "Yoga therapy"
+        ]
 
     },
     {
         key:7,
-        label: "    ",
-        desc: "Personal Development",
-        tags: ["Personal Transformation","Personal Productivity", "Leadership", "Career Development",
-            "Parenting", "Relationships", "Hapiness", "Religion", "Spirituality", "Personal Brand", 
-            "Creativity", "Influence", "Confidence", "Self Esteem", "Stress Management", "Memory",
-            "Study Skills", "Motivation", "Meditation", "CBT Cognitive Behavioral Therapy", "EFT Emotional Freedom Techniques"
-    ]
+        label: "Psychopedagogy",
+        desc: "Psychopedagogy",
+        tags: ["Behavioral psychology", "Cognitive psychology", "Constructivism", "Critical pedagogy", "Developmental psychology", "Educational psychology", "Emotional intelligence", "Experiential education", "Inclusive education", "Learning styles", "Learning theories", "Mindfulness education", "Motivation psychology", "Multiple intelligences theory", "Neuroeducation", "Pedagogy of autonomy", "Positive psychology", "Social psychology", "Special education"
+        ]
     },
     {
         key:8,
-        label: "Physical Science and Engineering",
-        desc: "Physical Science and Engineering",
+        label: "Various Categories",
+        desc: "Various Categories",
+        tags:["No Subcategory"]
     },
     {
         key:9,
-        label: "Social Science",
-        desc: "Social Science",
-        tags: ["Abnormal Psychology","Area Studies","Behavioral Psychology","Child Development",
-        "Civil Liberties","Economics","Foreign Policy","Gender Studies","Human Rights", "Media Studies",
-        "Politics", "Psychology", "Sociology", "Women's Rights", 
-        ]
-    },
-    {
-        key:10,
-        label: "Education and Pedagogy",
-        desc: "Education and Pedagogy",
-        tags: ["AP Courses", "College Preparation", "Educational Technology",       
-            "Learning Skills", "Project-Based Learning", "Research Skills and Methods",                
-            "Teacher Training", "Teaching Strategies"
-        ]
-    },
-    {
-        key:11,
-        label: "Arts and Humanities",
-        desc: "Arts and Humanities",
-        tags: ["Anthropology","Christianity","Conflict Resolution","Geography","History",
-            "International Relations","Islam","Judaism","Latin","Literature","Music","Mythology",
-            "Philosophy","Sikhism","Spirituality","Writing", "Art History",
-            "Animation","Architecture","Restoration","Cartography", "Creativity","Design",
-            "Digital Content Creation","Drawing","Writing", "CGI", "Fashion", "Game Design",
-            "UX Design", "Web Design", "Interior Design"
-        ]
-    },
-    {
-        key:12,
-        label: "Math and Logic",
-        desc: "Math and Logic",
-    },
-    {
-        key:13,
-        label: "Esoteric Practices",
-        desc:"Esoteric Practices",
-        tags:["Reiki", "Energy Healing", "Tarot", "Spiritual Healing", "Astrology", 
-            "Hypnotherapy", "Psychic", "Chakra", "Shamanism"
-        ]
-    },
-    {
-        key:14,
-        label: "Lifestyle",
-        desc: "Lifestyle",
-        tags:["Arts and Crafts", "Beauty and Makeup", "Food and Beverage", "Gaming", 
-            "Home improvement", "Gardening", "Pet Care and Training", "Travel", "Meditation"
-
-        ]
+        label: "Other Categories",
+        desc: "Other Categories",
+        tags: ["No Subcategory"]
     }
 ]
 
@@ -188,3 +137,8 @@ export const getTagsFromCategory = (label) =>{
     return result;
 }
 
+export const getIscedFromCode = (code)=>{
+    const found = iscedList.find((item)=>{return item.label === code; })
+    
+    return found.desc;
+}

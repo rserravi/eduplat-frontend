@@ -76,7 +76,7 @@ export const LandingPage = () =>{
         }
         if (!computerScience ||computerScience===undefined ||computerScience ===null){
             try {
-                getResourcesOfCategory("Computer Science").then((response)=>{
+                getResourcesOfCategory("ICT").then((response)=>{
     
                  setComputerScience(response.result.reverse())
                    
