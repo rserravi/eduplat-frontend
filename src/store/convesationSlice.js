@@ -1,5 +1,5 @@
 import { createSlice, current } from '@reduxjs/toolkit';
-import _ from 'lodash';
+//import _ from 'lodash';
 
 const findConversationById = (id, conversations) => {
     //console.log("CONVERSATIONS EN FINDCONVERSATION BY ID", conversations)

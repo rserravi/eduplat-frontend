@@ -5,9 +5,7 @@ import {  useState, useEffect } from 'react';
 
 import { useOutletContext } from 'react-router-dom';
 import Loader from 'src/ui-component/Loader';
-import _ from 'lodash';
-import { Valoration,ExtendedResourceValorations } from 'src/pages/myAccount/comp/valoration';
-import { themeOptions } from 'src/theme/theme';
+import { ExtendedResourceValorations, ExtenderUserValorations } from 'src/pages/myAccount/comp/valoration';
 import { ValorationMeanIcon } from 'src/components/favorites';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
@@ -16,18 +14,25 @@ import { fetchValorationsSorted } from 'src/api/edusourceApi'
 
 export const MyAccountValorations= (props) =>{
     const {user} = props;
+     // eslint-disable-next-line
     const [loadedUser, setLoadedUser] = useState(user);
     const [newWidth] = useOutletContext();
     const [openSnack, setOpenSnack] = useState(false);
    // const [edited, setEdited] = useState(false);
     const [valOpen, setValOpen]= useState(false);
     const [userValOpen, setUserValOpen] = useState(false);
+     // eslint-disable-next-line
     const [edusources, setEdusources] = useState();
     const [acceptedEduVals, setAcceptedEduVals]= useState();
     const [pendantEduVals, setPendantEduVals] = useState();
+    const [acceptedUserVals, setAcceptedUserVals]= useState();
+    const [pendantUserVals, setPendantUserVals] = useState();
+    const [sorted, setSorted] = useState(false)
 
     //SNACK
+     // eslint-disable-next-line
     const [severity, setSeverity] = useState("info");
+     // eslint-disable-next-line
     const [message, setMessage] = useState("");
 
     //CHANGE FUNCT.
@@ -60,9 +65,27 @@ export const MyAccountValorations= (props) =>{
     
         setOpenSnack(false);
       };
-
+ 
     
     useEffect(()=>{
+
+        const sortUserVals = ()=>{
+            var u_accepted = [];
+            var u_pendant = [];
+            for (let i = 0; i < loadedUser.valorations.length; i++) {
+                //console.log("ITERANDO ", loadedUser.valorations[i], i)
+                if (loadedUser.valorations[i].accepted){
+                    u_accepted.push(loadedUser.valorations[i])
+                }
+                else if (!loadedUser.valorations[i].rejected){
+                    u_pendant.push(loadedUser.valorations[i])
+                }
+            }
+            setAcceptedUserVals(u_accepted);
+            setPendantUserVals(u_pendant);
+            setSorted(true);
+            //console.log("ACEPTADOS", u_accepted, "PENDIENTES",u_pendant);
+        }
         if (edusources===null || edusources ===undefined || edusources ===""){
             try {
                 fetchValorationsSorted(user._id)
@@ -79,12 +102,15 @@ export const MyAccountValorations= (props) =>{
             } catch (error) {
                 console.error(error);
             }
-           
         }
-    },[])
+        if (!sorted){
+            sortUserVals();
+        }
+           
+    },[sorted,  edusources, user._id, loadedUser.valorations])
 
     //console.log(loadedUser);
-    if (loadedUser && loadedUser._id !=""){
+    if (loadedUser && loadedUser._id !==""){
     return (
         <>
 
@@ -118,12 +144,12 @@ export const MyAccountValorations= (props) =>{
                 <Grid container spacing={{ xs: 2, md: 3 }} width={newWidth-32} >
        
                     <Grid item xs={12} md={12}>
-                    {loadedUser.valorations && loadedUser.valorations.length >0?
+                    {pendantUserVals && pendantUserVals.length >0?
                     <>
-                        {loadedUser.valorations.map((val, index)=>{
+                        {pendantUserVals.map((val, index)=>{
                             return(
                             <React.Fragment key={index}>
-                                <Valoration editing={true} acceptedMode={"noaccepted"} valoration={val} backgroundColor={themeOptions.palette.background.paper} textColor={themeOptions.palette.text.primary}/>
+                                <ExtenderUserValorations  vals={val} user_id ={loadedUser._id}/>
                             </React.Fragment>
                             )
                         })}
@@ -149,12 +175,14 @@ export const MyAccountValorations= (props) =>{
            < Grid item xs={12}  md={12}>
                 <Grid container spacing={{ xs: 2, md: 3 }} width={newWidth-32} >
                     <Grid item xs={12} md={12}>
-                    {loadedUser.valorations && loadedUser.valorations.length >0?
+                 
+                    {acceptedUserVals && acceptedUserVals.length >0?
                     <>
-                        {loadedUser.valorations.map((val, index)=>{
+                        
+                        {acceptedUserVals.map((val, index)=>{
                             return(
                             <React.Fragment key={index}>
-                                <Valoration editing={true} acceptedMode={"accepted"} valoration={val} backgroundColor={themeOptions.palette.background.paper} textColor={themeOptions.palette.text.primary}/>
+                                <ExtenderUserValorations vals={val} user_id={loadedUser._id}/>
                             </React.Fragment>
                             )
                         })} 

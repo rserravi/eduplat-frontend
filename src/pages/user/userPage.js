@@ -59,6 +59,7 @@ export const UserPage = () =>{
     const [openNameDialog, setOpenNameDialog]= useState(false);
     const [openAboutMeDialog, setOpenAboutMeDialog] = useState(false);
     const [openDescriptionDialog, setOpenDescriptionDialog]= useState(false);
+    // eslint-disable-next-line
     const [openHeaderPicDialog, setOpenHeaderPicDialog]= useState(false);
     const [openProfilePicDialog, setOpenProfilePicDialog]= useState(false);
     const [openValorationDialog, setOpenValorationDialog]= useState(false);
@@ -221,13 +222,13 @@ export const UserPage = () =>{
         setOpenDescriptionDialog(false);
     };
 
-    const handleHeaderPicOpen = () => {
+   /*  const handleHeaderPicOpen = () => {
         setOpenHeaderPicDialog(true);
     };
     
     const handleHeaderPicClose = () => {
         setOpenHeaderPicDialog(false);
-    };
+    }; */
 
     const handleProfilePicOpen = () => {
         setOpenProfilePicDialog(true);
@@ -356,7 +357,7 @@ export const UserPage = () =>{
         
                 
 
-    },[loadedUser, id, dispatch])
+    },[loadedUser,user._id, id, dispatch])
 
     useEffect(() => {
 
@@ -368,11 +369,6 @@ export const UserPage = () =>{
     window.addEventListener('resize', handleResize)
 
     })
-
-    const navigation = (payload) =>{
-        console.log(payload)
-        window.open(payload);
-    }
 
     if(loadedUser && loadedUser!==null){
     return(
@@ -395,7 +391,7 @@ export const UserPage = () =>{
                     }} 
                     >
                          {loadedUser.username === user.username?<>
-                            <Fab size="small" aria-label="edit-heading-picture" 
+                            <Fab size="small" aria-label="edit-heading-picture" disabled 
                                 sx={{
                                     position:"absolute",
                                     top:"90px",
@@ -408,6 +404,7 @@ export const UserPage = () =>{
                         {loadedUser.username === user.username?<>
                             <Fab size="small" aria-label="edit-portrait-picture" 
                                 onClick={handleProfilePicOpen}
+                               
                                 sx={{
                                     position:"absolute",
                                     top:newWidth<500?230:380,

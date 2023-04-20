@@ -2,18 +2,15 @@ import * as React from 'react';
 import {
         FacebookShareCount,
         PinterestShareCount,
-        VKShareCount,
         OKShareCount,
         RedditShareCount,
         TumblrShareCount,
-        HatenaShareCount,
         FacebookShareButton,
         FacebookMessengerShareButton,
         FacebookMessengerIcon,
         LinkedinShareButton,
         TwitterShareButton,
         PinterestShareButton,
-        VKShareButton,
         OKShareButton,
         TelegramShareButton,
         WhatsappShareButton,
@@ -21,25 +18,20 @@ import {
         EmailShareButton,
         TumblrShareButton,
         LivejournalShareButton,
-        MailruShareButton,
         ViberShareButton,
         WorkplaceShareButton,
         LineShareButton,
-        WeiboShareButton,
         PocketShareButton,
         InstapaperShareButton,
-        HatenaShareButton,
         FacebookIcon,
         TwitterIcon,
         LinkedinIcon,
         PinterestIcon,
-        VKIcon,
         OKIcon,
         TelegramIcon,
         WhatsappIcon,
         RedditIcon,
         TumblrIcon,
-        MailruIcon,
         EmailIcon,
         LivejournalIcon,
         ViberIcon,
@@ -47,12 +39,11 @@ import {
         LineIcon,
         PocketIcon,
         InstapaperIcon,
-        WeiboIcon,
-        HatenaIcon,
+
       } from "react-share";
 
 import './sharebar.css';
-import { socialNetworks } from 'src/utils/social-networks-utils';
+//import { socialNetworks } from 'src/utils/social-networks-utils';
 import exampleImage from './react-share-pin-example.png';
 import { Grid,  Typography } from '@mui/material';
 import { getSocialUrl } from 'src/utils/socialList';

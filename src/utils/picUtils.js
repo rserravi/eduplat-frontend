@@ -1,6 +1,3 @@
-import * as React from 'react'
-import FileResizer from 'react-image-file-resizer';
-
 
 
 export const getHeadShot = (user)=>{

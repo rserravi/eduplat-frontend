@@ -2,7 +2,7 @@ import * as React from 'react'
 import {  useState, useEffect } from 'react';
 
 import { useOutletContext } from 'react-router-dom';
-import _ from 'lodash';
+//npm buimport _ from 'lodash';
 
 import { fetchEdusourceByPromoter } from 'src/api/edusourceApi'
 import { ResourcesNetflixGrid } from 'src/components/resources/resources';

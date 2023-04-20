@@ -7,7 +7,22 @@ import { ResourcesNetflixGrid } from "src/components/resources/resources";
 import { themeOptions } from 'src/theme/theme';
 import { replaceUnderscoresWithSpaces } from "src/utils/stringOperations";
 
+
 const theme = createTheme(themeOptions);
+
+export const JustTheme = (props)=>{
+    const [newWidth] = useOutletContext();
+    return(
+        <React.Fragment>
+            <ThemeProvider theme={theme}>
+            <Box sx={{ width: newWidth, p:2 }}> 
+                <Typography variant="h5" sx={{my:2}}>{i18next.t("Subcathegories and Labels")}</Typography>
+                
+            </Box>
+            </ThemeProvider>
+        </React.Fragment>
+    )
+}
 
 export const ThemePage = ()=>{
     const [newWidth] = useOutletContext();
@@ -39,7 +54,7 @@ export const ThemePage = ()=>{
         <React.Fragment>
             <ThemeProvider theme={theme}>
             <Box sx={{ width: newWidth, p:2 }}> 
-                <Typography variant="h5" sx={{my:2}}>{i18next.t("Theme")}: {i18next.t(thm)}</Typography>
+                <Typography variant="h5" sx={{my:2}}>{i18next.t("Subcathegories and Labels")}: {i18next.t(thm)}</Typography>
                 <ResourcesNetflixGrid edusourceList={theTheme} title={i18next.t(thm)} newcolor="secondary.light" newWidth={newWidth}/>
             </Box>
             </ThemeProvider>

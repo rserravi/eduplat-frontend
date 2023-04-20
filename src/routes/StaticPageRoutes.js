@@ -1,8 +1,8 @@
-import { lazy } from 'react';
+//import { lazy } from 'react';
 
 // project imports
 import MainLayout from '../layout/MainLayout';
-import Loadable from '../ui-component/Loadable';
+//import Loadable from '../ui-component/Loadable';
 import { Cookies } from 'src/pages/miscelanea/cookies';
 import { HelpCenter } from 'src/pages/miscelanea/helpcenter';
 import { Privacity } from 'src/pages/miscelanea/privacity';

@@ -258,7 +258,7 @@ export const MyAccountData = (props) =>{
       };
 
     //console.log(loadedUser);
-    if (loadedUser && loadedUser._id !=""){
+    if (loadedUser && loadedUser._id !==""){
     return (
         <>
         <Box

@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { Avatar, Grid, Link, Paper } from '@mui/material';
-import { fetchUserbyId } from 'src/api/userApi';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { fetchUserbyId, setUserAcceptedRejected } from 'src/api/userApi';
+import { createTheme } from '@mui/material/styles';
 import { themeOptions } from 'src/theme/theme';
 import { FavoriteIcon } from '../../../components/favorites';
 import i18next from 'i18next';
@@ -27,7 +27,7 @@ const navigation = (payload) =>{
   }
 
 
-export const Valoration =(props) =>{
+  export const Valoration =(props) =>{
 
     //ACCEPTED MODE: (all, accepted, noaccepted)
     //EDITING: when true, show editing buttons to show or hide in profile.
@@ -38,7 +38,7 @@ export const Valoration =(props) =>{
   const [error, setError] = useState("");
   const primary= textColor?textColor:theme.palette.primary;
   const secondary = backgroundColor?backgroundColor: theme.palette.secondary;
-  const mode = acceptedMode && acceptedMode!=""?acceptedMode:"all";
+  //const mode = acceptedMode && acceptedMode!==""?acceptedMode:"all";
 
   
 
@@ -207,7 +207,7 @@ export const ExtendedResourceValorations = (props)=>{
             <Paper 
 
                 sx={{border:1, borderRadius:5,p:1, borderColor:'lightgray',
-                    }}
+                   mb:2 }}
                 >
         
                 <Grid container>
@@ -243,7 +243,7 @@ export const ExtendedResourceValorations = (props)=>{
                                 <Typography variant='body2' mt={1}><i><b>"{vals.comment}"</b></i></Typography>
                                 <FavoriteIcon value={vals.value+1} />
                             </Grid>
-                <Button size='small' onClick={acceptButton} color='success' variant='contained' sx={{ m:1, borderRadius:5 }} >{i18next.t("Accept")}</Button>
+                <Button size='small' disabled={vals.accepted} onClick={acceptButton} color='success' variant='contained' sx={{ m:1, borderRadius:5 }} >{i18next.t("Accept")}</Button>
                 <Button size='small' onClick={rejectButton} color='warning' variant='contained' sx={{ m:1, borderRadius:5 }} >{i18next.t("Reject")}</Button>
                 
             </Paper> 
@@ -251,9 +251,162 @@ export const ExtendedResourceValorations = (props)=>{
                 <ValorationDialog open = {openDialog} handleClose={handleClose} />
      
             
-             </>  
+        </>  
     )
 }
+
+export const ExtenderUserValorations = (props)=>{
+    const {vals, user_id} = props;
+    const [sender, setSender] = useState();
+    // eslint-disable-next-line
+    const [error, setError] = useState("");
+
+    //console.log("EXTENDED USER",vals, user_id)
+
+
+    const [openDialog, setOpenDialog]= useState(false);
+
+    const handleClose = (event)=>{
+        setOpenDialog(false)
+        navigation('/myaccount/valorations')
+    }
+   
+    const acceptButton = async (event)=>{
+        
+       await setUserAcceptedRejected(user_id, vals._id, true, false).then((data)=>{
+            if (data.status ==="success"){
+                console.log("ACTUALIZADO")
+                setOpenDialog(true);
+            }
+            else {
+                console.log ("ERROR", data.message)
+            }
+       }) 
+
+    }
+
+    const rejectButton = async (event)=>{
+        await setUserAcceptedRejected(user_id, vals._id, false, true).then((data)=>{
+            if (data.status ==="success"){
+                console.log("ACTUALIZADO")
+                setOpenDialog(true);
+
+            }
+            else {
+                console.log ("ERROR", data.message)
+            }
+       })
+    }
+
+    useEffect(() =>{
+      
+        if(vals || vals!==null){
+            //console.log("ENCONTRANDO EL SENDER", vals.senderId)
+             try {
+    
+                fetchUserbyId(vals.senderId).then((response)=>{
+                    //console.log(response);
+                     setSender(response.user) 
+                     //console.log("USUARIO ENCONTRADO!",response.user);
+                     
+                 }).catch(error=>{
+                     console.log(error);
+                     setError(error);
+                 })
+                 
+             } catch (error) {
+                 setError(error);
+             }
+         }
+                 
+    
+     },[vals])
+
+    return(
+        <>
+    {sender && sender._id!==""?<>
+    <Paper sx={{mb:2, p:1, borderRadius:5,  backgroundColor: "secondary"}}>
+       
+        <Grid 
+            container
+            direction="row"
+            justifyContent="flex-start"
+            alignItems="flex-start"
+            sx={{p:1}}
+        >
+            <Grid item xs="auto">
+                <IconButton 
+                    size='small' 
+                    onClick={(e)=>{e.preventDefault(); navigation("/user/"+sender.username)}}
+                >
+                <Avatar alt={sender.username} src={getHeadShot(sender)}/>
+                </IconButton>
+            </Grid>
+            <Grid item xs={10} sx={{ml:1}}>
+                <Grid container direction="column">
+                    <Grid item>
+                        <Typography 
+                            variant='body2'
+                      
+                            onClick={(e)=>{e.preventDefault(); navigation("/user/"+sender.username)}}
+                            sx={{
+                                fontWeight:"bold", 
+                                fontSize:18, 
+                                '&:hover': {
+                                    textDecoration:"underline",
+                                    cursor: "pointer"
+                                    }
+                                }}
+                            >
+                                {sender.publicData.name?sender.firstname + " " + sender.lastname: sender.username}
+                        </Typography>
+                    </Grid>
+                    <Grid item>
+                        <Typography 
+                            variant='body2'
+                    
+                            sx={{
+                                fontWeight:"bold",
+                                '&:hover': {
+                                    textDecoration:"underline",
+                                    cursor: "pointer"
+                                    }
+                            }}
+                        >{sender.publicData.name? "@"+ sender.username:<></>}</Typography>
+                    </Grid>
+            
+                    <Grid item sx={{mt:1}}>  
+                        <Grid container direction="row" justifyContent="flex-start" alignItems="center">
+                            <Grid item>
+                                <Typography color={"primary"}>{i18next.t("Karma")}: {sender.karma}. - {i18next.t("Level")}: {karmaLevel(sender.karma)}</Typography>
+                            </Grid>
+                        </Grid>        
+                    </Grid>
+                    <Grid item>
+                        <Typography variant='body1' sx={{fontSize:15, fontWeight:'bold', ml:2, my:1}} ><i>"{vals.comment}"</i></Typography>
+                    </Grid>
+                    <Grid>
+                        <FavoriteIcon value={vals.value+1} />
+                    </Grid>
+
+                        
+                </Grid>
+            </Grid>
+
+        </Grid>
+        
+             <Button disabled={vals.accepted} size='small' onClick={acceptButton} color='success' variant='contained' sx={{ m:1, borderRadius:5 }} >{i18next.t("Accept")}</Button>
+             <Button size='small' onClick={rejectButton} color='warning' variant='contained' sx={{ m:1, borderRadius:5 }} >{i18next.t("Reject")}</Button>
+       
+    </Paper>
+    <ValorationDialog open = {openDialog} handleClose={handleClose} />
+    
+    </>:<></>}
+    
+    </> 
+    )
+}
+
 
 const ValorationDialog = (props)=>{
     const {open, handleClose}= props;

@@ -2,7 +2,7 @@ import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
-import { Box, Button, Divider, Grid, IconButton } from '@mui/material';
+import { Box, Button, Divider, Grid, IconButton, Link } from '@mui/material';
 import { shortDate } from 'src/utils/dateUtils';
 import { useNavigate } from 'react-router-dom';
 import { getHeadShot, getRightPicture } from 'src/utils/picUtils';
@@ -32,8 +32,8 @@ export default function EdusourceList(props) {
       objectFit:"cover",
       borderRadius:15,
       boxShadow: "1px 1px grey"
-      
     }
+    
     }
 
 
@@ -57,7 +57,7 @@ export default function EdusourceList(props) {
             alignItems="flex-start"
         >
             <Grid item  xs="auto" >
-                <img style={imgstyles.media} src={getRightPicture(edusource.picture)} alt="" />
+                <img style={imgstyles.media} src={getRightPicture(edusource.picture)} alt="" onClick={handleEdusourceLink}/>
             </Grid>
             <Grid item xs={9} sx={{ml:2, mt:-1}}>
                 <Grid 
@@ -101,8 +101,7 @@ export default function EdusourceList(props) {
                     {edusource.description}
                 </Typography>
                 <Typography variant='body2'>
-                    <Button>{edusource.promoterId.username}</Button> <i>{edusource.theme[0]}</i>
-                </Typography>
+                    <Button onClick={handlePromoterClick}>{edusource.promoterId.username}</Button>  {edusource.type} -- <Link href={'/theme/'+edusource.theme[0]}><i>#{edusource.theme[0]}</i></Link></Typography>
             </Grid>
         </Grid>
         <Divider />

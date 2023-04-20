@@ -17,8 +17,9 @@ import { Discipline } from 'src/pages/discipline';
 import MainLayout from '../layout/MainLayout';
 //import Loadable from '../ui-component/Loadable';
 import { Messages } from 'src/pages/messages/messagesPage';
-import { ThemePage } from 'src/pages/themePage';
+import { JustTheme, ThemePage } from 'src/pages/themePage';
 import { LevelPage } from 'src/pages/levelPage';
+import { KarmaPage } from 'src/pages/miscelanea/karmaPage';
 
 
 
@@ -85,6 +86,10 @@ const MainRoutes = {
             element: <Discipline />
         },
         {   
+            path: 'theme/',
+            element: <JustTheme />
+        },
+        {   
             path: 'theme/:thm',
             element: <ThemePage />
         },
@@ -99,6 +104,10 @@ const MainRoutes = {
         {
             path: '/messages',
             element: <Messages />
+        },
+        {
+            path: '/karma',
+            element: <KarmaPage />
         }
 
     ]

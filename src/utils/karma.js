@@ -27,7 +27,7 @@ export const karmaAndLevel = [
         maxPalette: 6,
     },
     {
-        karma: 2500,
+        karma: 3000,
         level: "Eduplatter boss",
         maxPalette: 100
     },
@@ -42,12 +42,12 @@ export const karmaAndLevel = [
         maxPalette: 100
     },
     {
-        karma: 6000,
+        karma: 7000,
         level: "Eduplatter master",
         maxPalette: 100
     },
     {
-        karma: 8000,
+        karma: 8500,
         level: "Eduplatter supreme master",
         maxPalette: 100
     },

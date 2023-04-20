@@ -220,7 +220,11 @@ function HeaderMenu(props) {
                     <div>
                     {user && user.username!==""?
                     <>
-                    <Menu anchorEl={anchorElNavResources} open={openResourcesNav} onClose={handleCloseNavResourcesMenu}>
+                    <Menu anchorEl={anchorElNavResources} open={openResourcesNav} onClose={handleCloseNavResourcesMenu}
+                      getContentAnchorEl={null}
+                      anchorOrigin={{vertical: 'top', horizontal: 'right'}}
+                      transformOrigin={{vertical: 'top', horizontal: 'left'}}
+                    >
                         <MenuList>
                             <MenuItem onClick={handelClickResourcesSearch}>{i18next.t("Search Resources")}</MenuItem>
                             <MenuItem onClick={handelClickCollectionSearch}> {i18next.t("Search Collections")}</MenuItem>
@@ -236,7 +240,11 @@ function HeaderMenu(props) {
                     </Menu>
                     </>:
                     <>
-                    <Menu anchorEl={anchorElNavResources} open={openResourcesNav} onClose={handleCloseNavResourcesMenu}>
+                    <Menu anchorEl={anchorElNavResources} open={openResourcesNav} onClose={handleCloseNavResourcesMenu}
+                    getContentAnchorEl={null}
+                    anchorOrigin={{vertical: 'top', horizontal: 'right'}}
+                    transformOrigin={{vertical: 'top', horizontal: 'left'}}
+                    >
                       <MenuList>
                           <MenuItem onClick={handelClickResourcesSearch}>{i18next.t("Search Resources")}</MenuItem>
                           <MenuItem onClick={handelClickCollectionSearch}> {i18next.t("Search Collections")}</MenuItem>

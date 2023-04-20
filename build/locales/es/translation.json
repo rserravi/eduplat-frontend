@@ -256,7 +256,7 @@
     "Do you really want to delete this resource?":"¿Estás seguro de borrar este recurso?",
     "DeleteInstrucctions":"Si procedes a borrar el recurso, no habrá marcha atrás y desaparecerá también de las colecciones, si pertenece a alguna.",
     "Your account is created. Welcome to Eduplat":"Tu cuenta ha sido creada. Bienvenido a Eduplat",
-    "JoiningDialog":"Necesitas <b>verificar tu correo electrónico</b> para poder compartir recursos, contactar a otros usuarios y comentar. Gracias por unirte a nuestra comunidad y por contribuir a que el conocimiento sea accesible a todos.",
+    "JoiningDialog":"Necesitas verificar tu correo electrónico para poder compartir recursos, contactar a otros usuarios y comentar. Gracias por unirte a nuestra comunidad y por contribuir a que el conocimiento sea accesible a todos.",
     "The valuation has been updated":"La valoración se ha actualizado",
     "You have unreaded messages":"Tienes mensajes sin leer",
     "About us text": "EduPlat.org y la Feria de Recursos Educativos son promovidos bajo el paraguas de la asociación sin fines de lucro BienesDar. Su misión es mejorar el bienestar de la sociedad compartiendo actividades, recursos, habilidades y conocimientos. Desde finales de 2021, contamos con la colaboración de numerosas instituciones, entre las que queremos destacar la Unión Europea 🇪🇺, que ha cofinanciado el proyecto y facilitado la creación de un consorcio formado por 4 socios: Instituto Duarte de Lemos (🇵🇹Portugal), European Institute for Local Development (🇬🇷Grecia), Associazione InCo (🇮🇹Italia) y BienesDar (🇪🇸España).",
@@ -476,5 +476,18 @@
     "Pedagogy of autonomy": "Pedagogía de la autonomía",
     "Positive psychology": "Psicología positiva",
     "Social psychology": "Psicología social",
-    "Special education": "Educación especial"
+    "Special education": "Educación especial",
+    "Share this resource":"Comparte este recurso",
+    "Select a sharing option":"Selecciona una opción para compartir",
+    "Share on":"Compartir en",
+    "Share via":"Compartir via",
+    "Copy link to Clipboard":"Copia el enlace al portapapeles",
+    "Subcathegories and Labels":"Subcategorías y etiquetas",
+    "You will win Karma for any good deed that you do en Eduplat.":"Ganarás Karma por cada buena acción que hagas en Eduplat.",
+    "You will gain levels as your karma improves.":"Irás subiendo de nivel a medida que suba tu Kar,a",
+    "Those are the avaliable levels:":"Estos son los niveles disponibles:",
+    "In each level, you will win a new look for your main page, and privileges for editing.":"En cada nivel, ganarás un nuevo 'look' para tu página principal, y privilegios de edición",
+    "Enjoy, and keep the good karma up.":"Difruta, y promueve el buen Karma.",
+    "Search by level":"Ver por nivel",
+    "Search by Category":"Ver por Categoria"
 }

@@ -8,8 +8,7 @@ import { categoriesList } from 'src/utils/isced';
 import { getTagsFromCategory } from 'src/utils/isced';
 import { languagesCodes } from 'src/utils/countries';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux'
-
+import { useSelector } from 'react-redux';
 
 
 // mui
@@ -48,11 +47,13 @@ export const CreateEdusource= ({ ...others }) =>{
     const [themesFilter, setThemesFilter] = React.useState([]);
     const [authors, setAuthors]= useState();
     const [level, setLevel]= useState();
+    // eslint-disable-next-line
     const [error, setError] = useState();
     const [imageSelectorOpen, setImageSelectorOpen] = useState(false);
     const [categoriesDialog, setCategoriesDialog]= React.useState(false)
     const [linktype, setLinkType] = React.useState();
     const [language, setLanguage] = React.useState();
+    // eslint-disable-next-line
     const [errorMsg, setErrorMsg] = React.useState();
     
    
@@ -63,6 +64,7 @@ export const CreateEdusource= ({ ...others }) =>{
 
     const handleSubmit = async (values) => {
         //console.log("EN HANDLE SUBMIT", values)
+        resetEverything();
         await scrapping(values.url).then((data)=>{
             if (data.status==="success"){
                 console.log ("DATOS OBTENIDOS EN SCRAP", data.result)
@@ -185,7 +187,7 @@ export const CreateEdusource= ({ ...others }) =>{
         setImage(null)
         setDiscipline("")
         setThemes("")
-        setThemesFilter(null)
+       // setThemesFilter(null)
         setFreeLabels("")
         setAuthors(null)
         setLanguage(null)

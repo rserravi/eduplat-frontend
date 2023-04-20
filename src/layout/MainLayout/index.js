@@ -38,7 +38,7 @@ const MainLayout = () => {
                 <Box
                     component="main"
                 >        
-                    <MainHeader />
+                    <MainHeader newWidth={newWidth} />
                     <Toolbar />
                     <Container sx={{ mb: 4}}>
                             <Outlet context={[newWidth]} />

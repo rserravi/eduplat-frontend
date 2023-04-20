@@ -26,6 +26,7 @@ function MainHeader() {
 
     // eslint-disable-next-line
     const [error, setError] = useState("");
+ 
     const user = useSelector(state => state.user)
     //const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -79,14 +80,14 @@ function MainHeader() {
 
            {/* FOR MOBILE */}
 
-          <HeaderMenu device="Mobile" user={user}/>
+          <HeaderMenu device="Mobile" user={user} />
           <Box sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} >
             <Logo color="white"/>
           </Box>
 
            {/* FOR BROWSER */}
 
-            <HeaderMenu device="Browser" user={user}/>
+            <HeaderMenu device="Browser" user={user} />
 
             {/* FOR BROWSER AND MOBLIE */}
 

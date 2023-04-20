@@ -9,7 +9,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import InfoIcon from '@mui/icons-material/Info';
 import i18next from 'i18next';
 import { karmaLevel } from 'src/utils/karma';
-import { UserCard } from 'src/ui-component/cards/user/userCard';
+//import { UserCard } from 'src/ui-component/cards/user/userCard';
 
 
 const theme = createTheme(themeOptions);

@@ -256,7 +256,7 @@
     "Do you really want to delete this resource?":"Do you really want to delete this resource?",
     "DeleteInstrucctions":"If you proceed to delete the resource, there will be no going back and it will also disappear from the collections, if it belongs to any",
     "Your account is created. Welcome to Eduplat":"Your account is created. Welcome to Eduplat",
-    "JoiningDialog":"You need <b>to verify your email</b> to be able to share resources, contact other users and comment. Thanks for joining our community and for contributing to make knowledge accesible to anyone.",
+    "JoiningDialog":"You need to verify your email to be able to share resources, contact other users and comment. Thanks for joining our community and for contributing to make knowledge accesible to anyone.",
     "The valuation has been updated":"The valuation has been updated",
     "You have unreaded messages":"You have unreaded messages",
     "About us text": " EduPlat.org and the Educational Resouces Fair are promoted under the umbrella of the non-profit association BienesDar. Its mission is to improve the welfare of society by sharing activities, resources, skills and knowledge. Since the end of 2021 we have the collaboration of numerous institutions, among which we want to highlight the European Union 🇪🇺, which has co-financed the project and facilitated the establishment of a consortium formed by 4 partners: Instituto Duarte de Lemos (🇵🇹Portugal), European Institute for Local Development (🇬🇷Greece),Associazione InCo (🇮🇹Italy) and BienesDar (🇪🇸 Spain).",
@@ -476,5 +476,18 @@
     "Pedagogy of autonomy": "Pedagogy of autonomy",
     "Positive psychology": "Positive psychology",
     "Social psychology": "Social psychology",
-    "Special education": "Special education"
+    "Special education": "Special education",
+    "Share this resource":"Share this resource",
+    "Select a sharing option":"Select a sharing option",
+    "Share on":"Share on",
+    "Share via":"Share on",
+    "Copy link to Clipboard":"Copy link to Clipboard",
+    "Subcathegories and Labels":"Subcathegories and Labels",
+    "You will win Karma for any good deed that you do en Eduplat.":"You will win Karma for any good deed that you do en Eduplat.",
+    "You will gain levels as your karma improves.":"You will gain levels as your karma improves.",
+    "Those are the avaliable levels:":"Those are the avaliable levels:",
+    "In each level, you will win a new look for your main page, and privileges for editing.":"In each level, you will win a new look for your main page, and privileges for editing.",
+    "Enjoy, and keep the good karma up.":"Enjoy, and keep the good karma up.",
+    "Search by level":"Search by level",
+    "Search by Category":"Search by Category"
 }

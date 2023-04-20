@@ -11,6 +11,7 @@ const loginUrl = userUrl + '/login/';
 const userListUrl = userUrl + "/list";
 const logOutUrl = userUrl + "/logout";
 const valorationUrl= userUrl + "/valoration";
+const valorationMod = userUrl + "/valorationMod"
 
 
 export const userGoogleRegistrationAPI = (frmData) => {
@@ -314,5 +315,24 @@ export const changeUserValoration = (frmData)=>{
     })
 }
 
+export const setUserAcceptedRejected = (user_id, val_id, accepted, rejected)=>{
+    return new Promise( async(resolve, reject)=>{
+        const frmData = {
+            "user_id":user_id,
+            "val_id":val_id,
+            "accepted":accepted,
+            "rejected":rejected
+        }
 
+        try {
+            const res = await axios.patch(valorationMod, frmData);
+            console.log("UPDATED", res.data)
+            resolve(res.data);
+            
+        } catch (error) {
+            console.log(error);
+            reject(error.message);
+        }
+    })
+}
 

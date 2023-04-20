@@ -25,7 +25,7 @@ import { themeOptions } from 'src/theme/theme';
 import { Copyright } from 'src/components/pageStruct/copyright';
 import { strengthColor, strengthIndicator } from 'src/utils/password-strength';
 import { userGoogleRegistrationAPI, userFormRegistrationApi, checkUserNameExists, checkEmailExists } from 'src/api/userApi';
-import { SET_AUTH_USER, SET_LOADING } from 'src/store/userSlice';
+import { SET_LOADING } from 'src/store/userSlice';
 import Logo from 'src/ui-component/Logo';
 import i18next from 'i18next';
 
@@ -70,9 +70,9 @@ export const RegisterPage = ({ ...others }) =>{
         setLevel(strengthColor(temp));
     };
 
-    const handleClickOpen = () => {
+   /*  const handleClickOpen = () => {
         setOpen(true);
-      };
+      }; */
     
       const handleClose = () => {
         setOpen(false);
@@ -426,12 +426,14 @@ export const RegisterPage = ({ ...others }) =>{
                                                     label={
                                                         <Typography variant="subtitle1">
                                                             {i18next.t("AgreeWith")} &nbsp;
-                                                            <Typography variant="subtitle1" component={Link} to="#">
-                                                                {i18next.t("TermsAndConditions")}
-                                                            </Typography>
+                                                           
                                                         </Typography>
                                                     }
                                                 />
+                                                 <Link href='/legal/useterms'>
+                                                {i18next.t("TermsAndConditions")}
+                                                </Link>
+                                    
                                             </Grid>
                                        
                                         {errors.submit && (
@@ -450,7 +452,7 @@ export const RegisterPage = ({ ...others }) =>{
                                             <Button
                                                 type="submit"
                                                 fullWidth
-                                                disabled = {errors.password || errors.email || errors.username || usernameExists}
+                                                disabled = {errors.password || errors.email || errors.username || usernameExists || !checked}
                                                 variant="contained"
                                                 sx={{ mt: 3, mb: 2,borderRadius:5 }}
                                                 >
@@ -459,7 +461,7 @@ export const RegisterPage = ({ ...others }) =>{
                                         </Grid>
                                         <Grid container justifyContent="flex-end">
                                         <Grid item>
-                                            <Link href="/login" variant="body2">
+                                            <Link href="/login" target="_blank" variant="body2">
                                             {i18next.t("AlreadyHaveAnAccount?")}  {i18next.t("signUp")}
                                             </Link>
                                         </Grid>

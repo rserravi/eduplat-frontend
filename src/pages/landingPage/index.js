@@ -8,14 +8,16 @@ import { themeOptions } from 'src/theme/theme';
 import { ResourcesNetflixGrid } from 'src/components/resources/resources';
 //import fakeLastResources from 'src/assets/fakeLists/lastResources'
 //import fakeTagCloud from 'src/assets/fakeLists/fakeCloudTag';
-import { TagCloud } from 'react-tagcloud'
+//import { TagCloud } from 'react-tagcloud'
 import { ShareBarBig } from 'src/components/pageStruct/sharebar';
 import { fetchLastResources, getResourcesOfCategory } from 'src/api/edusourceApi';
 import { Box } from '@mui/system';
 import { useOutletContext } from 'react-router-dom';
 import i18next from 'i18next';
 import { useNavigate } from 'react-router-dom';
-import { replaceSpacesWithUnderscores } from 'src/utils/stringOperations';
+//import { replaceSpacesWithUnderscores } from 'src/utils/stringOperations';
+import { categoriesList, iscedList } from 'src/utils/isced';
+import { Divider, MenuItem, TextField } from '@mui/material';
 
 
 const theme = createTheme(themeOptions);
@@ -28,12 +30,12 @@ const getRandomImageUrl = () =>{
 
 }
 
-const colorOptions = {
+/* const colorOptions = {
     luminosity: 'dark',
     hue: themeOptions.palette.secondary.main
-  }
+  } */
 
-const getCategoriesCloud = (resources) =>{
+/* const getCategoriesCloud = (resources) =>{
     const counts = {};
 
     for (const item of resources) {
@@ -47,16 +49,27 @@ const getCategoriesCloud = (resources) =>{
 
     const disciplineCounts = Object.keys(counts).map(key => ({ value: key, count: counts[key] }))
     return disciplineCounts;
-}
+} */
 
 
 export const LandingPage = () =>{
     
-    const [categoriesCloud, setCategoriesCloud] = React.useState();
     const [newWidth] = useOutletContext();
     const [lastResources, SetLastResources] = React.useState();
-    const [computerScience, setComputerScience]= React.useState();
+    const [catOne, setcatOne]= React.useState();
+    const [catTwo, setcatTwo]= React.useState();
     const navigate = useNavigate();
+
+    const handleSelectLevel = (event, code)=>{
+        event.preventDefault();
+        navigate("/level/"+code);
+    }
+
+    const handleSelectCategory = (event)=>{
+        event.preventDefault();
+       navigate("/discipline/"+event.target.value);
+      
+    }
 
     React.useEffect(()=>{
         if (!lastResources ||lastResources===undefined ||lastResources ===null){
@@ -64,7 +77,7 @@ export const LandingPage = () =>{
                 fetchLastResources().then((response)=>{
     
                  SetLastResources(response.result.reverse())
-                 setCategoriesCloud(getCategoriesCloud(response.result))  
+                
                }).catch(error=>{
                    
                 console.log(error);
@@ -74,11 +87,26 @@ export const LandingPage = () =>{
             console.log(error);
            }
         }
-        if (!computerScience ||computerScience===undefined ||computerScience ===null){
+        if (!catOne ||catOne===undefined ||catOne ===null){
             try {
                 getResourcesOfCategory("ICT").then((response)=>{
     
-                 setComputerScience(response.result.reverse())
+                 setcatOne(response.result.reverse())
+                   
+               }).catch(error=>{
+                   
+                console.log(error);
+               })
+               
+           } catch (error) {
+            console.log(error);
+           }
+        }
+        if (!catTwo ||catTwo===undefined ||catTwo ===null){
+            try {
+                getResourcesOfCategory("Natural Sciences").then((response)=>{
+    
+                 setcatTwo(response.result.reverse())
                    
                }).catch(error=>{
                    
@@ -90,7 +118,7 @@ export const LandingPage = () =>{
            }
         }
         
-    },[computerScience, lastResources])
+    },[catOne, catTwo, lastResources])
 
 
     return (
@@ -164,31 +192,89 @@ export const LandingPage = () =>{
                     alignItems="center"
                     >
                      {/* TAGCLOUD */}
-                    {categoriesCloud?<>
-                     <Grid item xs={5} backgroundColor= '#ffffff88' sx={{mt:4}} >
-                                <TagCloud
-                                        minSize={10}
-                                        maxSize={42}
-                                        colorOptions= {colorOptions}
-                                        tags={categoriesCloud}
-                                       //onClick={tag => alert(`'${tag.value}' was selected!`)}
-                                        onClick={tag => navigate("/discipline/"+ replaceSpacesWithUnderscores(tag.value))}
-                                    />
-                            </Grid> 
-                            </>:<></>}
+                    {/* {categoriesCloud?<>
+                     <Grid item xs={5} backgroundColor= '#ffffff88' sx={{mt:4, ml:2}} >
+                        <TagCloud
+                                minSize={10}
+                                maxSize={42}
+                                colorOptions= {colorOptions}
+                                tags={categoriesCloud}
+                                //onClick={tag => alert(`'${tag.value}' was selected!`)}
+                                onClick={tag => navigate("/discipline/"+ replaceSpacesWithUnderscores(tag.value))}
+                            />
+                    </Grid> 
+                    </>:<></>} */}
+                    <Grid container
+                        direction="row" 
+                        justifyContent="center"
+                        alignItems="center"
+                        columnSpacing={{ xs: 3}}
+                        mt={4}
+                    >
+                    <Grid item  mb={2}>
+                        <TextField
+                            label ={i18next.t("Levels")}
+                            select
+                            defaultValue=" "
+                            sx={{ 
+                                mt:1,
+                                '& fieldset': {
+                                borderRadius: '20px',
+                            },}}
+                        >
+                            {iscedList.map((option)=>{
+                                return(
+                                <MenuItem onClick={(e)=>{handleSelectLevel(e, option.label)}}  key={option.key} value={option.label+""}>{i18next.t(option.desc)}</MenuItem>
+                                )
+                               
+                            })}
+                             <Divider />
+                            <MenuItem key={1000} value={" "}>{i18next.t("Search by level")}</MenuItem>
+                        
+                        </TextField>
+                       
+                    </Grid>
+                    <Grid item mb={2} >
+                        <TextField
+                            label ={i18next.t("Categories")}
+                            select
+                            defaultValue=" "
+                            onChange={handleSelectCategory}
+                            sx={{ mt:1,
+                                '& fieldset': {
+                                borderRadius: '20px',
+                            },}}
+                        >
+                                {categoriesList.map((cat)=>{
+                                    return(
+                                        <MenuItem key={cat.key} value={cat.label+""}>
+                                            {i18next.t(cat.label)}
+                                        </MenuItem>
+                                        )
+                                })}
+                                <Divider />
+                                <MenuItem key={1000} value={" "}>{i18next.t("Search by Category")}</MenuItem>
+                        </TextField>
+                    </Grid>
+
+                    </Grid>
+                    
                     {/* RESOURCES GRID */}
                   
                     <ResourcesNetflixGrid edusourceList={lastResources} title="Last Resources" mt={4} newWidth={newWidth}/> 
                   
-                    <ResourcesNetflixGrid edusourceList={computerScience} title="Computer Science" newcolor="secondary.light" newWidth={newWidth}/>
+                    <ResourcesNetflixGrid edusourceList={catTwo} title="Natural Sciences" newcolor="secondary.light" newWidth={newWidth}/>
+
+                    <ResourcesNetflixGrid edusourceList={catOne} title="ICT" mt={4} newWidth={newWidth}/> 
                 
                     {/* COPYRIGTH */}
-                    <Grid item my={3}>
+                    <Grid item my={3} ml={4}>
                     <ShareBarBig />
                     </Grid>
                    
                 </Grid>
             </Box>
+
             </ThemeProvider>
 
         </React.Fragment>
