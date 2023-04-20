@@ -30,7 +30,7 @@ export const MyAccountResources= (props) =>{
             }
            
         }
-    },[])
+    },[edusources, user._id])
 
     return(
         <>

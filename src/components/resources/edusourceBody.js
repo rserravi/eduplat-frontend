@@ -125,7 +125,7 @@ export const EdusourceBody= (props) =>{
                 }
             }
         }
-        console.log("RESULTADO EN USERHASCOMMENTED",result, "con valor", valor);
+        //console.log("RESULTADO EN USERHASCOMMENTED",result, "con valor", valor);
         setAlreadyCommented(result);
     },[edusource.valorations, user.username])
 
@@ -145,9 +145,9 @@ export const EdusourceBody= (props) =>{
     
     const videoWrapper = {
         position: 'relative',
-        paddingBottom: "400px",
+        paddingBottom: "56.25%",
         overflow: 'hidden',
-        width : '90%',
+        width : '100%',
     }
     
     const videoIframe = {
@@ -155,20 +155,10 @@ export const EdusourceBody= (props) =>{
         border: 0,
         alignSelf: 'center',
         position: 'static',
-    
-        width: "calc(100vw - "+custom.drawerWidth+"px - 130px )",
-        height: "calc((100vw - "+custom.drawerWidth+"px - 130px ) * 0.5625)"
+        width: '100%',
+        height: "calc((100vw * 0.5625)"
     }
     
-    const vimeoIframe = {
-        overflow: 'hidden',
-        border: 0,
-        alignSelf: 'center',
-        position: 'static',
-    
-        width: "calc(100vw - "+custom.drawerWidth+"px - 130px )",
-        height: "calc((100vw - "+custom.drawerWidth+"px - 130px ) * 0.5625)"
-    }
     
     const acceptedValorations = ()=>{
         var count = 0;
@@ -209,7 +199,7 @@ export const EdusourceBody= (props) =>{
                 return (
                     <Container sx={{mt:2, p:1, pb:"56.25%"}}>
                         <div style={{videoWrapper}}>
-                            <iframe src={edusource.link} style={vimeoIframe} allowFullScreen  frameBorder={"0"} allow={"autoplay"} title={"VIMEO"}/>
+                            <iframe src={edusource.link} style={videoIframe} allowFullScreen  frameBorder={"0"} allow={"autoplay"} title={"VIMEO"}/>
                         </div>
                     </Container>
                 )

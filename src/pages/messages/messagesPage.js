@@ -5,13 +5,11 @@ import {  useState, useEffect } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useOutletContext } from 'react-router-dom';
 import Loader from 'src/ui-component/Loader';
-import _ from 'lodash';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions } from 'src/theme/theme';
 import { useSelector } from 'react-redux';
 import { GET_CONVERSATIONS, SET_CONVERSATIONS } from 'src/store/convesationSlice';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { getMessages } from 'src/api/messagesApi';
 import { ConversationComp } from 'src/components/messages/message-comp';
 
@@ -25,7 +23,6 @@ export const Messages= () =>{
     const [conversations, setConversation ]= useState(useSelector(state=> state.conversation));
     const [fire, setFire] =useState(false);
     const dispatch = useDispatch();
-    const navigate = useNavigate()
   
 
     //SNACK
@@ -74,7 +71,7 @@ export const Messages= () =>{
             }
         }
        
-    },[dispatch, conversations])
+    },[dispatch, conversations, fire, user._id])
 
     if (user && user._id !=="" ){
     return (
