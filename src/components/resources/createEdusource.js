@@ -63,7 +63,7 @@ export const CreateEdusource= ({ ...others }) =>{
     const user = useSelector(state => state.user)
 
     const handleSubmit = async (values) => {
-        //console.log("EN HANDLE SUBMIT", values)
+        console.log("EN HANDLE SUBMIT", values)
         resetEverything();
         await scrapping(values.url).then((data)=>{
             if (data.status==="success"){
@@ -79,9 +79,21 @@ export const CreateEdusource= ({ ...others }) =>{
                 setAuthors(data.result.authors)
             }
             else {
-                setError(data.message)
+                console.log("EN  ERROR")
+                setError("cant extract data")
+                setUrlData({"data":"no data"});
+                setUrl(values.url);
+                setTitle("No title found");
+                setDescription("No desc found");
+                setImage(" ");
+                setLinkType("website");
+                setLanguage("EN");
+                setFreeLabels(" ");
+                setAuthors(" ")
+                
             }
         }).catch((error)=>{
+            console.log("ERROR DE AXIOS")
             setError(error);
         })
         //Check url
