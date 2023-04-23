@@ -81,7 +81,12 @@ export const CreateEdusource= ({ ...others }) =>{
             else {
                 console.log("EN  ERROR")
                 setError("cant extract data")
-                setUrlData({"data":"no data"});
+                setUrlData({
+                    "description":" ",
+                    "images": [],
+                    "language":"",
+                    "linktype": "Website",
+                    "title": " "})
                 setUrl(values.url);
                 setTitle("No title found");
                 setDescription("No desc found");
@@ -95,6 +100,22 @@ export const CreateEdusource= ({ ...others }) =>{
         }).catch((error)=>{
             console.log("ERROR DE AXIOS")
             setError(error);
+            setError(i18next.t("Can't extract data"))
+            setUrlData({
+                "description":" ",
+                "images": [],
+                "language":"",
+                "linktype": "Website",
+                "title": " "})
+            setUrl(values.url);
+            setTitle(i18next.t("No title found"));
+            setDescription(i18next.t("No description found"));
+            setImage(" ");
+            setLinkType("Website");
+            setLanguage("EN");
+            setFreeLabels(" ");
+            setAuthors(" ")
+            
         })
         //Check url
         //Get data
@@ -265,6 +286,17 @@ export const CreateEdusource= ({ ...others }) =>{
         setLevel(code);
     }
 
+    const handleTitleChange = (event) =>{
+        event.preventDefault();
+        console.log("HANDEL TITLE", event.target)
+        setTitle(event.target.value);
+    }
+
+    const handleDescription = (event)=>{
+        event.preventDefault();
+        setDescription(event.target.value)
+    }
+
    
     return(
         <React.Fragment>
@@ -372,6 +404,7 @@ export const CreateEdusource= ({ ...others }) =>{
                                     label ={i18next.t("Title")}
                                     fullWidth
                                     defaultValue={title}
+                                    onChange={handleTitleChange}
                                     sx={{ 
                                         mt:1,
                                         '& fieldset': {
@@ -443,6 +476,7 @@ export const CreateEdusource= ({ ...others }) =>{
                                     label ={i18next.t("Description")}
                                     fullWidth
                                     multiline
+                                    onChange={handleDescription}
                                     rows={newWidth>500?4:7}
                                     defaultValue={description}
                                     sx={{ mt:1,
