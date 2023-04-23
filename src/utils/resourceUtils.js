@@ -7,51 +7,22 @@ export const imagePlaceholders ={
 }
 
 const removeStrangeChars= str => {
+    const letters = /^[a-zA-Z0-9]+$/
 
-    var newString = "";
-    for (let i = 0; i< str.length; i++) {
-      const character = str[i].toLowerCase();
-      var newChar= character
-      if (character ==="à" || character==='á' || character === 'ä'){
-        newChar = 'a'
+    let id = ''
+      // iterate through each letters
+      for (var i = 0; i < str.length; i++) {
+        if (str[i].match(letters) ) {
+          id += str[i]
+        } else {
+          // In case you want to replace with something else
+          id += '-'  
+        }
       }
+      return id;
+      
 
-      if (character ==="è" || character==='é' || character === 'ë'){
-        newChar = 'e'
-      }
-
-      if (character ==="ì" || character==='í' || character === 'ï'){
-        newChar = 'i'
-      }
-
-      if (character ==="ò" || character==='ó' || character === 'ö'){
-        newChar = 'o'
-      }
-
-      if (character ==="ù" || character==='ú' || character === 'ü'){
-        newChar = 'u'
-      }
-
-      if (character ==="ñ"){
-        newChar = 'ny'
-      }
-
-      if (character ==="ç"){
-        newChar = 's'
-      }
-
-      if(character === "/"){
-        newChar =""
-      }
-      if (character === "?" || character ==="$" || character === "="){
-        newChar =""
-      }
-
-
-      newString+=newChar;
-    }
-
-    return newString;
+    //return newString;
 }
 
 export const getResourceUrlFromTitle = (title) =>{

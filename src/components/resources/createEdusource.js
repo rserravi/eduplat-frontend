@@ -297,6 +297,11 @@ export const CreateEdusource= ({ ...others }) =>{
         setDescription(event.target.value)
     }
 
+    const handleAuthorsChange = (event) =>{
+        event.preventDefault()
+        setAuthors(event.targe.value)
+    }
+
    
     return(
         <React.Fragment>
@@ -441,6 +446,7 @@ export const CreateEdusource= ({ ...others }) =>{
                                 <TextField
                                     label ={i18next.t("Author")}
                                     fullWidth
+                                    onChange={handleAuthorsChange}
                                     defaultValue={authors}
                                     sx={{ mt:1,
                                         '& fieldset': {
