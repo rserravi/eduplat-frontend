@@ -40,6 +40,14 @@ const removeStrangeChars= str => {
         newChar = 's'
       }
 
+      if(character === "/"){
+        newChar =""
+      }
+      if (character === "?" || character ==="$" || character === "="){
+        newChar =""
+      }
+
+
       newString+=newChar;
     }
 
