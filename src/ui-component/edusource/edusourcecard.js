@@ -25,6 +25,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import { getShareUrl } from 'src/utils/rootTools';
 
 
 export default function EduSourceCard(props) {
@@ -57,7 +58,7 @@ export default function EduSourceCard(props) {
   const handleClickOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const shareUrl = "http://13.39.99.41/resources/"+ edusource.resourceURL
+  const shareUrl = getShareUrl()+ edusource.resourceURL
 
   const handleCopy = () => {
     navigator.clipboard.writeText(shareUrl);
