@@ -46,7 +46,7 @@ export const FavoriteIcon = (props)=>{
     try {
       return (<><Tooltip title={customIcons[value].label}>{customIcons[value].icon}</Tooltip></>)    
     } catch (error) {
-      console.error("Error en FavoriteIcon",error)
+      //console.error("Error en FavoriteIcon",error)
       return (<></>)
     }
   

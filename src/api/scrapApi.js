@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { getRootUrl } from 'src/utils/rootTools';
 
-const rootUrl = 'http://13.39.99.41/api/v1';
+const rootUrl = getRootUrl()
 //const rootUrl = 'http://localhost:3001/v1'
 const scrapUrl = rootUrl + "/scrap";
 

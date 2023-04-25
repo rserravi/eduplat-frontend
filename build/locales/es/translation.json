@@ -489,5 +489,8 @@
     "In each level, you will win a new look for your main page, and privileges for editing.":"En cada nivel, ganarás un nuevo 'look' para tu página principal, y privilegios de edición",
     "Enjoy, and keep the good karma up.":"Difruta, y promueve el buen Karma.",
     "Search by level":"Ver por nivel",
-    "Search by Category":"Ver por Categoria"
+    "Search by Category":"Ver por Categoria",
+    "Can't extract data":"No se han podido extraer los datos",
+    "No title found":"No se ha encontrado título",
+    "No description found":"No se ha encontrado descripción"
 }

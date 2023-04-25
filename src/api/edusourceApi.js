@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { getRootUrl } from 'src/utils/rootTools';
 import { replaceSpacesWithUnderscores } from 'src/utils/stringOperations';
 
-const rootUrl = 'http://13.39.99.41/api/v1';
+const rootUrl = getRootUrl();
 //const rootUrl = 'http://localhost:3001/v1'
 const edusourceUrl = rootUrl + '/edusource/';
 const byLink = edusourceUrl + '/bylink';
