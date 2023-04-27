@@ -1,7 +1,7 @@
 {
     "register": "Registrar",
-    "signIn" : "Entrar",
-    "signUp" : "Inscrever-se",
+    "signIn" : "Inscrever-se",
+    "signUp" : "Entrar",
     "Login / Register": "Entrar / Registrar-se",
     "orSignUpWith": "ou inscreva-se com",
     "orSignInpWith": "ou entre com",

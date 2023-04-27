@@ -106,7 +106,14 @@ export const Messages= () =>{
                 )
             })}
         </>:<>
-            <Loader />
+        <Grid item>
+            <Typography variant='h3' sx={{my:2}}>{i18next.t("Conversations")}</Typography>
+        </Grid>
+        <Grid item>
+            <Typography variant ='body1'>
+                {i18next.t("You don't have any conversation yet. If you want to start a conversation, search for a user and click 'Send Message'")}
+            </Typography>
+        </Grid>
         </>}
         
 

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Badge, Button, Container,  Paper, TextField, Typography } from '@mui/material'
+import { Alert, Badge, Button, Container,  Paper, TextField, Typography } from '@mui/material'
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -16,7 +16,7 @@ import { customIcons, FavoriteIcon, Favorites, ValorationMeanIcon } from '../fav
 import i18next from 'i18next';
 import { addValoration, changeValoration, } from 'src/api/edusourceApi';
 import { shortDate } from 'src/utils/dateUtils';
-import { YoutubeLinkToIframeLink } from 'src/utils/stringOperations';
+import { ExtractEmbedUrlWordWallFromImage, YoutubeLinkToIframeLink } from 'src/utils/stringOperations';
 
 
 //const theme = createTheme(themeOptions);
@@ -34,6 +34,7 @@ export const EdusourceBody= (props) =>{
     const custom = useSelector(state => state.custom)
     const CHARACTER_LIMIT = 250;
     const [error, setError]= React.useState("");
+    const [contentAllowed, setContentAllowed] = React.useState(true);
 
     const navigation = (payload) =>{
         console.log(payload)
@@ -174,23 +175,42 @@ export const EdusourceBody= (props) =>{
 
     //console.log(videoIframe.width);
     const ResourceWeb = ()=>{
+        const [allowed, setAllowed] = React.useState(true);
+        const handleIFrameLoad = () => {
+            const iFrame = document.getElementById('iframe');
+            const iFrameWindow = iFrame.contentWindow;
+
+            //console.log("IFRAME",iFrame, iFrameWindow)
+        
+            try {
+              // Check if the external website implements x-frame options or a content security policy
+              const frameOptions = iFrameWindow.frameElement.getAttribute('allow');
+              console.log ("FRAME OPTIONS", frameOptions)
+              if (!frameOptions || frameOptions.indexOf('allow-forms') === -1) {
+                setAllowed(false);
+                setContentAllowed(false);
+              }
+            } catch (error) {
+                setAllowed(false);
+                setContentAllowed(false);
+            }
+          };
+        
         
         switch (edusource.linktype) {
-            case "Webpage":
-                return (
-                    <Paper sx={{mt:2, p:1}}>
-                    <div style={{divStyle}}>
-                        <iframe src={edusource.link} style={iframeStyle} height={800} title={"WEBSITE"}/>
-                       
-                    </div>
-                    </Paper>
-                )
+            
             case "Youtube":
                 return (
                     <>
                     <Container sx={{mt:2}}>
                         <div style={{videoWrapper}}>
-                            <iframe src={YoutubeLinkToIframeLink(edusource.link)} style={videoIframe} allowFullScreen frameBorder={"0"} allow={"autoplay"} title={"YOUTUBE"}/>
+                            <iframe 
+                                src={YoutubeLinkToIframeLink(edusource.link)} 
+                                style={videoIframe} 
+                                allowFullScreen 
+                                frameBorder={"0"} 
+                                allow={"autoplay"} 
+                                title={"YOUTUBE"}/>
                         </div>
                     </Container>
                     </>
@@ -199,20 +219,67 @@ export const EdusourceBody= (props) =>{
                 return (
                     <Container sx={{mt:2, p:1, pb:"56.25%"}}>
                         <div style={{videoWrapper}}>
-                            <iframe src={edusource.link} style={videoIframe} allowFullScreen  frameBorder={"0"} allow={"autoplay"} title={"VIMEO"}/>
+                            <iframe 
+                                src={edusource.link} 
+                                style={videoIframe} 
+                                allowFullScreen  
+                                frameBorder={"0"}
+                                allow={"autoplay"} 
+                                title={"VIMEO"}/>
                         </div>
                     </Container>
                 )
-        
+            case "Wordwall":
+                if (edusource.picture.fileName)
+                return (
+                    <>
+                    <Container sx={{mt:2}}>
+                        <div style={{divStyle}}>
+                            <iframe 
+                                src={ExtractEmbedUrlWordWallFromImage(edusource.picture.fileName)} 
+                                style={iframeStyle} 
+                                allowFullScreen 
+                                height="400"
+                                frameBorder={"0"} 
+                                title={"WORDWALL"}/>
+                        </div>
+                    </Container>
+                    </>
+                ) 
+          
             default:
+                console.log("IN DEFAULT RESOURCEWEB")
+                if (allowed){
                 return (
                     <Paper sx={{mt:2, p:1}}>
                     <div style={{divStyle}}>
-                        <iframe src={edusource.link} style={iframeStyle} height={800} title={"WEBSITE"}/>
+                        <iframe
+                            id = "iframe"
+                            onLoad={handleIFrameLoad}
+                            src={edusource.link}
+                            style={iframeStyle}
+                            height={800}
+                            title={"WEBSITE"}
+                        />
                        
                     </div>
                     </Paper>
-                )
+                )}else{
+                    return(
+                    
+                        <Alert severity='warning' sx={{m:2}}>
+                    
+                        <Typography>
+                            {i18next.t("This website cannot be displayed in an iframe due to security policies, implemented by the owner.")}
+                        </Typography>
+                        <Typography>
+                            {i18next.t("Use the 'visit' button to open a new browser window to see the resource")}
+                        </Typography>
+                        </Alert>
+                    
+                 
+                    )
+                }
         }  
     }
 

@@ -65,16 +65,27 @@ export const LoginPage = ({ ...others }) =>{
         console.log("EN HANDLE SUBMINT", event);
         dispatch(SET_LOADING, true);
         await userLogin(event).then (async result=>{
+            console.log("RESULT EN HANDLE SUBMIT",result)
             if (result.status==='error'){
                 setErrorMsg(result.message);
             } else {
-                console.log(result.result);
-                navigate("/");
+                if (result.status==='Not Verified'){
+                    navigate("/notverified/" + event.email);
+                }
+                else {
+                    console.log("TODO HA IDO BIEN",result.result);
+                    navigate("/");
+                }
             }
         }
         ).catch(error =>{
-            console.log(error);
-            setGoogleError(error.message);
+            if (error.status==='Not Verified'){
+                navigate("/notverified/"+ event.email);
+            }
+            else {
+                console.log(error);
+                setErrorMsg(error.message);
+            }
         });
         dispatch(SET_LOADING, false);        
       };
@@ -88,9 +99,13 @@ export const LoginPage = ({ ...others }) =>{
                 setErrorMsg(result.message);
                 
             } else {
-                console.log(result);
-                navigate("/");
-            
+                if (result.status==='Not Verified'){
+                    navigate("/notverified");
+                }
+                else {
+                    console.log(result.result);
+                    navigate("/");
+                }
             }
         }
         ).catch(error =>{
@@ -316,7 +331,7 @@ export const LoginPage = ({ ...others }) =>{
                                         <Grid item xs={12}>
                                         <Grid container>
                                             <Grid item xs>
-                                                <Link href="#" variant="body2">
+                                                <Link href="/forgotpassword" variant="body2">
                                                 {i18next.t("forgotPassword")}
                                                 </Link>
                                             </Grid>

@@ -13,6 +13,9 @@ const userListUrl = userUrl + "/list";
 const logOutUrl = userUrl + "/logout";
 const valorationUrl= userUrl + "/valoration";
 const valorationMod = userUrl + "/valorationMod"
+const userVerificationUrl = userUrl + "/verify"
+const userResend = userUrl + "/resendVerificationLink"
+const userLostPass = userUrl + "/reset-password"
 
 
 export const userGoogleRegistrationAPI = (frmData) => {
@@ -39,28 +42,45 @@ export const userFormRegistrationApi = (frmData)=>{
 }
 
 export const userLogin = (frmData) =>{
-    console.log("USER LOGIN", frmData)
+    console.log("USER LOGIN", frmData, "Direccion: ", loginUrl)
+    const config = {
+        url: loginUrl,
+        method :'POST',
+        headers: {
+            'Access-Control-Allow-Origin': '*',
+            'origin':'x-requested-with',
+            'Access-Control-Allow-Headers': 'POST, GET, PUT, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin',
+            'Content-Type': 'application/json',
+        },
+        data: frmData
+    }
     return new Promise( async(resolve, reject)=>{
-        try {
-            const res = await axios.post(loginUrl, frmData);
-            console.log(res)
+        //try {
+
+            const res = await axios(config);
+            console.log("USER LOGIN RES",res, loginUrl)
             if(res.data.status ==="success"){
                 console.log("DATA DE AXIOS EN USERLOGIN",res.data);
+             
                 sessionStorage.setItem("accessJWT", res.data.accessJWT);
                 localStorage.setItem(
                   "eduplat",
                   JSON.stringify({ refreshJWT: res.data.refreshJWT })
                 );
+               
                 resolve(res.data);
             }
-            else{
+            if (res.data.status ==="Not Verified"){
+                reject({"status":"Not Verified"})
+            }
+            if (res.data.status === "Error"){
                 console.log("FALLO DE AXIOS")
                 reject(res.data);
             }
           
-        } catch (error) {
+       /*  } catch (error) {
            reject(error);
-        }
+        } */
     })
 }
 
@@ -333,6 +353,86 @@ export const setUserAcceptedRejected = (user_id, val_id, accepted, rejected)=>{
         } catch (error) {
             console.log(error);
             reject(error.message);
+        }
+    })
+}
+
+export const userRegistrationVerification = (frmData) =>{
+    return new Promise( async(resolve, reject)=>{
+        try {
+            const res = await axios.patch(userVerificationUrl, frmData);
+
+            resolve(res.data);
+            console.log("Status en userRegistration");
+            console.log(res.data);
+            if(res.data.status ==="success"){
+               resolve(res.data)
+            }
+        } catch (error) {
+            console.log("Error en userRegistration");
+            reject({status:"error", message:error.error});
+        }
+    })
+}
+
+export const resendVerificationLink = (email)=>{
+    const frmData = {
+        "email": email
+    }
+    return new Promise( async(resolve, reject)=>{
+        try {
+            const res = await axios.patch(userResend, frmData);
+
+            resolve(res.data);
+            console.log("Status en resendVerificationLink");
+            console.log(res.data);
+            if(res.data.status ==="success"){
+               resolve(res.data)
+            }
+        } catch (error) {
+            console.log("Error en resendeVerificationLink");
+            reject({status:"error", message:error.error});
+        }
+    })
+}
+
+
+export const sendResetPasswordEmail = (email)=>{
+    const frmData = {
+        "email": email
+    }
+    return new Promise( async(resolve, reject)=>{
+        try {
+            const res = await axios.post(userLostPass, frmData);
+            console.log("Status en sendResetPasswordEmail");
+            console.log(res.data);
+            if(res.data.status ==="success"){
+               resolve(res.data)
+            }
+        } catch (error) {
+            console.log("Error en sendResetPasswordEmail");
+            reject({status:"error", message:error.error});
+        }
+    })
+}
+
+export const setNewPassword = (email, pin, password) =>{
+    const frmData = {
+        "email": email,
+        "pin": pin,
+        "newPassword": password
+    }
+    return new Promise( async(resolve, reject)=>{
+        try {
+            const res = await axios.patch(userLostPass, frmData);
+            console.log("Status en setNewPassword");
+            console.log(res.data);
+            if(res.data.status ==="success"){
+               resolve(res.data)
+            }
+        } catch (error) {
+            console.log("Error en setNewPassword");
+            reject({status:"error", message:error.error});
         }
     })
 }

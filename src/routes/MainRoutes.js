@@ -20,6 +20,7 @@ import { Messages } from 'src/pages/messages/messagesPage';
 import { JustTheme, ThemePage } from 'src/pages/themePage';
 import { LevelPage } from 'src/pages/levelPage';
 import { KarmaPage } from 'src/pages/miscelanea/karmaPage';
+import { LanguagePage } from 'src/pages/languagePage';
 
 
 
@@ -96,6 +97,10 @@ const MainRoutes = {
         {   
             path: 'level/:level',
             element: <LevelPage />
+        },
+        {   
+            path: 'language/:lang',
+            element: <LanguagePage />
         },
         {
             path: '/aboutus',

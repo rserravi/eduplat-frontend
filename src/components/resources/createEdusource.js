@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 
 
 // mui
-import { InputAdornment,  ImageList, ImageListItem, MenuItem, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Divider } from '@mui/material';
+import { InputAdornment,  ImageList, ImageListItem, MenuItem, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Divider, CircularProgress } from '@mui/material';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -51,13 +51,18 @@ export const CreateEdusource= ({ ...others }) =>{
     const [error, setError] = useState();
     const [imageSelectorOpen, setImageSelectorOpen] = useState(false);
     const [categoriesDialog, setCategoriesDialog]= React.useState(false)
+    const [kahootDialogOpen, setKahootDialogOpen]= React.useState(false)
+    const [googleDocDialogOpen, setGoogleDocDialogOpen]= React.useState(false)
     const [linktype, setLinkType] = React.useState();
     const [language, setLanguage] = React.useState();
     // eslint-disable-next-line
     const [errorMsg, setErrorMsg] = React.useState();
+    const [loading, setLoading]= React.useState(false);
     
    
     const categoriesDescriptionElementRef = React.useRef(null);
+    const kahootDescriptionElementRef = React.useRef(null);
+    const googleDocDescriptionElementRef = React.useRef(null);
 
     const navigate = useNavigate();
     const user = useSelector(state => state.user)
@@ -65,6 +70,7 @@ export const CreateEdusource= ({ ...others }) =>{
     const handleSubmit = async (values) => {
         console.log("EN HANDLE SUBMIT", values)
         resetEverything();
+        setLoading(true);
         await scrapping(values.url).then((data)=>{
             if (data.status==="success"){
                 console.log ("DATOS OBTENIDOS EN SCRAP", data.result)
@@ -77,6 +83,21 @@ export const CreateEdusource= ({ ...others }) =>{
                 setLanguage(data.result.language);
                 setFreeLabels(data.result.keywords);
                 setAuthors(data.result.authors)
+
+                 //SHOW ALERTS
+                switch (data.result.linktype) {
+                    case "Kahoot":
+                        setKahootDialogOpen(true);
+                        break;
+                    case "Google Docs":
+                        setGoogleDocDialogOpen(true);
+                        break;
+                    
+                
+                    default:
+                        break;
+                }
+                setLoading(false)
             }
             else {
                 console.log("EN  ERROR")
@@ -95,6 +116,7 @@ export const CreateEdusource= ({ ...others }) =>{
                 setLanguage("EN");
                 setFreeLabels(" ");
                 setAuthors(" ")
+                setLoading(false)
                 
             }
         }).catch((error)=>{
@@ -115,10 +137,9 @@ export const CreateEdusource= ({ ...others }) =>{
             setLanguage("EN");
             setFreeLabels(" ");
             setAuthors(" ")
-            
+            setLoading(false)
         })
-        //Check url
-        //Get data
+       
         
       
     };
@@ -249,6 +270,16 @@ export const CreateEdusource= ({ ...others }) =>{
         setCategoriesDialog(!categoriesDialog);
     }
 
+    const handleKahootDialogClick = (event)=>{
+        event.preventDefault();
+        setKahootDialogOpen(!kahootDialogOpen);
+    }
+
+    const handleGoogleDocDialogClick = (event)=>{
+        event.preventDefault();
+        setGoogleDocDialogOpen(!googleDocDialogOpen);
+    }
+
     const proposedTagsFinder = (category)=>{
         const themesString= getTagsFromCategory(category);
         //console.log(themesString);
@@ -374,7 +405,10 @@ export const CreateEdusource= ({ ...others }) =>{
                                                     InputProps={{
                                                         endAdornment: (
                                                           <InputAdornment position="end">
-                                                             <Button
+                                                            {loading?<>
+                                                                <CircularProgress />
+                                                            </>:<>
+                                                            <Button
                                                                 type="submit"
                                                                 fullWidth
                                                                 disabled = {errors.url}
@@ -383,6 +417,8 @@ export const CreateEdusource= ({ ...others }) =>{
                                                                 >  
                                                                {i18next.t("Continue")}
                                                             </Button>
+                                                            </>}
+                                                             
                                                           </InputAdornment>
                                                         ),
                                                     }}
@@ -547,6 +583,7 @@ export const CreateEdusource= ({ ...others }) =>{
                                     helperText={i18next.t("Add free themes/labels/hashtags separated by comma")}
                                     onChange={freeLabelsChange}
                                     fullWidth
+                                    defaultValue={freeLabels}
                                     sx={{ mt:1,
                                         '& fieldset': {
                                         borderRadius: '20px',
@@ -628,6 +665,56 @@ export const CreateEdusource= ({ ...others }) =>{
                         </DialogContent>
                         <DialogActions>
                         <Button onClick={handleCategoriesDialogClick}>{i18next.t("Close")}</Button>
+                        </DialogActions>
+                    </Dialog>
+
+                     {/* DIALOG FOR KAHOOT EXPLANATION */}
+                     <Dialog
+                        open={kahootDialogOpen}
+                        onClose={handleKahootDialogClick}
+                        scroll='paper'
+                        aria-labelledby="kahoot-dialog-title"
+                        aria-describedby="kahoot-dialog-description"
+                    >
+                        <DialogTitle id="kahoot-dialog-title">{i18next.t("Are you using a kahoot?")}</DialogTitle>
+                        <DialogContent dividers={true}>
+                        <DialogContentText
+                            id="kahoot-dialog-description"
+                            ref={kahootDescriptionElementRef}
+                            tabIndex={-1}
+                        >
+                            <p>{i18next.t("Make sure that your kahoot is listed as 'public', or nobody is going to be able to see it")}</p>
+                            <p>{i18next.t("Watch this shor video if you need instrutions on how to do it")}:</p>
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/gddd_aMpM7Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                        <Button onClick={handleKahootDialogClick}>{i18next.t("Close")}</Button>
+                        </DialogActions>
+                    </Dialog>
+
+                     {/* DIALOG FOR GOOGLEDOC EXPLANATION */}
+                     <Dialog
+                        open={googleDocDialogOpen}
+                        onClose={handleGoogleDocDialogClick}
+                        scroll='paper'
+                        aria-labelledby="googleDoc-dialog-title"
+                        aria-describedby="googleDoc-dialog-description"
+                    >
+                        <DialogTitle id="googleDoc-dialog-title">{i18next.t("Are you publishing a Google Document?")}</DialogTitle>
+                        <DialogContent dividers={true}>
+                        <DialogContentText
+                            id="googleDoc-dialog-description"
+                            ref={googleDocDescriptionElementRef}
+                            tabIndex={-1}
+                        >
+                            <p>{i18next.t("Make sure that your Google Document is listed as 'public', or nobody is going to be able to see it")}</p>
+                            <p>{i18next.t("Watch this shor video if you need instrutions on how to do it")}:</p>
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/fV_hbCl31G0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                        <Button onClick={handleGoogleDocDialogClick}>{i18next.t("Close")}</Button>
                         </DialogActions>
                     </Dialog>
             </ThemeProvider>

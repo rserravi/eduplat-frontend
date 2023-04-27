@@ -53,6 +53,7 @@ const userSlice = createSlice({
         loading: false,
         loaded: false,
         isLogged: true,
+        isBoss: false,
         valorations:[],
         alerts:{
             user: 0,
@@ -94,6 +95,7 @@ const userSlice = createSlice({
             state.valorations = action.payload.valorations;
             state.alerts = action.payload.alerts;
             state.language = action.payload.language;
+            state.isBoss = action.payload.isBoss;
         },
         SET_LOADING(state, action) {
             state.loading = action.payload;

@@ -124,7 +124,7 @@ export const EdusourcePage = () =>{
                     
                 </Grid>
                 
-                {user && (user._id===edusource.promoterId)?<>
+                {user && ((user._id===edusource.promoterId) || user.isBoss)?<>
                 <Grid item sx= {{my:1}}>
                     <ButtonGroup >
                         <Button color='secondary' variant='contained' onClick={(e)=>{ editClickHandle(e, edusource)}} size="small" sx={{borderRadius :"15px", mt:1}}>{i18next.t("edit")}</Button>

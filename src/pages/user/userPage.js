@@ -1,4 +1,4 @@
-import { Alert, Box, Button,  Chip,  CssBaseline, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Fab, Grid, IconButton,  Snackbar, TextField, Typography } from '@mui/material';
+import { Alert, Box, Button,  Chip,  CssBaseline, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Fab, Grid, IconButton,  Menu,  MenuItem,  Snackbar, TextField, Typography } from '@mui/material';
 import * as React from 'react'
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -21,12 +21,18 @@ import { SocialRow } from 'src/ui-component/cards/user/socialRow';
 import { Valoration } from 'src/pages/myAccount/comp/valoration';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import CopyIcon from '@mui/icons-material/FileCopy';
+import EmailIcon from '@mui/icons-material/Email';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import { customIcons, FavoriteIcon, Favorites, ValorationMeanIcon } from 'src/components/favorites';
 import i18next from 'i18next';
 import { karmaLevel, karmaPalettes } from 'src/utils/karma';
 import { PictureDialog } from 'src/components/form-components/image-comp';
 import { getHeadShot, getRightPicture } from 'src/utils/picUtils';
 import { sendMessage } from 'src/api/messagesApi';
+import { getShareProfileUrl } from 'src/utils/rootTools';
 
 const theme = createTheme(themeOptions);
 var newMaxWidth  = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -69,6 +75,18 @@ export const UserPage = () =>{
     const [activityOpen, setActivityOpen] = useState(true);
     const [openSnack, setOpenSnack] = useState(false);
 
+    //MENU
+    const [menuAnchorEl, setMenuAnchorEl] = useState(null);
+    const menuOpen = Boolean(menuAnchorEl);
+    const handleMoreClick = (event)=>{
+        console.log(event.currentTarget)
+        setMenuAnchorEl(event.currentTarget);
+    }
+
+    const handleMoreClose = () => {
+        setMenuAnchorEl(null);
+      };
+
     //SNACK
     const [severity, setSeverity] = useState("info");
     const [message, setMessage] = useState("");
@@ -87,7 +105,80 @@ export const UserPage = () =>{
         }
     }
 
+     //DIALOGS OPEN CLOSE FUNCTIONS
 
+     const [reportText, setReportText] = useState("")
+     const [reportDialogOpen, setReportDialogOpen] = useState(false)
+
+     const handleReportChange = (event)=>{
+        setReportText(event.target.value)
+     }
+
+     const handleReportAccept = ()=>{
+        const email = "incidencias@eduplat.org";
+        console.log(email)
+        const subject = i18next.t("Report Profile");
+        const emailBody = reportText;
+
+        window.location.href = `mailto:${email}?subject=${subject}&body=${encodeURIComponent(emailBody)}`
+        setReportDialogOpen(false)
+    }
+
+    const handleReportCancel = ()=>{
+        setReportDialogOpen(false)
+    }
+
+    const openReportDialog = (event)=>{
+        setReportDialogOpen(true);
+    }
+
+    // SHARE PROFILE FUNCTIONS
+    const [shareProfileOpen, setShareProfileOpen] = useState(false);
+    const [shareUrl, setShareUrl] = useState("");
+    const handleShareProfileOpen = () => setShareProfileOpen(true);
+    const handleShareProflieClose = () => setShareProfileOpen(false);
+
+        
+    const handleCopy = () => {
+        navigator.clipboard.writeText(shareUrl);
+        handleShareProflieClose();
+    };
+
+    const handleEmail = () => {
+        const subject = 'Check out this page!';
+        const body = `I thought you might be interested in this page:\n\n${shareUrl}`;
+        const mailToLink = `mailto:?subject=${encodeURIComponent(
+        subject
+        )}&body=${encodeURIComponent(body)}`;
+        window.location.href = mailToLink;
+        handleShareProflieClose();
+    };
+
+    const handleFacebook = () => {
+        const fbShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+        shareUrl
+        )}`;
+        window.open(fbShareUrl, '_blank');
+        handleShareProflieClose();
+    };
+
+    const handleTwitter = () => {
+        const twitterShareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+        shareUrl
+        )}`;
+        window.open(twitterShareUrl, '_blank');
+        handleShareProflieClose();
+    };
+
+    const handleLinkedIn = () => {
+        const linkedinShareUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
+        shareUrl
+        )}`;
+        window.open(linkedinShareUrl, '_blank');
+        handleShareProflieClose();
+    };
+
+    
     //DIALOGS OPEN CLOSE FUNCTIONS
 
     const handleSendAMssageDialogOpen = ()=>{
@@ -291,6 +382,19 @@ export const UserPage = () =>{
         }
     }
 
+    const shareProfile = (event)=>{
+        handleMoreClose();
+        handleShareProfileOpen();
+    }
+
+    const reportProfile = (event)=>{
+    
+        handleMoreClose();
+        openReportDialog()
+
+        
+    }
+
     useEffect(() =>{
       
        if(!loadedUser || loadedUser===null){
@@ -299,6 +403,7 @@ export const UserPage = () =>{
                  fetchUserByUsername(id).then((response)=>{
                    //console.log(response);
                     setLoadedUser(response.user)
+                    setShareUrl(getShareProfileUrl()+ response.user.username);
                     
                     // SET COMENTARIES
                     
@@ -390,7 +495,7 @@ export const UserPage = () =>{
                         width: newWidth - 20,
                     }} 
                     >
-                         {loadedUser.username === user.username?<>
+                         {loadedUser.username === user.username || user.isBoss?<>
                             <Fab size="small" aria-label="edit-heading-picture" disabled 
                                 sx={{
                                     position:"absolute",
@@ -401,7 +506,7 @@ export const UserPage = () =>{
                                 <EditIcon />
                             </Fab>
                         </>:<></>}
-                        {loadedUser.username === user.username?<>
+                        {loadedUser.username === user.username || user.isBoss?<>
                             <Fab size="small" aria-label="edit-portrait-picture" 
                                 onClick={handleProfilePicOpen}
                                
@@ -450,7 +555,7 @@ export const UserPage = () =>{
                         ml: newWidth<500?4:30,
                     }}>
                         {!loadedUser.publicData.name?loadedUser.firstname + " " + loadedUser.lastname:loadedUser.username}
-                            {loadedUser.username === user.username?<>
+                            {loadedUser.username === user.username || user.isBoss?<>
                             <IconButton onClick={handleNameOpen} size="small" aria-label="edit-name-and-username" 
                                 sx={{
                                     backgroundColor: palette.primaryColor,
@@ -478,7 +583,7 @@ export const UserPage = () =>{
                        ml: 4
                     }}>
                         {loadedUser.job.position} at {loadedUser.job.workplace}
-                        {loadedUser.username === user.username?<>
+                        {loadedUser.username === user.username || user.isBoss?<>
                         <IconButton onClick={handleDescriptionOpen}  size="small" aria-label="edit-name-and-username" 
                                 sx={{
                                     backgroundColor: palette.primaryColor,
@@ -506,7 +611,7 @@ export const UserPage = () =>{
                                 mx:1,
                         }} /> 
                    </Grid>
-                   {loadedUser.username !== user.username?<>
+                   {loadedUser.username !== user.username ?<>
                     <Button onClick={handleSendAMssageDialogOpen } startIcon={<SendIcon />} variant='contained' sx={{
                         backgroundColor:palette.secondaryColor?palette.secondaryColor:"#b3b8cd",
                         borderRadius:"20px",
@@ -520,7 +625,11 @@ export const UserPage = () =>{
                     }}>
                         {i18next.t("Send Message")}
                     </Button>
-                    <Button  variant='outlined' sx={{
+                    <Button  variant='outlined' onClick={handleMoreClick}
+                        aria-controls={menuOpen ? 'see-menu' : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={menuOpen ? 'true' : undefined}
+                        sx={{
                         borderColor:palette.secondaryColor,
                         color:palette.secondaryColor,
                         borderRadius:"20px",
@@ -530,6 +639,7 @@ export const UserPage = () =>{
                             borderColor: palette.secondaryColor,
                             color: palette.primaryColor,
                         },
+                       
                     }}>
                         {i18next.t("More")}...
                     </Button>
@@ -558,7 +668,7 @@ export const UserPage = () =>{
                             ml: 2
                             }}>
                                 {i18next.t("About me")}:
-                                {loadedUser.username === user.username?<>
+                                {loadedUser.username === user.username || user.isBoss?<>
                                 <IconButton onClick={handleAboutOpen} size="small" aria-label="edit-name-and-username" 
                                 sx={{
                                     backgroundColor: palette.primaryColor,
@@ -830,7 +940,61 @@ export const UserPage = () =>{
                     </DialogActions>
                 </Dialog>
 
+                {/* REPORT DIALOG*/}
 
+                <Dialog open={reportDialogOpen} >
+                    <DialogTitle>{i18next.t("Report profile")} @{loadedUser.username}</DialogTitle>
+                    <DialogContent>
+                        <Typography variant='h4'>
+                            {i18next.t("Write the motive of your report, and Eduplat team will review it:")}
+                        </Typography>
+                    <TextField
+                        autoFocus
+                        name='report'
+                        margin="dense"
+                        id="name"
+                        multiline
+                        fullWidth
+                        rows={8}
+                        variant="outlined"
+                        sx={{backgroundColor: 'background.terciary'}}
+                        onChange={handleReportChange}
+                    />
+                    </DialogContent>
+                    <DialogActions>
+                    <Button onClick={handleReportAccept}>{i18next.t("Accept")}</Button>
+                    <Button onClick={handleReportCancel}>{i18next.t("Cancel")}</Button>
+                    </DialogActions>
+                </Dialog>
+
+                 {/* SHARE PROFILE DIALOG*/}
+
+                <Dialog open={shareProfileOpen} onClose={handleShareProflieClose}>
+                    <DialogTitle>{i18next.t("Share this profile")}</DialogTitle>
+                    <DialogContent>
+                    <DialogContentText><Typography variant='h3'> @{loadedUser.username}</Typography></DialogContentText>
+                    <DialogContentText>&nbsp;</DialogContentText>
+                    <DialogContentText>{i18next.t("Select a sharing option")}:</DialogContentText>
+                    <Button startIcon={<FacebookIcon />} onClick={handleFacebook}>
+                        {i18next.t("Share on")} Facebook
+                    </Button>
+                    <Button startIcon={<TwitterIcon />} onClick={handleTwitter}>
+                    {i18next.t("Share on")} Twitter
+                    </Button>
+                    <Button startIcon={<LinkedInIcon />} onClick={handleLinkedIn}>
+                    {i18next.t("Share on")} LinkedIn
+                    </Button>
+                    <Button startIcon={<EmailIcon />} onClick={handleEmail}>
+                    {i18next.t("Share via")} Email
+                    </Button>
+                    <Button startIcon={<CopyIcon />} onClick={handleCopy}>
+                        {i18next.t("Copy link to Clipboard")}
+                    </Button>
+                    </DialogContent>
+                    <DialogActions>
+                    <Button onClick={handleShareProflieClose}>{i18next.t("Cancel")}</Button>
+                    </DialogActions>
+                </Dialog>
 
                 <PictureDialog
                     user={user}
@@ -844,6 +1008,20 @@ export const UserPage = () =>{
                     {message}
                     </Alert>
                 </Snackbar>
+
+                {/* MENU SEE MORE */}
+                <Menu
+                    id="see-menu"
+                    anchorEl={menuAnchorEl}
+                    open={menuOpen}
+                    onClose={handleMoreClose}
+                    MenuListProps={{
+                    'aria-labelledby': 'basic-button',
+                    }}
+                >
+                    <MenuItem onClick={shareProfile}>{i18next.t("Share Profile")}</MenuItem>
+                    <MenuItem onClick={reportProfile}>{i18next.t("Report Profile")}</MenuItem>
+                </Menu>
 
             </ThemeProvider>
         </React.Fragment>

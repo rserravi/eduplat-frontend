@@ -101,8 +101,8 @@ export const Copyright = (props)=> {
                         alignItems="center"
                         >
                         <Grid item>
-                            <Link href='https://www.bienesdar.org/' target="_blank" rel="noopener" underline="hover">
-                            <Typography>Bienesdar.org</Typography>
+                            <Link href='mailto:incidencias@eduplat.org' target="_blank" rel="noopener" underline="hover">
+                            <Typography>{i18next.t("Support")}</Typography>
                             </Link>
                         </Grid>
                         <Grid item>

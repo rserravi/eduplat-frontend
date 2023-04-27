@@ -18,6 +18,7 @@ import { useNavigate } from 'react-router-dom';
 //import { replaceSpacesWithUnderscores } from 'src/utils/stringOperations';
 import { categoriesList, iscedList } from 'src/utils/isced';
 import { Divider, MenuItem, TextField } from '@mui/material';
+import { languagesCodes } from 'src/utils/countries';
 
 
 const theme = createTheme(themeOptions);
@@ -63,6 +64,11 @@ export const LandingPage = () =>{
     const handleSelectLevel = (event, code)=>{
         event.preventDefault();
         navigate("/level/"+code);
+    }
+
+    const handleSelectLanguage = (event, code)=>{
+        event.preventDefault();
+        navigate("/language/"+code);
     }
 
     const handleSelectCategory = (event)=>{
@@ -211,6 +217,29 @@ export const LandingPage = () =>{
                         columnSpacing={{ xs: 3}}
                         mt={4}
                     >
+                    <Grid item  mb={2}>
+                        <TextField
+                            label ={i18next.t("Languages")}
+                            select
+                            defaultValue=" "
+                            sx={{ 
+                                mt:1,
+                                '& fieldset': {
+                                borderRadius: '20px',
+                            },}}
+                        >
+                            {languagesCodes.map((option)=>{
+                                return(
+                                <MenuItem onClick={(e)=>{handleSelectLanguage(e, option.code)}}  key={option.code} value={option.code+""}>{i18next.t(option.label)}</MenuItem>
+                                )
+                                
+                            })}
+                                <Divider />
+                            <MenuItem key={1000} value={" "}>{i18next.t("Search by language")}</MenuItem>
+                        
+                        </TextField>
+                       
+                    </Grid>
                     <Grid item  mb={2}>
                         <TextField
                             label ={i18next.t("Levels")}

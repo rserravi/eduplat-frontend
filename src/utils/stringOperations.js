@@ -22,26 +22,49 @@ export const replaceUnderscoresWithSpaces=(str)=> {
     return result;
   }
 
+const getYouTubeID = (url)=> {
+    // Remove any query parameters from the URL
+    url = url.split('?')[0];
+  
+    // Extract the video ID from the URL
+    let id;
+    if (url.indexOf('youtu.be/') !== -1) {
+      // Shortened URL format: https://youtu.be/{VIDEO_ID}
+      id = url.split('youtu.be/')[1];
+    } else {
+      // Full URL format: https://www.youtube.com/watch?v={VIDEO_ID}&...
+      id = url.split('v=')[1];
+      if (id.indexOf('&') !== -1) {
+        id = id.split('&')[0];
+      }
+    }
+  
+    return id;
+  }
+
 export const YoutubeLinkToIframeLink = (link)=>{
    //https://youtu.be/EXM3dTdm7Xk
   // https://www.youtube.com/watch?v=EXM3dTdm7Xk
   // https://www.youtube.com/embed/EXM3dTdm7Xk
 
-  var retorno = link;
-  const mini = link.search("youtu.be");
-  if (mini && mini !==-1){
-    const id = link.substring(17, link.length);
-    console.log("POS ES:", mini, id)
-    retorno =  "https://www.youtube.com/embed/"+id;
-  }
+  const id = getYouTubeID(link);
+  var retorno = "https://www.youtube.com/embed/"+id;
 
-  const pos = link.search("v=");
-  if (pos && pos!==-1){
-    const id = link.substring(pos+2, link.length);
-    console.log("POS ES:", pos, id)
-    retorno =  "https://www.youtube.com/embed/"+id;
-  }
   return retorno;
 
+}
+
+function extractIdAndSuffix(url) {
+  const id = url.split('/').pop().split('_')[0];
+  const suffix = url.split('_').pop().split('.')[0];
+  return { id, suffix };
+}
+
+export const ExtractEmbedUrlWordWallFromImage = (image)=>{
+console.log("IMAGEN EN EXTRACT FROM IMAGE", image)
+  const { id, suffix } = extractIdAndSuffix(image);
+  const embedUrl = "https://wordwall.net/embed/" + id +"?themeId="+suffix+"&templateId=3&fontStackId=0"
+
+  return embedUrl;
 }
 
