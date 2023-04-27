@@ -198,8 +198,9 @@ export const EdusourceBody= (props) =>{
         
         
         switch (edusource.linktype) {
-            
+          
             case "Youtube":
+                console.log("LINK EN EDUSOURCE.BODY", edusource.link)
                 return (
                     <>
                     <Container sx={{mt:2}}>
@@ -215,6 +216,7 @@ export const EdusourceBody= (props) =>{
                     </Container>
                     </>
                 )
+                
             case "Vimeo":
                 return (
                     <Container sx={{mt:2, p:1, pb:"56.25%"}}>
@@ -246,7 +248,7 @@ export const EdusourceBody= (props) =>{
                     </Container>
                     </>
                 ) 
-          
+                break;
             default:
                 console.log("IN DEFAULT RESOURCEWEB")
                 if (allowed){

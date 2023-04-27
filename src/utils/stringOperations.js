@@ -23,23 +23,22 @@ export const replaceUnderscoresWithSpaces=(str)=> {
   }
 
 const getYouTubeID = (url)=> {
-    // Remove any query parameters from the URL
-    url = url.split('?')[0];
-  
-    // Extract the video ID from the URL
-    let id;
-    if (url.indexOf('youtu.be/') !== -1) {
-      // Shortened URL format: https://youtu.be/{VIDEO_ID}
-      id = url.split('youtu.be/')[1];
-    } else {
-      // Full URL format: https://www.youtube.com/watch?v={VIDEO_ID}&...
-      id = url.split('v=')[1];
-      if (id.indexOf('&') !== -1) {
-        id = id.split('&')[0];
-      }
-    }
-  
-    return id;
+  let videoId = '';
+
+  if (url.includes('youtu.be/')) {
+    // Extract video ID from "youtu.be" links
+    videoId = url.split('youtu.be/')[1];
+  } else if (url.includes('watch?v=')) {
+    // Extract video ID from "www.youtube.com" links
+    videoId = url.split('watch?v=')[1];
+  }
+
+  // If the URL has additional query parameters, remove them
+  if (videoId.includes('&')) {
+    videoId = videoId.split('&')[0];
+  }
+
+  return videoId;
   }
 
 export const YoutubeLinkToIframeLink = (link)=>{
