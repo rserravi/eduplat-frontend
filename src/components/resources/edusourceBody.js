@@ -187,12 +187,16 @@ export const EdusourceBody= (props) =>{
               const frameOptions = iFrameWindow.frameElement.getAttribute('allow');
               console.log ("FRAME OPTIONS", frameOptions)
               if (!frameOptions || frameOptions.indexOf('allow-forms') === -1) {
-                setAllowed(false);
-                setContentAllowed(false);
+                if (edusource.linktype!=="Google Docs"){
+                    setAllowed(false);
+                    setContentAllowed(false);
+                }
               }
             } catch (error) {
-                setAllowed(false);
-                setContentAllowed(false);
+                if (edusource.linktype!=="Google Docs"){
+                    setAllowed(false);
+                    setContentAllowed(false);
+                }
             }
           };
         
