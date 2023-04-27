@@ -92,6 +92,9 @@ export const CreateEdusource= ({ ...others }) =>{
                     case "Google Docs":
                         setGoogleDocDialogOpen(true);
                         break;
+                    case "Google Drive":
+                        setGoogleDocDialogOpen(true);
+                        break;
                     
                 
                     default:
@@ -330,7 +333,7 @@ export const CreateEdusource= ({ ...others }) =>{
 
     const handleAuthorsChange = (event) =>{
         event.preventDefault()
-        setAuthors(event.targe.value)
+        setAuthors(event.target.value)
     }
 
    

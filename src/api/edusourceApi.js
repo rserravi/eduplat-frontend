@@ -261,6 +261,20 @@ export const getResourcesOfTheme = (thm) =>{
     })
 }
 
+export const getResourcesOfType = (thm) =>{
+    return new Promise( async(resolve, reject)=>{
+        try {
+            const res = await axios.get(edusourceUrl+"type?type="+replaceSpacesWithUnderscores(thm));
+            //console.log("RES IN GET THEM", res.data)
+            resolve(res.data);
+            
+        } catch (error) {
+            console.log(error);
+            reject(error.message);
+        }
+    })
+}
+
 
 export const getResourcesOfLevel = (level) =>{
     return new Promise( async(resolve, reject)=>{

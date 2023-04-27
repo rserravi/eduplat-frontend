@@ -21,6 +21,7 @@ import { JustTheme, ThemePage } from 'src/pages/themePage';
 import { LevelPage } from 'src/pages/levelPage';
 import { KarmaPage } from 'src/pages/miscelanea/karmaPage';
 import { LanguagePage } from 'src/pages/languagePage';
+import { TypePage } from 'src/pages/typePage';
 
 
 
@@ -101,6 +102,10 @@ const MainRoutes = {
         {   
             path: 'language/:lang',
             element: <LanguagePage />
+        },
+        {   
+            path: 'type/:type',
+            element: <TypePage />
         },
         {
             path: '/aboutus',

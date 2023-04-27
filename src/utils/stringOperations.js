@@ -67,3 +67,12 @@ console.log("IMAGEN EN EXTRACT FROM IMAGE", image)
   return embedUrl;
 }
 
+export const embedGoogleDriveUrl=(url)=> {
+  const regex = /\/file\/d\/(.+?)\/(?:view|edit)?/; // regex to extract file ID from URL
+  const match = url.match(regex);
+  if (!match) {
+    return null; // URL is not a valid Google Drive URL
+  }
+  const fileId = match[1];
+  return `https://drive.google.com/file/d/${fileId}/preview`; // return embedded URL with "preview" parameter
+}

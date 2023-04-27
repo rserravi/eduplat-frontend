@@ -1,7 +1,7 @@
 export const resourceTypes = [
     {
         value: 'Website',
-        label: 'Woman',
+        label: 'Website',
     },
     {
         value: 'Youtube',
@@ -26,6 +26,10 @@ export const resourceTypes = [
     {
         value: 'Google Drive',
         label: 'Google Drive',
+    },
+    {
+        value: 'Google Docs',
+        label: 'Google Docs',
     },
     {
         value: 'Wordwall',

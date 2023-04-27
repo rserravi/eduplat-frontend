@@ -19,6 +19,7 @@ import { useNavigate } from 'react-router-dom';
 import { categoriesList, iscedList } from 'src/utils/isced';
 import { Divider, MenuItem, TextField } from '@mui/material';
 import { languagesCodes } from 'src/utils/countries';
+import { resourceTypes } from 'src/utils/resourceTypes';
 
 
 const theme = createTheme(themeOptions);
@@ -74,7 +75,11 @@ export const LandingPage = () =>{
     const handleSelectCategory = (event)=>{
         event.preventDefault();
        navigate("/discipline/"+event.target.value);
-      
+    }
+
+    const handleSelectType = (event)=>{
+        event.preventDefault();
+       navigate("/type/"+event.target.value);
     }
 
     React.useEffect(()=>{
@@ -285,6 +290,30 @@ export const LandingPage = () =>{
                                 <MenuItem key={1000} value={" "}>{i18next.t("Search by Category")}</MenuItem>
                         </TextField>
                     </Grid>
+
+                    <Grid item mb={2} >
+                        <TextField
+                            label ={i18next.t("Type")}
+                            select
+                            defaultValue=" "
+                            onChange={handleSelectType}
+                            sx={{ mt:1,
+                                '& fieldset': {
+                                borderRadius: '20px',
+                            },}}
+                        >
+                                {resourceTypes.map((cat)=>{
+                                    return(
+                                        <MenuItem key={cat.value} value={cat.label+""}>
+                                            {i18next.t(cat.label)}
+                                        </MenuItem>
+                                        )
+                                })}
+                                <Divider />
+                                <MenuItem key={1000} value={" "}>{i18next.t("Search by Type")}</MenuItem>
+                        </TextField>
+                    </Grid>
+
 
                     </Grid>
                     

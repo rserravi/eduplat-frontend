@@ -16,7 +16,7 @@ import { customIcons, FavoriteIcon, Favorites, ValorationMeanIcon } from '../fav
 import i18next from 'i18next';
 import { addValoration, changeValoration, } from 'src/api/edusourceApi';
 import { shortDate } from 'src/utils/dateUtils';
-import { ExtractEmbedUrlWordWallFromImage, YoutubeLinkToIframeLink } from 'src/utils/stringOperations';
+import { embedGoogleDriveUrl, ExtractEmbedUrlWordWallFromImage, YoutubeLinkToIframeLink } from 'src/utils/stringOperations';
 
 
 //const theme = createTheme(themeOptions);
@@ -187,13 +187,21 @@ export const EdusourceBody= (props) =>{
               const frameOptions = iFrameWindow.frameElement.getAttribute('allow');
               console.log ("FRAME OPTIONS", frameOptions)
               if (!frameOptions || frameOptions.indexOf('allow-forms') === -1) {
-                if (edusource.linktype!=="Google Docs"){
+                if (
+                    edusource.linktype!=="Google Docs" && 
+                    edusource.linktype!=="Google Drive"
+                    
+                    ){
                     setAllowed(false);
                     setContentAllowed(false);
                 }
               }
             } catch (error) {
-                if (edusource.linktype!=="Google Docs"){
+                if (
+                    edusource.linktype!=="Google Docs" && 
+                    edusource.linktype!=="Google Drive"
+                   
+                    ){
                     setAllowed(false);
                     setContentAllowed(false);
                 }
@@ -232,6 +240,21 @@ export const EdusourceBody= (props) =>{
                                 frameBorder={"0"}
                                 allow={"autoplay"} 
                                 title={"VIMEO"}/>
+                        </div>
+                    </Container>
+                )
+        
+            case "Google Drive":
+                return (
+                    <Container sx={{mt:2}}>
+                        <div style={{divStyle}}>
+                            <iframe 
+                                src={embedGoogleDriveUrl(edusource.link)} 
+                                style={iframeStyle} 
+                                allowFullScreen  
+                                width={newWidth/2} 
+                                height={newWidth*0.66}  
+                                title={"Google Drive Document"}/>
                         </div>
                     </Container>
                 )
