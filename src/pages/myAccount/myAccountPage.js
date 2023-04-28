@@ -10,6 +10,7 @@ import Loader from 'src/ui-component/Loader';
 import { MyAccountSetup } from './comp/myAccount-setup';
 import { MyAccountValorations } from './comp/myAccoun-valorations';
 import { MyAccountResources } from './comp/myAccount-resources';
+import { MyAccountAdministration } from './comp/myAccount-administration';
 
 
 const theme = createTheme(themeOptions);
@@ -84,6 +85,16 @@ export const MyAccount = () =>{
                             {selected==='collections'?<u>{i18next.t("Collections")}</u>:i18next.t("Collections")}
                         </Button>
                     </Grid>
+                    {user.isBoss?<>
+                        <Grid item >
+                            <Button 
+                                color={selected==='administration'?'secondary':'primary'} 
+                                onClick={(event)=>{selectTab(event, "administration")}}
+                                sx={{ borderRadius:5, mt:1 }}> 
+                                {selected==='administration'?<u>{i18next.t("Administration")}</u>:i18next.t("Administration")}
+                            </Button>
+                    </Grid>
+                    </>:<></>}
                     
                </Grid>
                <Divider />
@@ -101,6 +112,7 @@ export const MyAccount = () =>{
                     {selected==="setup"?<><MyAccountSetup user={user} /></>:<></>}
                     {selected==="valorations"?<><MyAccountValorations user={user} /></>:<></>}
                     {selected==="resources"?<><MyAccountResources user={user} /> </>:<></>}
+                    {selected==="administration"?<><MyAccountAdministration user={user} /> </>:<></>}
                {/*  </Box> */}
             </ThemeProvider>
         </React.Fragment>

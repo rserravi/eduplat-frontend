@@ -1,11 +1,10 @@
-import { Box,   CssBaseline, Grid, IconButton, InputAdornment, Skeleton, TextField, Typography } from '@mui/material';
+import { Box,   CircularProgress,   CssBaseline, Grid, IconButton, InputAdornment, Skeleton, TextField, Typography } from '@mui/material';
 import * as React from 'react'
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions } from 'src/theme/theme';
 
-import fakeLastResources from 'src/assets/fakeLists/lastResources'
 import { ResourcesNetflixGrid } from 'src/components/resources/resources';
 import SearchIcon from '@mui/icons-material/Search';
 
@@ -22,8 +21,9 @@ var newMaxWidth  = window.innerWidth || document.documentElement.clientWidth || 
 
 export const OpenSearch = () =>{
 
-    const {type, terms} = useParams();
+    var {type, terms} = useParams();
     console.log (terms, type);
+    
     const [searchValue, setSearchValue] = useState(terms);
     const [serp, setSerp] = useState(); //CHANGE fakeLastResources
     const [newWidth, setNewWidth] = useState(newMaxWidth);
@@ -34,8 +34,8 @@ export const OpenSearch = () =>{
     const [themesFilter, setThemesFilter]= useState("")
     const [searching, setSearching] = useState(false);
     const [flag, setFlag]= useState(false);
-       
-
+    const [firstRender, setFirstRender] = useState(terms!=="" && terms!==null && terms!==undefined);
+      
  
     const updateFilters = (lang, type, cat, level, themes) =>{
         setLanguageFilter(lang);
@@ -51,17 +51,15 @@ export const OpenSearch = () =>{
         console.log("SELECTED ITEM", event.target.textContent);
         setSearchValue(event.target.textContent);
         setFlag(true);
-        
-
     }
 
-   //const [userLS, setUserLS] = useState(new LocalBrowserHistory("eduplat.u-search",5, selectedItem));
     const userLS = new LocalBrowserHistory("eduplat.u-search",5, selectedItem, setFlag);
     const resourcesLS = new LocalBrowserHistory("eduplat.r-search",5, selectedItem, setFlag);
     const collectionsLS = new LocalBrowserHistory("eduplat.c-search",5);
 
     const OnSearchChange = (event) =>{
-        //console.log(event.target.value);
+        console.log("ON SEARCH CHANGE",event.target.value);
+        event.preventDefault();
          setSearchValue(event.target.value);
        }
    
@@ -73,8 +71,9 @@ export const OpenSearch = () =>{
     };
 
     const OnSearchClick = (event) =>{
+        
         event.preventDefault();
-
+        console.log("ON SEARCH CLICK")
         if (searchValue!==""){
           console.log (searchValue, typeOfFilter);
        
@@ -110,6 +109,7 @@ export const OpenSearch = () =>{
     
     const searchResources = async () =>{
         //BUSCAR RECURSOS
+        console.log("SEARCHING")
         setSearching(true);
         await searchInResources(searchValue, languageFilter, categoriesFilter, levelFilter, themesFilter).then((result)=>{
             console.log("Resultado en Search Resources",result)
@@ -142,10 +142,11 @@ export const OpenSearch = () =>{
     }
 
     useEffect(()=>{
-        console.log("VALOR ESTABLECIDO EN SEARCH VALUE")
-        if (flag) {
+        //console.log("VALOR ESTABLECIDO EN SEARCH VALUE")
+        if (flag || firstRender) {
             OnSearchClick(new Event('UpdatedTheSelectedItem'));
             setFlag(false);
+            setFirstRender(false);
         }
 
     },[searchValue, flag])
@@ -177,6 +178,7 @@ export const OpenSearch = () =>{
                                 <Typography variant='h2' component='h1' >
                                     {i18next.t("Search Resources")}
                                 </Typography>
+                               
                             </Grid>
                             <Grid item xs={12} mt={1}>
                                 <FilterMenu updateFilters={updateFilters} type={type}/>
@@ -201,9 +203,14 @@ export const OpenSearch = () =>{
                                     InputProps={{
                                         endAdornment: (
                                           <InputAdornment position="end">
+                                            {searching?<>
+                                            <CircularProgress />
+                                            </>:<>
                                             <IconButton onClick={OnSearchClick}>
-                                            <SearchIcon color='secondary' />
+                                                <SearchIcon color='secondary' />
                                             </IconButton>
+                                            </>}
+                                            
                                           </InputAdornment>
                                         ),
                                       }}

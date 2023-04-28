@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
 import { getResourcesOfTheme } from "src/api/edusourceApi";
 import { ResourcesNetflixGrid } from "src/components/resources/resources";
+import { SearchBarComponent } from "src/components/search-bar-component";
 import { themeOptions } from 'src/theme/theme';
 import { replaceUnderscoresWithSpaces } from "src/utils/stringOperations";
 
@@ -55,6 +56,7 @@ export const ThemePage = ()=>{
             <ThemeProvider theme={theme}>
             <Box sx={{ width: newWidth, p:2 }}> 
                 <Typography variant="h5" sx={{my:2}}>{i18next.t("Subcathegories and Labels")}: {i18next.t(thm)}</Typography>
+                <SearchBarComponent tab={"category"} />
                 <ResourcesNetflixGrid edusourceList={theTheme} title={i18next.t(thm)} newcolor="secondary.light" newWidth={newWidth}/>
             </Box>
             </ThemeProvider>

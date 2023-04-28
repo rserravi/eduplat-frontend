@@ -10,7 +10,7 @@ import { Volunteers } from 'src/pages/miscelanea/volunteers';
 import { UserPage } from 'src/pages/user/userPage';
 import { MyAccount } from 'src/pages/myAccount/myAccountPage';
 import { AboutUs } from 'src/pages/miscelanea/aboutus';
-import { Discipline } from 'src/pages/discipline';
+import { Discipline } from 'src/pages/disciplinePage';
 
 
 // project imports

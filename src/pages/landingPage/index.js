@@ -1,25 +1,16 @@
 import * as React from 'react'
 import { isBrowser } from 'react-device-detect';
-//import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions } from 'src/theme/theme';
 import { ResourcesNetflixGrid } from 'src/components/resources/resources';
-//import fakeLastResources from 'src/assets/fakeLists/lastResources'
-//import fakeTagCloud from 'src/assets/fakeLists/fakeCloudTag';
-//import { TagCloud } from 'react-tagcloud'
 import { ShareBarBig } from 'src/components/pageStruct/sharebar';
 import { fetchLastResources, getResourcesOfCategory } from 'src/api/edusourceApi';
 import { Box } from '@mui/system';
 import { useOutletContext } from 'react-router-dom';
 import i18next from 'i18next';
-import { useNavigate } from 'react-router-dom';
-//import { replaceSpacesWithUnderscores } from 'src/utils/stringOperations';
-import { categoriesList, iscedList } from 'src/utils/isced';
-import { Divider, MenuItem, TextField } from '@mui/material';
-import { languagesCodes } from 'src/utils/countries';
-import { resourceTypes } from 'src/utils/resourceTypes';
+import { SearchBarComponent } from 'src/components/search-bar-component';
 
 
 const theme = createTheme(themeOptions);
@@ -32,55 +23,12 @@ const getRandomImageUrl = () =>{
 
 }
 
-/* const colorOptions = {
-    luminosity: 'dark',
-    hue: themeOptions.palette.secondary.main
-  } */
-
-/* const getCategoriesCloud = (resources) =>{
-    const counts = {};
-
-    for (const item of resources) {
-      const discipline = item.discipline;
-      if (discipline in counts) {
-        counts[discipline]++;
-      } else {
-        counts[discipline] = 1;
-      }
-    }
-
-    const disciplineCounts = Object.keys(counts).map(key => ({ value: key, count: counts[key] }))
-    return disciplineCounts;
-} */
-
-
 export const LandingPage = () =>{
     
     const [newWidth] = useOutletContext();
     const [lastResources, SetLastResources] = React.useState();
     const [catOne, setcatOne]= React.useState();
     const [catTwo, setcatTwo]= React.useState();
-    const navigate = useNavigate();
-
-    const handleSelectLevel = (event, code)=>{
-        event.preventDefault();
-        navigate("/level/"+code);
-    }
-
-    const handleSelectLanguage = (event, code)=>{
-        event.preventDefault();
-        navigate("/language/"+code);
-    }
-
-    const handleSelectCategory = (event)=>{
-        event.preventDefault();
-       navigate("/discipline/"+event.target.value);
-    }
-
-    const handleSelectType = (event)=>{
-        event.preventDefault();
-       navigate("/type/"+event.target.value);
-    }
 
     React.useEffect(()=>{
         if (!lastResources ||lastResources===undefined ||lastResources ===null){
@@ -202,118 +150,16 @@ export const LandingPage = () =>{
                     direction="column"
                     alignItems="center"
                     >
-                     {/* TAGCLOUD */}
-                    {/* {categoriesCloud?<>
-                     <Grid item xs={5} backgroundColor= '#ffffff88' sx={{mt:4, ml:2}} >
-                        <TagCloud
-                                minSize={10}
-                                maxSize={42}
-                                colorOptions= {colorOptions}
-                                tags={categoriesCloud}
-                                //onClick={tag => alert(`'${tag.value}' was selected!`)}
-                                onClick={tag => navigate("/discipline/"+ replaceSpacesWithUnderscores(tag.value))}
-                            />
-                    </Grid> 
-                    </>:<></>} */}
                     <Grid container
                         direction="row" 
                         justifyContent="center"
                         alignItems="center"
-                        columnSpacing={{ xs: 3}}
+                        
                         mt={4}
                     >
-                    <Grid item  mb={2}>
-                        <TextField
-                            label ={i18next.t("Languages")}
-                            select
-                            defaultValue=" "
-                            sx={{ 
-                                mt:1,
-                                '& fieldset': {
-                                borderRadius: '20px',
-                            },}}
-                        >
-                            {languagesCodes.map((option)=>{
-                                return(
-                                <MenuItem onClick={(e)=>{handleSelectLanguage(e, option.code)}}  key={option.code} value={option.code+""}>{i18next.t(option.label)}</MenuItem>
-                                )
-                                
-                            })}
-                                <Divider />
-                            <MenuItem key={1000} value={" "}>{i18next.t("Search by language")}</MenuItem>
-                        
-                        </TextField>
-                       
-                    </Grid>
-                    <Grid item  mb={2}>
-                        <TextField
-                            label ={i18next.t("Levels")}
-                            select
-                            defaultValue=" "
-                            sx={{ 
-                                mt:1,
-                                '& fieldset': {
-                                borderRadius: '20px',
-                            },}}
-                        >
-                            {iscedList.map((option)=>{
-                                return(
-                                <MenuItem onClick={(e)=>{handleSelectLevel(e, option.label)}}  key={option.key} value={option.label+""}>{i18next.t(option.desc)}</MenuItem>
-                                )
-                               
-                            })}
-                             <Divider />
-                            <MenuItem key={1000} value={" "}>{i18next.t("Search by level")}</MenuItem>
-                        
-                        </TextField>
-                       
-                    </Grid>
-                    <Grid item mb={2} >
-                        <TextField
-                            label ={i18next.t("Categories")}
-                            select
-                            defaultValue=" "
-                            onChange={handleSelectCategory}
-                            sx={{ mt:1,
-                                '& fieldset': {
-                                borderRadius: '20px',
-                            },}}
-                        >
-                                {categoriesList.map((cat)=>{
-                                    return(
-                                        <MenuItem key={cat.key} value={cat.label+""}>
-                                            {i18next.t(cat.label)}
-                                        </MenuItem>
-                                        )
-                                })}
-                                <Divider />
-                                <MenuItem key={1000} value={" "}>{i18next.t("Search by Category")}</MenuItem>
-                        </TextField>
-                    </Grid>
-
-                    <Grid item mb={2} >
-                        <TextField
-                            label ={i18next.t("Type")}
-                            select
-                            defaultValue=" "
-                            onChange={handleSelectType}
-                            sx={{ mt:1,
-                                '& fieldset': {
-                                borderRadius: '20px',
-                            },}}
-                        >
-                                {resourceTypes.map((cat)=>{
-                                    return(
-                                        <MenuItem key={cat.value} value={cat.label+""}>
-                                            {i18next.t(cat.label)}
-                                        </MenuItem>
-                                        )
-                                })}
-                                <Divider />
-                                <MenuItem key={1000} value={" "}>{i18next.t("Search by Type")}</MenuItem>
-                        </TextField>
-                    </Grid>
-
+                        <Grid item>
+                        <SearchBarComponent />
+                   </Grid>
 
                     </Grid>
                     
