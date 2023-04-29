@@ -2,6 +2,9 @@
 
 export const getHeadShot = (user)=>{
     var pic = "";
+    if (!user.picture || user.picture===undefined || user.picture===null){
+        return ( "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png") 
+    }
    
     if (user.picture.type ==="link"){
         if (user.picture.fileName !==null ||user.picture.fileName !==undefined || user.picture.fileName !==""){

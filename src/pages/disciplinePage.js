@@ -18,12 +18,14 @@ export const Discipline = ()=>{
     cat = replaceUnderscoresWithSpaces(cat);
     console.log(cat);
     const [category, setCategory]= React.useState();
+    const [catTotal, setCatTotal]= React.useState();
 
     useEffect (()=>{
             try {
-                getResourcesOfCategory(cat).then((response)=>{
+                getResourcesOfCategory(cat,1).then((response)=>{
     
-                    setCategory(response.result.reverse())
+                    setCategory(response.data.data)
+                    setCatTotal(response.data.total)
                    
                }).catch(error=>{
                    
@@ -36,13 +38,30 @@ export const Discipline = ()=>{
 
     },[location.key, cat])
 
+    const onPageChange = (page)=>{
+        try {
+            getResourcesOfCategory(cat,page).then((response)=>{
+
+                setCategory(response.data.data)
+                setCatTotal(response.data.total)
+               
+           }).catch(error=>{
+               
+            console.log(error);
+           })
+           
+       } catch (error) {
+        console.log(error);
+       }
+    }
+
     return (
         <React.Fragment>
             <ThemeProvider theme={theme}>
             <Box sx={{ width: newWidth, p:2 }}> 
                 <Typography variant="h5" sx={{my:2}}>{i18next.t("Category")}: {i18next.t(cat)}</Typography>
                 <SearchBarComponent tab={category} />
-                <ResourcesNetflixGrid edusourceList={category} title={i18next.t(cat)} newcolor="contrast" newWidth={newWidth}/>
+                <ResourcesNetflixGrid edusourceList={category} title={i18next.t(cat)} newcolor="contrast" newWidth={newWidth} total={catTotal} setPage={onPageChange}/>
             </Box>
             </ThemeProvider>
         </React.Fragment>

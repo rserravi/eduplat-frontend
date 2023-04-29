@@ -164,7 +164,7 @@ export const SearchBarComponent = (tab) =>{
                     </Grid>
                     <Grid item mb={1}>
                         <TextField
-                            label={i18next.t("Search resources")}
+                            label={i18next.t("Search Resources")}
                             variant="outlined"
                             onChange={edusourceChange}
                             sx={{ 
@@ -189,7 +189,7 @@ export const SearchBarComponent = (tab) =>{
 
                     <Grid item mb={1}>
                         <TextField
-                            label={i18next.t("Search users")}
+                            label={i18next.t("Search Users")}
                             variant="outlined"
                             onChange={userChange}
                             sx={{ 

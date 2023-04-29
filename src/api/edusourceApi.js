@@ -64,18 +64,19 @@ export const fetchEdusourceByPromoter = (id) =>{
     })
 }
 
-export const fetchLastResources = () =>{
+export const fetchLastResources = (page) =>{
     return new Promise( async(resolve, reject)=>{
         try {
-            const axiosUrl = edusourceUrl + "/last";
+            const axiosUrl = edusourceUrl + "/last?page="+page;
             //console.log(axiosUrl);
             const res = await axios.get(axiosUrl);
             if(res){
-               // console.log(res.data);
+                console.log("RES DATA IN FETCH",res.data);
                 if (res.data.status==="error"){
                     reject(res.data.message)
                 }
-                resolve(res.data);
+               // resolve(res.data);
+               resolve(res)
             }
             else {
                 console.log("NO EXISTE LA URL")
@@ -201,7 +202,7 @@ export const fetchValorationsSorted = (promoterId) =>{
     })
 }
 
-export const searchInResources = (terms, languageFilter, categoriesFilter, levelFilter, themesFilter)=>{
+export const searchInResources = (terms, languageFilter, categoriesFilter, levelFilter, themesFilter, page)=>{
     var newUrl = edusourceUrl+"/search?terms="+terms;
     if (!languageFilter || languageFilter!==""){
         newUrl = newUrl + "&lang="+ languageFilter;
@@ -218,12 +219,23 @@ export const searchInResources = (terms, languageFilter, categoriesFilter, level
     if (themesFilter && themesFilter!==""){
         newUrl = newUrl + "&themes="+ themesFilter;
     }
+    newUrl = newUrl + "&page="+page;
 
 
     return new Promise( async(resolve, reject)=>{
         try {
             const res = await axios.get(newUrl);
-            resolve(res.data);
+            if(res){
+                console.log("RES DATA IN GET RESOURCES OF SEARCH IN RESORCE",res.data);
+                if (res.data.status==="error"){
+                    reject(res.data.message)
+                }
+               // resolve(res.data);
+               resolve(res)
+            }
+            else {
+                console.log("NO EXISTE LA URL")
+            }
             
         } catch (error) {
             console.log(error);
@@ -232,12 +244,21 @@ export const searchInResources = (terms, languageFilter, categoriesFilter, level
     })
 }
 
-export const getResourcesOfCategory = (cat) =>{
+export const getResourcesOfCategory = (cat, page) =>{
     return new Promise( async(resolve, reject)=>{
         try {
-            const res = await axios.get(edusourceUrl+"category?category="+replaceSpacesWithUnderscores(cat));
-            //console.log("RES IN GET CATEGORY", res.data)
-            resolve(res.data);
+            const res = await axios.get(edusourceUrl+"category?category="+replaceSpacesWithUnderscores(cat)+"&page="+page);
+            if(res){
+                console.log("RES DATA IN GET RESOURCES OF CATEGORY",res.data);
+                if (res.data.status==="error"){
+                    reject(res.data.message)
+                }
+               // resolve(res.data);
+               resolve(res)
+            }
+            else {
+                console.log("NO EXISTE LA URL")
+            }
             
         } catch (error) {
             console.log(error);
@@ -245,7 +266,6 @@ export const getResourcesOfCategory = (cat) =>{
         }
     })
 }
-
 
 export const getResourcesOfTheme = (thm) =>{
     return new Promise( async(resolve, reject)=>{
@@ -261,12 +281,21 @@ export const getResourcesOfTheme = (thm) =>{
     })
 }
 
-export const getResourcesOfType = (thm) =>{
+export const getResourcesOfType = (thm,page) =>{
     return new Promise( async(resolve, reject)=>{
         try {
-            const res = await axios.get(edusourceUrl+"type?type="+replaceSpacesWithUnderscores(thm));
-            //console.log("RES IN GET THEM", res.data)
-            resolve(res.data);
+            const res = await axios.get(edusourceUrl+"type?type="+replaceSpacesWithUnderscores(thm)+"&page="+page);
+            if(res){
+                console.log("RES DATA IN GET RESOURCES OF TYPE",res.data);
+                if (res.data.status==="error"){
+                    reject(res.data.message)
+                }
+               // resolve(res.data);
+               resolve(res)
+            }
+            else {
+                console.log("NO EXISTE LA URL")
+            }
             
         } catch (error) {
             console.log(error);
@@ -275,13 +304,21 @@ export const getResourcesOfType = (thm) =>{
     })
 }
 
-
-export const getResourcesOfLevel = (level) =>{
+export const getResourcesOfLevel = (level, page) =>{
     return new Promise( async(resolve, reject)=>{
         try {
-            const res = await axios.get(edusourceUrl+"level?level="+level);
-            //console.log("RES IN GET THEM", res.data)
-            resolve(res.data);
+            const res = await axios.get(edusourceUrl+"level?level="+level+"&page="+page);
+            if(res){
+                console.log("RES DATA IN GET RESOURCES OF LEVEL",res.data);
+                if (res.data.status==="error"){
+                    reject(res.data.message)
+                }
+               // resolve(res.data);
+               resolve(res)
+            }
+            else {
+                console.log("NO EXISTE LA URL")
+            }
             
         } catch (error) {
             console.log(error);
@@ -290,12 +327,22 @@ export const getResourcesOfLevel = (level) =>{
     })
 }
 
-export const getResourcesOflanguage = (lang) =>{
+export const getResourcesOflanguage = (lang, page) =>{
     return new Promise( async(resolve, reject)=>{
         try {
-            const res = await axios.get(edusourceUrl+"language?language="+lang);
+            const res = await axios.get(edusourceUrl+"language?language="+lang+"&page="+page);
             //console.log("RES IN GET THEM", res.data)
-            resolve(res.data);
+            if(res){
+                console.log("RES DATA IN GET RESOURCES OF LANG",res.data);
+                if (res.data.status==="error"){
+                    reject(res.data.message)
+                }
+               // resolve(res.data);
+               resolve(res)
+            }
+            else {
+                console.log("NO EXISTE LA URL")
+            }
             
         } catch (error) {
             console.log(error);

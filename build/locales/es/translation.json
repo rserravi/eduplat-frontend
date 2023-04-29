@@ -520,5 +520,8 @@
     "Your password has been updated. You can log-in now":"Su contraseña ha sido actualizada. Puedes iniciar sesión ahora",
     "Unable to update your password. Please, try again later.":"No se puede actualizar su contraseña. Por favor, inténtelo de nuevo más tarde.",
     "This website cannot be displayed in an iframe due to security policies, implemented by the owner.":"Este sitio web no se puede mostrar en un iframe debido a políticas de seguridad implementadas por el propietario.",
-    "Use the 'visit' button to open a new browser window to see the resource":"Use el botón 'visitar' para abrir una nueva ventana del navegador para ver el recurso"
+    "Use the 'visit' button to open a new browser window to see the resource":"Use el botón 'visitar' para abrir una nueva ventana del navegador para ver el recurso",
+    "Total":"Total",
+    "results":"resultados",
+    "Type":"Tipo"
 }

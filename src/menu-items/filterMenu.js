@@ -12,7 +12,6 @@ import { arrayFromString, findInString } from 'src/utils/stringOperations';
 import { getTagsFromCategory, iscedList } from 'src/utils/isced';
 import fakeTagCloud from 'src/assets/fakeLists/fakeCloudTag';
 import i18next from 'i18next';
-import i18n from 'src/i18n';
 
 
 
@@ -176,7 +175,7 @@ export const FilterMenu =(props) =>{
 
 const resetFilters = (event) =>{
     event.preventDefault();
-    setLanguageFilter('ES');
+    setLanguageFilter('any');
     setTypeOfFilter('resources');
     setCategoriesFilter('');
     setLevelFilter('');

@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Grid, IconButton, Typography } from '@mui/material'
+import { Button, ButtonGroup, Grid, IconButton, Pagination, Typography } from '@mui/material'
 import * as React from 'react'
 import fakeLastResources from 'src/assets/fakeLists/lastResources'
 import GridOnIcon from '@mui/icons-material/GridOn';
@@ -18,7 +18,7 @@ import { deleteResource } from 'src/api/edusourceApi';
 
 
 export const ResourcesNetflixGrid = (props) =>{
-    var {edusourceList, title, newcolor, mt, defaultMode} = props;
+    var {edusourceList, title, newcolor, mt, defaultMode, total, setPage} = props;
     const [deleteDialog, setDeleteDialog] = React.useState(false);
     const [eduToDelete, setEduToDelete] = React.useState();
     const {newWidth} = props;
@@ -45,7 +45,6 @@ export const ResourcesNetflixGrid = (props) =>{
         }
         return result
     }
-
   
     const [mode, setMode] = React.useState(getInitialMode());
    
@@ -73,6 +72,14 @@ export const ResourcesNetflixGrid = (props) =>{
         setDeleteDialog(false);
     }
 
+    const calcPaginationCount = ()=>{
+        console.log("TOTAL EN NETFLIX GRID",total)
+
+        return (
+            Math.floor(total/20)+1
+        )
+    }
+
     const dangerouslyProceedToDelete = async (event)=>{
         try {
             if (eduToDelete){
@@ -89,6 +96,11 @@ export const ResourcesNetflixGrid = (props) =>{
             console.log(error)
             
         }
+    }
+
+    const onPageChange = (event, value) =>{
+        event.preventDefault();
+        setPage(value);
     }
 
 
@@ -114,37 +126,47 @@ export const ResourcesNetflixGrid = (props) =>{
                 </ButtonGroup>
             </Grid>
             </>}
+            {total<20?<></>:
+            <>
+            <Grid item sx={{ml:2}}> 
+            <Pagination count={calcPaginationCount()} onChange={onPageChange} variant='outlined' color='secondary'></Pagination> 
+            </Grid>
+            </>}
+            <Grid item sx={{ml:2}}>
+             {i18next.t("Total: ")}{total} {i18next.t("results")}.
+             </Grid>
+           
         </Grid>
         
             {mode!=="List"?
                 <>
-                
-                <Box width="100%">
-                <Slider>
-                {edusourceList.map((edusource, index) => (
+                    <Box width="100%">
+                    <Slider>
+                    {edusourceList.map((edusource, index) => (
 
-                    <Slider.Item edusource={edusource} key={index}>item1</Slider.Item>
-                ))}
-                </Slider>
-                </Box>
-                </>:<>
-                <Grid container direction="column" sx={{mt:2, ml:2}} justifyContent="flex-start" alignItems="flex-start">
-                    {edusourceList.map((edusource, index)=>{
-                        return (
-                            <React.Fragment key={index}>
-                            <Grid item sx={{mb:2}} >
-                                <EduSourceList edusource= {edusource} newWidth={newWidth} />
-                                {defaultMode && defaultMode==="List"?<>
-                                    <ButtonGroup >
-                                        <Button onClick={(e)=>{ editClickHandle(e, edusource)}} size="small" sx={{borderRadius :"15px", mt:1}}>{i18next.t("edit")}</Button>
-                                        <Button onClick={(e)=>{ deleteCliclHandle(e, edusource)}} size="small" sx={{borderRadius :"15px", mt:1}}>{i18next.t("delete")}</Button>
-                                    </ButtonGroup>
-                                </>:<></>}
-                            </Grid>
-                            </React.Fragment>
-                        )
-                    })}
-                </Grid>
+                        <Slider.Item edusource={edusource} key={index}>item1</Slider.Item>
+                    ))}
+                    </Slider>
+                    </Box>
+                </>:
+                <>
+                    <Grid container direction="column" sx={{mt:2, ml:2}} justifyContent="flex-start" alignItems="flex-start">
+                        {edusourceList.map((edusource, index)=>{
+                            return (
+                                <React.Fragment key={index}>
+                                <Grid item sx={{mb:2}} >
+                                    <EduSourceList edusource= {edusource} newWidth={newWidth} />
+                                    {defaultMode && defaultMode==="List"?<>
+                                        <ButtonGroup >
+                                            <Button onClick={(e)=>{ editClickHandle(e, edusource)}} size="small" sx={{borderRadius :"15px", mt:1}}>{i18next.t("edit")}</Button>
+                                            <Button onClick={(e)=>{ deleteCliclHandle(e, edusource)}} size="small" sx={{borderRadius :"15px", mt:1}}>{i18next.t("delete")}</Button>
+                                        </ButtonGroup>
+                                    </>:<></>}
+                                </Grid>
+                                </React.Fragment>
+                            )
+                        })}
+                    </Grid>
                 </>}
         </Grid>
 

@@ -27,13 +27,15 @@ export const OpenSearch = () =>{
     const [searchValue, setSearchValue] = useState(terms);
     const [serp, setSerp] = useState(); //CHANGE fakeLastResources
     const [newWidth, setNewWidth] = useState(newMaxWidth);
-    const [languageFilter, setLanguageFilter] = useState('ES')
+    const [languageFilter, setLanguageFilter] = useState('ANY')
     const [typeOfFilter, setTypeOfFilter] = useState(type);
     const [categoriesFilter, setCategoriesFilter]= useState("")
     const [levelFilter, setLevelFilter]= useState("")
     const [themesFilter, setThemesFilter]= useState("")
     const [searching, setSearching] = useState(false);
     const [flag, setFlag]= useState(false);
+    const [total, setTotal] =useState();
+    const [page, setPage]= useState(1);
     const [firstRender, setFirstRender] = useState(terms!=="" && terms!==null && terms!==undefined);
       
  
@@ -111,9 +113,11 @@ export const OpenSearch = () =>{
         //BUSCAR RECURSOS
         console.log("SEARCHING")
         setSearching(true);
-        await searchInResources(searchValue, languageFilter, categoriesFilter, levelFilter, themesFilter).then((result)=>{
+        await searchInResources(searchValue, languageFilter, categoriesFilter, levelFilter, themesFilter, page).then((result)=>{
             console.log("Resultado en Search Resources",result)
-            setSerp(result.result)
+            setSerp(result.data.data);
+            setTotal(result.data.total);
+
         }).catch((error)=>{
             console.log(error);
         })
@@ -141,6 +145,21 @@ export const OpenSearch = () =>{
 
     }
 
+    const onPageChange = async (thePage)=>{
+        console.log("SEARCHING")
+        setSearching(true);
+        await searchInResources(searchValue, languageFilter, categoriesFilter, levelFilter, themesFilter, thePage).then((result)=>{
+            console.log("Resultado en Search Resources",result)
+            setSerp(result.data.data);
+            setTotal(result.data.total);
+
+        }).catch((error)=>{
+            console.log(error);
+        })
+        
+        setSearching(false);
+    }
+
     useEffect(()=>{
         //console.log("VALOR ESTABLECIDO EN SEARCH VALUE")
         if (flag || firstRender) {
@@ -149,7 +168,7 @@ export const OpenSearch = () =>{
             setFirstRender(false);
         }
 
-    },[searchValue, flag])
+    },[searchValue, flag, firstRender])
 
     useEffect(() => {
 
@@ -235,7 +254,7 @@ export const OpenSearch = () =>{
                 <Box sx={{width:newWidth}}>
                     {typeOfFilter==="resources"?
                     serp.length>0?<>
-                    <ResourcesNetflixGrid edusourceList={serp} title={i18next.t("Search results")} mt={2}/>
+                    <ResourcesNetflixGrid edusourceList={serp} title={i18next.t("Search results")}  mt={2} total={total} setPage={onPageChange}/>
                     </>:<>
                          <Box sx={{ml:2, mt:2}} >
                             <Typography variant='body1'><b>{i18next.t("No results")}</b> {i18next.t("Try another search or other filters")}</Typography>

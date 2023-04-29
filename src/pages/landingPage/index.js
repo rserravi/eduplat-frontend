@@ -27,15 +27,72 @@ export const LandingPage = () =>{
     
     const [newWidth] = useOutletContext();
     const [lastResources, SetLastResources] = React.useState();
+    const [lastTotal, setLastTotal]= React.useState();
     const [catOne, setcatOne]= React.useState();
+    const [catOneTotal, setCatOneTotal] = React.useState();
     const [catTwo, setcatTwo]= React.useState();
+    const [catTwoTotal, setCatTwoTotal] = React.useState();
+
+    const onPageLastRChange = (page)=>{
+        try {
+                fetchLastResources(page).then((response)=>{
+                 console.log("RESPONSE EN ONPAGECHANGE", response)
+                 SetLastResources(response.data.data)
+                 setLastTotal(response.data.total)
+                
+               }).catch(error=>{
+                   
+                console.log(error);
+               })
+               
+           } catch (error) {
+            console.log(error);
+           }
+    }
+
+    const onPageCat1Change = (page)=>{
+        try {
+            getResourcesOfCategory("ICT",page).then((response)=>{
+
+                setcatOne(response.data.data)
+                setCatOneTotal(response.data.total)
+               
+           }).catch(error=>{
+               
+            console.log(error);
+           })
+           
+       } catch (error) {
+        console.log(error);
+       }
+    }
+
+    const onPageCat2Change = (page)=>{
+        try {
+            getResourcesOfCategory("Natural Sciences",page).then((response)=>{
+
+                setcatTwo(response.data.data)
+                setCatTwoTotal(response.data.total)
+               
+           }).catch(error=>{
+               
+            console.log(error);
+           })
+           
+       } catch (error) {
+        console.log(error);
+       }
+    }
+
+    
 
     React.useEffect(()=>{
         if (!lastResources ||lastResources===undefined ||lastResources ===null){
             try {
-                fetchLastResources().then((response)=>{
-    
-                 SetLastResources(response.result.reverse())
+                fetchLastResources(1).then((response)=>{
+                 console.log("RESPONSE EN FETCHLAST", response)
+                 SetLastResources(response.data.data)
+                 setLastTotal(response.data.total)
                 
                }).catch(error=>{
                    
@@ -48,9 +105,10 @@ export const LandingPage = () =>{
         }
         if (!catOne ||catOne===undefined ||catOne ===null){
             try {
-                getResourcesOfCategory("ICT").then((response)=>{
-    
-                 setcatOne(response.result.reverse())
+                getResourcesOfCategory("ICT",1).then((response)=>{
+                    console.log("CHECK RESPONSE", response)
+                 setcatOne(response.data.data)
+                 setCatOneTotal(response.data.total)
                    
                }).catch(error=>{
                    
@@ -63,9 +121,10 @@ export const LandingPage = () =>{
         }
         if (!catTwo ||catTwo===undefined ||catTwo ===null){
             try {
-                getResourcesOfCategory("Natural Sciences").then((response)=>{
-    
-                 setcatTwo(response.result.reverse())
+                getResourcesOfCategory("Natural Sciences",1).then((response)=>{
+                 
+                 setcatTwo(response.data.data)
+                 setCatTwoTotal(response.data.total)
                    
                }).catch(error=>{
                    
@@ -155,9 +214,9 @@ export const LandingPage = () =>{
                         justifyContent="center"
                         alignItems="center"
                         
-                        mt={4}
+                        mt={1}
                     >
-                        <Grid item>
+                        <Grid item sx={{ml:2}}>
                         <SearchBarComponent />
                    </Grid>
 
@@ -165,11 +224,11 @@ export const LandingPage = () =>{
                     
                     {/* RESOURCES GRID */}
                   
-                    <ResourcesNetflixGrid edusourceList={lastResources} title="Last Resources" mt={4} newWidth={newWidth}/> 
+                    <ResourcesNetflixGrid edusourceList={lastResources} title="Last Resources" mt={4} newWidth={newWidth} total={lastTotal} setPage={onPageLastRChange}/> 
                   
-                    <ResourcesNetflixGrid edusourceList={catTwo} title="Natural Sciences" newcolor="secondary.light" newWidth={newWidth}/>
+                    <ResourcesNetflixGrid edusourceList={catTwo} title="Natural Sciences" newcolor="secondary.light" newWidth={newWidth} total={catTwoTotal} setPage={onPageCat2Change}/>
 
-                    <ResourcesNetflixGrid edusourceList={catOne} title="ICT" mt={4} newWidth={newWidth}/> 
+                    <ResourcesNetflixGrid edusourceList={catOne} title="ICT" mt={4} newWidth={newWidth} total={catOneTotal} setPage={onPageCat1Change}/> 
                 
                     {/* COPYRIGTH */}
                     <Grid item my={3} ml={4}>

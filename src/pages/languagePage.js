@@ -19,13 +19,16 @@ export const LanguagePage = ()=>{
     lang = replaceUnderscoresWithSpaces(lang);
     console.log(lang);
     const [language, setlanguage]= React.useState();
+    const [langTotal, setLanglTotal]= React.useState();
+
 
     useEffect (()=>{
         //if (!language ||language===undefined ||language ===null){
             try {
-                getResourcesOflanguage(lang).then((response)=>{
+                getResourcesOflanguage(lang, 1).then((response)=>{
     
-                    setlanguage(response.result.reverse())
+                    setlanguage(response.data.data);
+                    setLanglTotal(response.data.total)
                    
                }).catch(error=>{
                    
@@ -39,13 +42,31 @@ export const LanguagePage = ()=>{
 
     },[location.key, lang])
 
+    const onPageChange = (page)=>{
+        try {
+            getResourcesOflanguage(lang, page).then((response)=>{
+
+                setlanguage(response.data.data);
+                setLanglTotal(response.data.total)
+               
+           }).catch(error=>{
+               
+            console.log(error);
+           })
+           
+       } catch (error) {
+        console.log(error);
+       }
+    }
+
+
     return (
         <React.Fragment>
             <ThemeProvider theme={theme}>
             <Box sx={{ width: newWidth, p:2 }}> 
                 <Typography variant="h5" sx={{my:2}}>{i18next.t("Language")}: {i18next.t(findLangFromCode(lang))}</Typography>
                 <SearchBarComponent tab={lang} />
-                <ResourcesNetflixGrid edusourceList={language} title={i18next.t(lang)} newcolor="contrast" newWidth={newWidth}/>
+                <ResourcesNetflixGrid edusourceList={language} title={i18next.t(lang)} newcolor="contrast" newWidth={newWidth} total={langTotal} setPage={onPageChange}/>
             </Box>
             </ThemeProvider>
         </React.Fragment>

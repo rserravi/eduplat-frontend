@@ -17,13 +17,15 @@ export const LevelPage = ()=>{
     var {level} =  useParams();
     console.log(level);
     const [theLevel, setTheLevel]= React.useState();
+    const [levelTotal, setLevelTotal]= React.useState();
 
     useEffect (()=>{
         
             try {
-                getResourcesOfLevel(level).then((response)=>{
+                getResourcesOfLevel(level, 1).then((response)=>{
     
-                    setTheLevel(response.result.reverse())
+                    setTheLevel(response.data.data)
+                    setLevelTotal(response.data.total);
                    
                }).catch(error=>{
                    
@@ -37,13 +39,30 @@ export const LevelPage = ()=>{
 
     },[location.key, level])
 
+    const onPageChange = (page)=>{
+        try {
+            getResourcesOfLevel(level,page).then((response)=>{
+
+                setTheLevel(response.data.data)
+                setLevelTotal(response.data.total)
+               
+           }).catch(error=>{
+               
+            console.log(error);
+           })
+           
+       } catch (error) {
+        console.log(error);
+       }
+    }
+
     return (
         <React.Fragment>
             <ThemeProvider theme={theme}>
             <Box sx={{ width: newWidth, p:2 }}> 
                 <Typography variant="h5" sx={{my:2}}>{i18next.t("Level")} {i18next.t(level)}</Typography>
                 <SearchBarComponent tab={"level"} />
-                <ResourcesNetflixGrid edusourceList={theLevel} title={i18next.t(getIscedFromCode(level))} newcolor="contrast"  newWidth={newWidth}/>
+                <ResourcesNetflixGrid edusourceList={theLevel} title={i18next.t(getIscedFromCode(level))} newcolor="contrast"  newWidth={newWidth} total={levelTotal} setPage={onPageChange}/>
             </Box>
 
             </ThemeProvider>

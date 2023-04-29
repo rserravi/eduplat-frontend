@@ -445,7 +445,7 @@ export const countries = [
     },
     {
       code: 'PT', label: 'Portuguese', flag: "https://upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_Portugal.svg"
-    },
+    }
     
   ]
 
