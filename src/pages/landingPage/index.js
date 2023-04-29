@@ -18,7 +18,6 @@ const theme = createTheme(themeOptions);
 const getRandomImageUrl = () =>{
     const num = Math.floor(Math.random() * 7) + 1;
     const url = 'url(/images/background'+num.toString()+'.jpg)';
-    //console.log(url);
     return url;
 
 }
@@ -36,7 +35,7 @@ export const LandingPage = () =>{
     const onPageLastRChange = (page)=>{
         try {
                 fetchLastResources(page).then((response)=>{
-                 console.log("RESPONSE EN ONPAGECHANGE", response)
+                 //console.log("RESPONSE EN ONPAGECHANGE", response)
                  SetLastResources(response.data.data)
                  setLastTotal(response.data.total)
                 
@@ -90,7 +89,7 @@ export const LandingPage = () =>{
         if (!lastResources ||lastResources===undefined ||lastResources ===null){
             try {
                 fetchLastResources(1).then((response)=>{
-                 console.log("RESPONSE EN FETCHLAST", response)
+                // console.log("RESPONSE EN FETCHLAST", response)
                  SetLastResources(response.data.data)
                  setLastTotal(response.data.total)
                 
@@ -106,7 +105,7 @@ export const LandingPage = () =>{
         if (!catOne ||catOne===undefined ||catOne ===null){
             try {
                 getResourcesOfCategory("ICT",1).then((response)=>{
-                    console.log("CHECK RESPONSE", response)
+                   // console.log("CHECK RESPONSE", response)
                  setcatOne(response.data.data)
                  setCatOneTotal(response.data.total)
                    

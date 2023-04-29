@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.c18ff3d1.css",
-    "main.js": "/static/js/main.b7fdf088.js",
+    "main.js": "/static/js/main.d743855b.js",
     "static/media/EN-Co-Funded-by-the-EU_POS.png": "/static/media/EN-Co-Funded-by-the-EU_POS.97b1ef8d08f19db4e55b.png",
     "static/media/LOGO-Eduplat-W.png": "/static/media/LOGO-Eduplat-W.50abb8745b18711863e8.png",
     "static/media/logo-bienesdar-horizontal.png": "/static/media/logo-bienesdar-horizontal.04ddb15764a65fc34983.png",
@@ -10,10 +10,10 @@
     "index.html": "/index.html",
     "static/media/getFetch.cjs": "/static/media/getFetch.40f37ddea2378391108f.cjs",
     "main.c18ff3d1.css.map": "/static/css/main.c18ff3d1.css.map",
-    "main.b7fdf088.js.map": "/static/js/main.b7fdf088.js.map"
+    "main.d743855b.js.map": "/static/js/main.d743855b.js.map"
   },
   "entrypoints": [
     "static/css/main.c18ff3d1.css",
-    "static/js/main.b7fdf088.js"
+    "static/js/main.d743855b.js"
   ]
 }

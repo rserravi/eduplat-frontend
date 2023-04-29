@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import * as React from 'react'
 import {  useState, useEffect } from 'react';
 
@@ -15,7 +15,18 @@ export const MyAccountAdministration= (props) =>{
     if (user.isBoss){
     return(
         <>
+        <Box
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                minWidth: {newWidth} -32,
+                p:2
+            }}
+        > 
             <Typography variant='h3'>Administration</Typography>
+            
+            </Box>
         </>
     )
     }{

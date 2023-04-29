@@ -40,7 +40,7 @@ export const fetchEdusourceByLink = (link) =>{
 export const fetchEdusourceByPromoter = (id) =>{
     //  http://localhost:3001/v1/edusource/bypromoter?promoterId=63fdb9e80daaa0ce85983c3a
     return new Promise( async(resolve, reject)=>{
-        console.log("ID EN FETCHEDUSOURCE",id)
+       // console.log("ID EN FETCHEDUSOURCE",id)
         try {
             const axiosUrl = byPromoter + "?promoterId="+id;
             //console.log(axiosUrl);
@@ -71,7 +71,7 @@ export const fetchLastResources = (page) =>{
             //console.log(axiosUrl);
             const res = await axios.get(axiosUrl);
             if(res){
-                console.log("RES DATA IN FETCH",res.data);
+               // console.log("RES DATA IN FETCH",res.data);
                 if (res.data.status==="error"){
                     reject(res.data.message)
                 }
@@ -118,7 +118,7 @@ export const deleteResource = (frmData)=>{
     return new Promise( async(resolve, reject)=>{
         try {
             const res = await axios.delete(edusourceUrl+"?edusourceId="+frmData._id);
-            console.log("RESPUESTA en DELETE RESOURCE");
+            //console.log("RESPUESTA en DELETE RESOURCE");
             resolve(res.data);
         } catch (error) {
             reject(error);
@@ -141,7 +141,7 @@ export const addValoration = (frmData)=>{
 
 export const changeValoration = (frmData)=>{
     return new Promise( async(resolve, reject)=>{
-        console.log("frmData en CHANGE VALORATION API",frmData)
+        //console.log("frmData en CHANGE VALORATION API",frmData)
         try {
             const res = await axios.patch(valorationUrl, frmData);
             resolve(res.data);
@@ -152,11 +152,11 @@ export const changeValoration = (frmData)=>{
 }
 
 export const findValoration = (userId, edusourceId) =>{
-    console.log(userId, edusourceId)
+   //console.log(userId, edusourceId)
     return new Promise( async(resolve, reject)=>{
         try {
             const axiosUrl = valorationUrl + "?userId="+userId+"&edusourceId="+edusourceId;
-            console.log(axiosUrl);
+            //console.log(axiosUrl);
             const res = await axios.get(axiosUrl);
             if(res){
                 //console.log(res.data);
@@ -226,7 +226,7 @@ export const searchInResources = (terms, languageFilter, categoriesFilter, level
         try {
             const res = await axios.get(newUrl);
             if(res){
-                console.log("RES DATA IN GET RESOURCES OF SEARCH IN RESORCE",res.data);
+                //console.log("RES DATA IN GET RESOURCES OF SEARCH IN RESORCE",res.data);
                 if (res.data.status==="error"){
                     reject(res.data.message)
                 }
@@ -249,7 +249,7 @@ export const getResourcesOfCategory = (cat, page) =>{
         try {
             const res = await axios.get(edusourceUrl+"category?category="+replaceSpacesWithUnderscores(cat)+"&page="+page);
             if(res){
-                console.log("RES DATA IN GET RESOURCES OF CATEGORY",res.data);
+               // console.log("RES DATA IN GET RESOURCES OF CATEGORY",res.data);
                 if (res.data.status==="error"){
                     reject(res.data.message)
                 }
@@ -286,7 +286,7 @@ export const getResourcesOfType = (thm,page) =>{
         try {
             const res = await axios.get(edusourceUrl+"type?type="+replaceSpacesWithUnderscores(thm)+"&page="+page);
             if(res){
-                console.log("RES DATA IN GET RESOURCES OF TYPE",res.data);
+                //console.log("RES DATA IN GET RESOURCES OF TYPE",res.data);
                 if (res.data.status==="error"){
                     reject(res.data.message)
                 }
@@ -309,7 +309,7 @@ export const getResourcesOfLevel = (level, page) =>{
         try {
             const res = await axios.get(edusourceUrl+"level?level="+level+"&page="+page);
             if(res){
-                console.log("RES DATA IN GET RESOURCES OF LEVEL",res.data);
+                //console.log("RES DATA IN GET RESOURCES OF LEVEL",res.data);
                 if (res.data.status==="error"){
                     reject(res.data.message)
                 }
@@ -362,7 +362,7 @@ export const setAcceptedRejected = (edu_id, val_id, accepted, rejected)=>{
 
         try {
             const res = await axios.patch(valorationMod, frmData);
-            console.log("UPDATED", res.data)
+            //console.log("UPDATED", res.data)
             resolve(res.data);
             
         } catch (error) {

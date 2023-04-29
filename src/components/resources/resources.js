@@ -73,7 +73,7 @@ export const ResourcesNetflixGrid = (props) =>{
     }
 
     const calcPaginationCount = ()=>{
-        console.log("TOTAL EN NETFLIX GRID",total)
+      // console.log("TOTAL EN NETFLIX GRID",total)
 
         return (
             Math.floor(total/20)+1
