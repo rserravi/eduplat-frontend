@@ -5,7 +5,7 @@ import {  useState, useEffect } from 'react';
 
 import { useOutletContext } from 'react-router-dom';
 import Loader from 'src/ui-component/Loader';
-import { ExtendedResourceValorations, ExtenderUserValorations } from 'src/pages/myAccount/comp/valoration';
+import { ExtendedResourceValorations, ExtenderUserValorations } from 'src/pages/myAccount/comp/myAccount-valoration';
 import { ValorationMeanIcon } from 'src/components/favorites';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';

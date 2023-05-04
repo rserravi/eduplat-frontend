@@ -2,7 +2,7 @@ import { Box,  Button,  ButtonGroup,  CssBaseline, Dialog, DialogActions, Dialog
 import * as React from 'react'
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { deleteResource, fetchEdusourceByLink } from 'src/api/edusourceApi';
+import { addValoration, changeValoration, deleteResource, fetchEdusourceByLink } from 'src/api/edusourceApi';
 import { EdusourceHeader } from 'src/components/resources/edusourceHeader';
 import Loader from 'src/ui-component/Loader';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -15,6 +15,7 @@ import { MENU_OPEN } from 'src/store/menuSlice';
 import { useOutletContext } from 'react-router-dom';
 import i18next from 'i18next';
 import { useNavigate } from 'react-router-dom';
+import { ValorateEdusource } from 'src/components/favorites';
 
 
 const theme = createTheme(themeOptions);
@@ -66,7 +67,28 @@ export const EdusourcePage = () =>{
         }
     }
 
- 
+    const updateValoration = async (valoration, firstTime)=>{
+        var frmData=  {
+            edusourceId: edusource._id,
+            senderId: user._id,
+            comment: valoration.comment,
+            value: valoration.value
+        } 
+        if (firstTime){
+            await addValoration(frmData).then ((res)=>{
+                console.log("RESPUESTA EN FATHER", res)
+            }).catch((err)=>{
+                console.log(err)
+            })
+        }
+        else{
+            await changeValoration(frmData).then ((res)=>{
+                console.log("RESPUESTA EN FATHER", res)
+            }).catch((err)=>{
+                console.log(err)
+            })
+        }
+    }
 
     useEffect(() =>{
       
@@ -124,14 +146,26 @@ export const EdusourcePage = () =>{
                     
                 </Grid>
                 
-                {user && ((user._id===edusource.promoterId) || user.isBoss)?<>
-                <Grid item sx= {{my:1}}>
-                    <ButtonGroup >
-                        <Button color='secondary' variant='contained' onClick={(e)=>{ editClickHandle(e, edusource)}} size="small" sx={{borderRadius :"15px", mt:1}}>{i18next.t("edit")}</Button>
-                        <Button color='secondary' variant='contained' onClick={(e)=>{ deleteCliclHandle(e, edusource)}} size="small" sx={{borderRadius :"15px", mt:1}}>{i18next.t("delete")}</Button>
-                    </ButtonGroup>
+                <Grid 
+                    container
+                    direction="row"
+                    justifyContent="flex-start"
+                    alignItems="flex-start"
+                > 
+                
+                    {user && ((user._id===edusource.promoterId) || user.isBoss)?<>
+                    <Grid item sx= {{my:1}}>
+                        <ButtonGroup >
+                            <Button color='secondary' variant='contained' onClick={(e)=>{ editClickHandle(e, edusource)}} size="small" sx={{borderRadius :"15px", mt:1}}>{i18next.t("edit")}</Button>
+                            <Button color='secondary' variant='contained' onClick={(e)=>{ deleteCliclHandle(e, edusource)}} size="small" sx={{borderRadius :"15px", mt:1}}>{i18next.t("delete")}</Button>
+                        </ButtonGroup>
+                        </Grid>
+                    </>:<></>}
+                    <Grid item >
+                    <ValorateEdusource edusource={edusource} user={user} updateValoration={updateValoration} />
                     </Grid>
-                </>:<></>}
+                    
+                </Grid>
                 
                 <EdusourceBody edusource={edusource} promoter={promoter} newWidth={newWidth} />
                 

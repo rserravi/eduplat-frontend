@@ -124,14 +124,14 @@ export default function EduSourceCard(props) {
           </IconButton>
         }
         titleTypographyProps={{variant:'body1' }}
-        title={edusource.title}
+        title={edusource.title.length>73?edusource.title.substring(0,73)+" ...":edusource.title}
         subheader= {subh}
       />
       </>:<>
       <CardHeader
         sx={{height:80}}
         titleTypographyProps={{variant:'body1' }}
-        title={edusource.title}
+        title={edusource.title.length>75?edusource.title.substring(0,75)+" ...":edusource.title}
         subheader= {subh}
       />
       </>}
@@ -164,7 +164,7 @@ export default function EduSourceCard(props) {
          {edusource.theme[0]}
        </Typography>
         <Typography sx={{fontSize:12}} variant="body2" color="text.secondary">
-          {edusource.description}
+          {edusource.description.length>240? edusource.description.substring(0,240)+" ...":edusource.description}
         </Typography>
       </CardContent>
       </>:<></>} 

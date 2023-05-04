@@ -1,5 +1,6 @@
 // imports
 import * as React from 'react'
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import Rating from '@mui/material/Rating';
@@ -9,9 +10,18 @@ import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAltOutlined';
 import SentimentVerySatisfiedIcon from '@mui/icons-material/SentimentVerySatisfied';
 import BlockIcon from '@mui/icons-material/Block';
-import { Tooltip, Typography } from '@mui/material';
+import Typography from '@mui/material/Typography';
+import Tooltip from '@mui/material/Tooltip';
 import i18next from 'i18next';
-import { Box } from '@mui/system';
+import Box from '@mui/system/Box';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import TextField from '@mui/material/TextField';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContentText from '@mui/material/DialogContentText';
+import { Grid } from '@mui/material';
 
 export const customIcons = {
     0: {
@@ -56,7 +66,7 @@ export const FavoriteIcon = (props)=>{
 
 export const ValorationMeanIcon = (props)=>{
   const {valorations} = props;
-  //console.log("MEAN ICON",valorations)
+  console.log("MEAN VALORATIONS", valorations)
   var count=0;
   var value=0;
 
@@ -65,10 +75,8 @@ export const ValorationMeanIcon = (props)=>{
   }
   
   for (let val = 0; val < valorations.length; val++) {
-    if (valorations[val].accepted){
       count++;
-      value = value + valorations[val].value +1;
-    }
+      value = value + valorations[val].value;
   }
   var result;
   if (count===0){
@@ -77,7 +85,7 @@ export const ValorationMeanIcon = (props)=>{
   else{
     result = Math.floor(value / count);
   }
-  //console.log(customIcons[result]);
+  console.log("RESULT EN MEAN",result)
   return(<FavoriteIcon value={result} />)
 }
 
@@ -102,31 +110,42 @@ IconContainer.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
+const acceptedValorations = (valorations)=>{
+  var result = [];
+  for (let i = 0; i < valorations.length; i++) {
+    if (valorations[i].accepted){
+      result.push(valorations[i])
+    }
+    
+  }
+  console.log("ACCEPTED VALORATIONS", result)
+  return result;
+}
+
 export const Favorites = (props)=>{
-  const {defaultFav, changeFavoriteRating, mode, ml} = props;
+  const {defaultFav, valoration, changeFavoriteRating, mode, ml} = props;
   const [hover, setHover] = React.useState(-1);
   const [value, setValue]= React.useState(defaultFav);
 
-  //console.log("VALOR POR DEFECTO EN FAVORITES",defaultFav)
+  if (valoration){
+    setValue(valoration.value);
+  }
 
-  const Textual = ()=>{
-    var Result = null
+
+  const Textual = (props)=>{
+    const {value}= props
+
+    var Result;
+    if (value && value!==null && value!==undefined){
+      Result = customIcons[value].label;
+    }
    
     if (hover !== -1){
             Result = customIcons[hover].label;
     }
-    else {
-      if (value && value!==undefined && value!==null){
-        Result = customIcons[value].label;
-      }
-      else {
-        Result = "No valoration yet"
-      }
-    }
+  
   if(Result===null | Result===undefined || Result===0){return (<>{i18next.t("No valoration yet")}</>)}
-  return (<>{i18next.t(Result)}</>);
-    
-    
+    return (<>{i18next.t(Result)}</>);
   }
 
   return (
@@ -175,10 +194,322 @@ export const Favorites = (props)=>{
       size="large"
     />}
     <Typography>
-     <Textual/>
+     <Textual value={defaultFav}/>
     </Typography>
     
     </Box>
     </>
   );
+}
+
+
+export const ValorateDialog = (props)=>{
+  const CHARACTER_LIMIT = 250;
+  const {open, handleAccept, handleClose, valoration, subject}=props;
+
+  const [comment, setComment]= useState(valoration.comment);
+  
+  const commentChange = (event)=>{
+    if (comment.length < 300){
+        setComment(event.target.value)
+    }
+  }
+  return (
+    <>
+   
+     {/* VALORATIONS DIALOG */}
+
+     <Dialog open={open} >
+     <DialogTitle>{i18next.t("Value")} {subject}</DialogTitle>
+     <DialogContent>
+     <DialogContentText>
+         <Box sx={{display: 'flex', alignItems:"center"}}>
+         <FavoriteIcon value={valoration.value} /> <Typography variant='body1' ml={1}>{customIcons[valoration.value]!==undefined?i18next.t(customIcons[valoration.value].label):<></>}</Typography>
+         
+         </Box>
+         <Typography variant='body1' sx={{mt:1}}> {i18next.t("Add a comment")}</Typography>
+     </DialogContentText>
+     <TextField
+         autoFocus
+         multiline
+         margin="dense"
+         id="userValoration"
+         label={i18next.t("Valoration")}
+         fullWidth
+         variant="standard"
+         defaultValue={comment}
+         rows={4}
+         onChange={commentChange}
+         helperText={comment.length + "/ "+CHARACTER_LIMIT}
+         inputProps={{
+             maxLength: CHARACTER_LIMIT
+         }}
+     />
+     </DialogContent>
+     <DialogActions>
+     <Button onClick={(e)=>{e.preventDefault(); handleAccept(valoration.value, comment)}}>{i18next.t("Accept")}</Button>
+     <Button onClick={handleClose}>{i18next.t("Cancel")}</Button>
+     </DialogActions>
+ </Dialog>
+ </>)
+}
+
+export const ValorateCollection = (props) =>{
+  //props : collection, textColor, backGroundcolor
+
+  var {collection, user, textColor, backgroundColor, updateValoration} = props;
+  const [userValorationObj, setUserValorationObj]= useState({
+    value: 0,
+    comment: ""
+  });
+
+  const [accepted, setAccepted] = useState(acceptedValorations(collection.valorations))
+
+  //console.log("USERVALORATION", userValorationObj)
+  const [dialogOpen, setDialogOpen]=useState(false);
+  const [firstTime, setFirstTime]=useState(false);
+
+  const handleValorationDialogOpen= ()=>{
+   
+    setDialogOpen(true);
+  }
+  const handleDialogAccept= (value, comment)=>{
+    
+    userValorationObj.value = value;
+    userValorationObj.comment = comment;
+    console.log("VALORATION IN CHILD",userValorationObj)
+    updateValoration(userValorationObj, firstTime);
+    setFirstTime(false);
+    setDialogOpen(false);
+  }
+
+  const handleDialogClose= (event)=>{
+    event.preventDefault();
+    setDialogOpen(false);
+  }
+
+  const changeFavoriteRating = (newValue)=>{
+    if (newValue!==null || newValue!==undefined){
+        //console.log("ESTAMOS EN CHANGEFAVORITE",newValue)
+        setUserValorationObj({...userValorationObj, "value": newValue});
+        handleValorationDialogOpen();
+    }
+  }
+
+  
+
+  React.useEffect(()=>{
+    const findCollectionVal = ()=>{
+      const founded = collection.valorations.find(item=>item.senderId === user._id)
+      if (founded){
+        //console.log("FOUNDED VALORATION OF USER", founded)
+        setUserValorationObj(founded);
+      }
+      else {
+        //console.log("NO HAY VALORACIONES PREVIAS")
+        setFirstTime(true);
+      }
+    }
+   
+    if(userValorationObj.comment==="" && userValorationObj.value===0){
+      try {
+           findCollectionVal();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    
+  },[collection, user._id, userValorationObj.comment, userValorationObj.value])
+
+  return (
+      <>
+      {user._id && user._id!==null && user._id!==undefined?<>
+        <Grid
+          container
+          direction="row"
+          justifyContent="flex-start"
+          alignItems="center"
+          padding={2}
+        >
+          <Grid item  >
+            <Grid container direction="column">
+              <Grid item>
+                <Typography><b>{i18next.t("Mean valoration")}:</b></Typography>
+              </Grid>
+              <Grid item>
+                <Grid 
+                  container
+                  direction="row"
+                  justifyContent="flex-start"
+                  alignItems="center"
+                  mb={2}
+                >
+                  <Grid item>
+                      <ValorationMeanIcon valorations={accepted}/>
+                  </Grid>
+                  <Grid item>
+                    <Typography> {i18next.t("of")} {accepted.length} {accepted.length===1?i18next.t("valoration"):i18next.t("valorations")}</Typography>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>  
+          </Grid>
+          <Grid item >
+            <Grid container direction="column">
+              <Grid item>
+                <Typography><b>{i18next.t("Your valoration")}:</b></Typography>
+              </Grid>
+              <Grid item mb={1}>
+                <Favorites defaultFav={userValorationObj.value} changeFavoriteRating={changeFavoriteRating} mode={"dark"} />
+              </Grid>
+              <Grid item>
+                <Typography variant='body1'><i>{userValorationObj.comment}</i></Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+          <ValorateDialog 
+            open={dialogOpen} 
+            handleAccept={handleDialogAccept} 
+            handleClose={handleDialogClose}
+            valoration={userValorationObj}
+            subject = {collection.title}
+            />
+            </>:<>
+            <Typography variant='body1' m={2}>
+            <i>{i18next.t("Register and LogIn to comment and valorate")}</i>
+            </Typography>
+            </>}
+      </>
+  )
+}
+
+export const ValorateEdusource = (props) =>{
+  //props : collection, textColor, backGroundcolor
+
+  var {edusource, user, textColor, backgroundColor, updateValoration} = props;
+  const [userValorationObj, setUserValorationObj]= useState({
+    value: 0,
+    comment: ""
+  });
+
+  const [accepted, setAccepted] = useState(acceptedValorations(edusource.valorations))
+
+
+  //console.log("USERVALORATION", userValorationObj)
+  const [dialogOpen, setDialogOpen]=useState(false);
+  const [firstTime, setFirstTime]=useState(false);
+
+  const handleValorationDialogOpen= ()=>{
+   
+    setDialogOpen(true);
+  }
+  const handleDialogAccept= (value, comment)=>{
+    
+    userValorationObj.value = value;
+    userValorationObj.comment = comment;
+    console.log("VALORATION IN CHILD",userValorationObj)
+    updateValoration(userValorationObj, firstTime);
+    setFirstTime(false);
+    setDialogOpen(false);
+  }
+
+  const handleDialogClose= (event)=>{
+    event.preventDefault();
+    setDialogOpen(false);
+  }
+
+  const changeFavoriteRating = (newValue)=>{
+    if (newValue!==null || newValue!==undefined){
+        //console.log("ESTAMOS EN CHANGEFAVORITE",newValue)
+        setUserValorationObj({...userValorationObj, "value": newValue});
+        handleValorationDialogOpen();
+    }
+  }
+
+  React.useEffect(()=>{
+    const findCollectionVal = ()=>{
+      const founded = edusource.valorations.find(item=>item.senderId === user._id)
+      if (founded){
+        //console.log("FOUNDED VALORATION OF USER", founded)
+        setUserValorationObj(founded);
+      }
+      else {
+        //console.log("NO HAY VALORACIONES PREVIAS")
+        setFirstTime(true);
+      }
+    }
+   
+    if(userValorationObj.comment==="" && userValorationObj.value===0){
+      try {
+           findCollectionVal();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    
+  },[edusource, user._id, userValorationObj.comment, userValorationObj.value])
+
+  return (
+      <>
+      {user._id && user._id!==null && user._id!==undefined?<>
+        <Grid
+          container
+          direction="row"
+          justifyContent="flex-start"
+          alignItems="flex-start"
+          padding={2}
+          
+        >
+          <Grid item mr={2}  >
+            <Grid container direction="column">
+              <Grid item>
+                <Typography><b>{i18next.t("Mean valoration")}:</b></Typography>
+              </Grid>
+              <Grid item>
+                <Grid 
+                  container
+                  direction="row"
+                  justifyContent="flex-start"
+                  alignItems="center"
+                  mb={2}
+                >
+                  <Grid item>
+                      <ValorationMeanIcon valorations={accepted}/>
+                  </Grid>
+                  <Grid item>
+                    <Typography> {i18next.t("of")} {accepted.length} {accepted.length===1?i18next.t("valoration"):i18next.t("valorations")}</Typography>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>  
+          </Grid>
+          <Grid item >
+            <Grid container direction="column">
+              <Grid item>
+                <Typography><b>{i18next.t("Your valoration")}:</b></Typography>
+              </Grid>
+              <Grid item mb={1}>
+                <Favorites defaultFav={userValorationObj.value} changeFavoriteRating={changeFavoriteRating} mode={"dark"} />
+              </Grid>
+              <Grid item>
+                <Typography variant='body1'><i>{userValorationObj.comment}</i></Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+          <ValorateDialog 
+            open={dialogOpen} 
+            handleAccept={handleDialogAccept} 
+            handleClose={handleDialogClose}
+            valoration={userValorationObj}
+            subject = {edusource.title}
+            />
+            </>:<>
+            <Typography variant='body1' m={2}>
+            <i>{i18next.t("Register and LogIn to comment and valorate")}</i>
+            </Typography>
+            </>}
+      </>
+  )
 }

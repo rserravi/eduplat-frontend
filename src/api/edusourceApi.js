@@ -37,6 +37,31 @@ export const fetchEdusourceByLink = (link) =>{
     })
 }
 
+export const fetchEdusourceById = (id)=>{
+    return new Promise( async(resolve, reject)=>{
+        try {
+            const axiosUrl = edusourceUrl + "?id="+id;
+            //console.log(axiosUrl);
+            const res = await axios.get(axiosUrl);
+            if(res){
+                //console.log(res.data);
+                if (res.data.status==="error"){
+                    reject(res.data.message)
+                }
+                resolve(res.data);
+            }
+            else {
+                console.log("NO EXISTE LA URL")
+            }
+            
+            
+        } catch (error) {
+            console.log("HA HABIDO UN ERROR en fetchEdusourceById",error);
+            reject(error.message);
+        }
+    })
+}
+
 export const fetchEdusourceByPromoter = (id) =>{
     //  http://localhost:3001/v1/edusource/bypromoter?promoterId=63fdb9e80daaa0ce85983c3a
     return new Promise( async(resolve, reject)=>{

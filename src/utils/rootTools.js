@@ -1,7 +1,7 @@
 export const getRootUrl = () => {
    
     const protocol = window.location.protocol;
-    const retorno = protocol + "//13.39.99.41/api/v1"
+    const retorno = protocol + "//eduplat.org.es/api/v1"
     //console.log("ESTA ES LA ROOT URL",retorno)
     
     return(

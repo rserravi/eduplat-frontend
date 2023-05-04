@@ -22,6 +22,7 @@ import { LevelPage } from 'src/pages/levelPage';
 import { KarmaPage } from 'src/pages/miscelanea/karmaPage';
 import { LanguagePage } from 'src/pages/languagePage';
 import { TypePage } from 'src/pages/typePage';
+import { CollectionShow } from 'src/collections/collectionPage';
 
 
 
@@ -54,6 +55,10 @@ const MainRoutes = {
         {
             path: "/collections/create",
             element: <CreateCollection />
+        },
+        {
+            path: "/collections/:id",
+            element: <CollectionShow />
         },
         {
             path: 'user/:id',
