@@ -66,7 +66,7 @@ export const FavoriteIcon = (props)=>{
 
 export const ValorationMeanIcon = (props)=>{
   const {valorations} = props;
-  console.log("MEAN VALORATIONS", valorations)
+  //console.log("MEAN VALORATIONS", valorations)
   var count=0;
   var value=0;
 
@@ -85,7 +85,7 @@ export const ValorationMeanIcon = (props)=>{
   else{
     result = Math.floor(value / count);
   }
-  console.log("RESULT EN MEAN",result)
+  //console.log("RESULT EN MEAN",result)
   return(<FavoriteIcon value={result} />)
 }
 
