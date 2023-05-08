@@ -15,10 +15,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { deleteResource } from 'src/api/edusourceApi';
+import CollectionList from 'src/ui-component/edusource/collectionlist';
 
 
 export const ResourcesNetflixGrid = (props) =>{
-    var {edusourceList, title, newcolor, mt, defaultMode, total, setPage} = props;
+    var {edusourceList,  title, newcolor, mt, defaultMode, total, setPage, isCollection} = props;
     const [deleteDialog, setDeleteDialog] = React.useState(false);
     const [eduToDelete, setEduToDelete] = React.useState();
     const {newWidth} = props;
@@ -143,8 +144,14 @@ export const ResourcesNetflixGrid = (props) =>{
                     <Box width="100%">
                     <Slider>
                     {edusourceList.map((edusource, index) => (
-
+                       <>
+                       {isCollection?<>
+                        <Slider.Item collection={edusource} key={index}>item1</Slider.Item>
+                       </>:<>
+                       
                         <Slider.Item edusource={edusource} key={index}>item1</Slider.Item>
+                        </>}
+                        </>
                     ))}
                     </Slider>
                     </Box>
@@ -155,7 +162,12 @@ export const ResourcesNetflixGrid = (props) =>{
                             return (
                                 <React.Fragment key={index}>
                                 <Grid item sx={{mb:2}} >
-                                    <EduSourceList edusource= {edusource} newWidth={newWidth} />
+                                    {isCollection?<>
+                                        <CollectionList collection= {edusource} newWidth={newWidth} />
+                                    </>:<>
+                                        <EduSourceList edusource= {edusource} newWidth={newWidth} />
+                                    </>}
+                                   
                                     {defaultMode && defaultMode==="List"?<>
                                         <ButtonGroup >
                                             <Button onClick={(e)=>{ editClickHandle(e, edusource)}} size="small" sx={{borderRadius :"15px", mt:1}}>{i18next.t("edit")}</Button>

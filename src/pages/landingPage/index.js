@@ -11,6 +11,7 @@ import { Box } from '@mui/system';
 import { useOutletContext } from 'react-router-dom';
 import i18next from 'i18next';
 import { SearchBarComponent } from 'src/components/search-bar-component';
+import { fetchLastCollections } from 'src/api/collectionApi';
 
 
 const theme = createTheme(themeOptions);
@@ -31,6 +32,8 @@ export const LandingPage = () =>{
     const [catOneTotal, setCatOneTotal] = React.useState();
     const [catTwo, setcatTwo]= React.useState();
     const [catTwoTotal, setCatTwoTotal] = React.useState();
+    const [lastCollections, setLastCollections] = React.useState();
+    const [lastCollectionTotla, setLastCollectionTotal]=React.useState();
 
     const onPageLastRChange = (page)=>{
         try {
@@ -72,6 +75,23 @@ export const LandingPage = () =>{
 
                 setcatTwo(response.data.data)
                 setCatTwoTotal(response.data.total)
+               
+           }).catch(error=>{
+               
+            console.log(error);
+           })
+           
+       } catch (error) {
+        console.log(error);
+       }
+    }
+
+    const onLastCollectionChange = (page)=>{
+        try {
+            fetchLastCollections(page).then((response)=>{
+             //console.log("RESPIESTE EN USEEFFECT",response.data.result.data)
+             setLastCollections(response.data.result.data)
+             setLastCollectionTotal(response.data.result.total)
                
            }).catch(error=>{
                
@@ -134,6 +154,23 @@ export const LandingPage = () =>{
             console.log(error);
            }
         }
+
+        if (!lastCollections || lastCollections===undefined || lastCollections===null){
+            try {
+                fetchLastCollections(1).then((response)=>{
+                 console.log("RESPIESTE EN USEEFFECT",response.data.result.data)
+                 setLastCollections(response.data.result.data)
+                 setLastCollectionTotal(response.data.result.total)
+                   
+               }).catch(error=>{
+                   
+                console.log(error);
+               })
+               
+           } catch (error) {
+            console.log(error);
+           }
+        }
         
     },[catOne, catTwo, lastResources])
 
@@ -171,22 +208,22 @@ export const LandingPage = () =>{
                                 >
                                 <Grid item backgroundColor= 'primary.main'>
                                     <Typography variant='h2' component='h3' color='primary.contrast'>
-                                        {i18next.t("landingText1line")}
+                                        {i18next.t("EduPlat.org is the Educational Platform")}
                                     </Typography>
                                 </Grid>
                                 <Grid item backgroundColor= 'primary.main'>
                                     <Typography variant='h2' component='h3' color='primary.contrastText'>
-                                    {i18next.t("landingText2line")}
+                                    {i18next.t("where students, families, schools, teachers")}
                                     </Typography>
                                 </Grid>
                                 <Grid item backgroundColor= 'primary.main'>
                                     <Typography variant='h2' component='h3' color='primary.contrastText'>
-                                    {i18next.t("landingText3line")}
+                                    {i18next.t("and other education professionals")}
                                     </Typography>
                                 </Grid>
                                 <Grid item backgroundColor= 'primary.main'>
                                     <Typography variant='h2' component='h3' color='primary.contrastText'>
-                                    {i18next.t("landingText4line")}
+                                    {i18next.t("can collaborate by sharing resources.")}
                                     </Typography>
                                 </Grid>
                                 <Grid item>
@@ -225,7 +262,7 @@ export const LandingPage = () =>{
                   
                     <ResourcesNetflixGrid edusourceList={lastResources} title="Last Resources" mt={4} newWidth={newWidth} total={lastTotal} setPage={onPageLastRChange}/> 
                   
-                    <ResourcesNetflixGrid edusourceList={catTwo} title="Natural Sciences" newcolor="secondary.light" newWidth={newWidth} total={catTwoTotal} setPage={onPageCat2Change}/>
+                    <ResourcesNetflixGrid edusourceList={lastCollections} title="Last Colections" newcolor="secondary.light" newWidth={newWidth} total={lastCollectionTotla} isCollection={true} setPage={onLastCollectionChange}/>
 
                     <ResourcesNetflixGrid edusourceList={catOne} title="ICT" mt={4} newWidth={newWidth} total={catOneTotal} setPage={onPageCat1Change}/> 
                 

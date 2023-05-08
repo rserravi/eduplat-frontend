@@ -105,7 +105,7 @@ export default function EduSourceCard(props) {
         onMouseEnter={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
         sx={{ minWidth:260,
-          
+          borderRadius:5,
           position:"relative",
           '&:hover': {
           
@@ -161,7 +161,7 @@ export default function EduSourceCard(props) {
       {hovering?<>
       <CardContent onClick={handleCardClic} style={{cursor:"pointer",position:"absolute", marginTop:-150}}>
       <Typography sx={{fontSize:10}} variant="p" color="text.terciary">
-         {edusource.theme[0]}
+         {edusource.theme[0]?edusource.theme[0]:""}
        </Typography>
         <Typography sx={{fontSize:12}} variant="body2" color="text.secondary">
           {edusource.description.length>240? edusource.description.substring(0,240)+" ...":edusource.description}

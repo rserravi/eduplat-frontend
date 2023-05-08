@@ -30,6 +30,7 @@ import { getResourceUrlFromTitle, setPictureInResource } from 'src/utils/resourc
 import i18next from 'i18next';
 import { iscedList } from 'src/utils/isced';
 import { arrayFromString } from 'src/utils/stringOperations';
+import { handleLoadFromDisk, handlePasteImage } from 'src/utils/picUtils';
 
 
 const theme = createTheme(themeOptions);
@@ -603,8 +604,8 @@ export const CreateEdusource= ({ ...others }) =>{
                                 {urlData.images && urlData.images.length >0?
                                 <Button size='small' variant='contained' color={imageSelectorOpen?'secondary':'primary'} sx={{borderRadius:5, mr:2 }} onClick={imageSelectorClick}>{imageSelectorOpen?i18next.t("Close Images"):i18next.t("Select another image")}</Button>
                                 :<></>}
-                                <Button size='small' variant='contained' sx={{borderRadius:5, mr:2 }}>{i18next.t("Load from disk")}</Button>
-                                <Button size='small' variant='contained' sx={{borderRadius:5 }}>{i18next.t("Paste")}</Button>
+                                <Button onClick={(e)=>{e.preventDefault(); handleLoadFromDisk(setImage)}} size='small' variant='contained' sx={{borderRadius:5, mr:2 }}>{i18next.t("Load from disk")}</Button>
+                                <Button onClick={(e)=>{e.preventDefault(); handlePasteImage(setImage)}} size='small' variant='contained' sx={{borderRadius:5 }}>{i18next.t("Paste")}</Button>
                                 {imageSelectorOpen?<>
                                 <ImageList sx={{width:newWidth>500?newWidth-432: newWidth-32, height:newWidth>500?700:1000}} variant="masonry" cols={newWidth>500?6:3} gap={4}>
                                     {urlData.images.map((im, index)=>{
@@ -616,7 +617,6 @@ export const CreateEdusource= ({ ...others }) =>{
                                                     alt={im}
                                                     loading="lazy"
                                                     onClick={setNewImage}
-                
                                                     style={{borderRadius:10, borderColor:"#000000",
 
                                                         }}

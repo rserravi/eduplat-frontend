@@ -4,8 +4,10 @@ import SliderContext from './context'
 import Mark from './Mark'
 import './Item.scss'
 import EduSourceCard from 'src/ui-component/edusource/edusourcecard';
+import CollectionCard from 'src/ui-component/edusource/collectioncard';
 
-const Item = ({ edusource }) => (
+const Item = ({ edusource, collection }) => (
+
   <SliderContext.Consumer>
     {({ onSelectSlide, currentSlide, elementRef }) => {
       const isActive = currentSlide && currentSlide.id === edusource.key;
@@ -17,8 +19,11 @@ const Item = ({ edusource }) => (
             'item--open': isActive,
           })}
         > 
-        
+          {edusource?<>
           <EduSourceCard edusource = {edusource} />
+          </>:<>
+          <CollectionCard collection = {collection} />
+          </>}      
      
           
           {/* <img src={edusource.image} alt="" /> */}

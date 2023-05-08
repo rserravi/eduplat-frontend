@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Grid, Typography } from '@mui/material';
+import { Box, Button, ButtonGroup, Divider, Grid, Typography } from '@mui/material';
 import * as React from 'react'
 import {  useState, useEffect } from 'react';
 
@@ -27,63 +27,59 @@ export const MyAccountAdministration= (props) =>{
             }}
         > 
             <Typography variant='h3'>Administration</Typography>
+            <Box border={1} borderRadius={10} p={2} my={2}>
 
-            <Grid
-              container
-              direction="column"
-              justifyContent="flex-start"
-              alignItems="flex-start"
-              
-              mt={1}
-            >
-                <Grid item>
-                    <Grid 
-                        container
-                        direction="row"
-                        justifyContent="flex-start"
-                        alignItems="center"
-                    >
-                        <Grid item mr={2}>
-                            <Typography variant='h4'>Comunicación</Typography>
-                        </Grid>
-                        <Grid item>
-                            <Button  >Anuncios</Button>
-                        </Grid>
-                        <Grid item>
-                            <Button  >Texto Portada</Button>
-                        </Grid>
-                        <Grid item>
-                            <Button  > Enviar Email</Button>
-                        </Grid>
-                        <Grid item>
-                            <Button  >Email masivo</Button>
-                        </Grid>
-                    </Grid>
-                </Grid>
-                <Grid item>
-                    <Grid 
-                        container
-                        direction="row"
-                        justifyContent="flex-start"
-                        alignItems="center"
-                    >
-                        <Grid item mr={2}>
-                            <Typography variant='h4'>Eventos</Typography>
-                        </Grid>
-                        <Grid item>
-                            <Button  >Crear</Button>
-                        </Grid>
-                        <Grid item>
-                            <Button  >Editar</Button>
-                        </Grid>
-                        <Grid item>
-                            <Button  >Ver eventos</Button>
-                        </Grid>
-                     
-                    </Grid>
-                </Grid>
+                <Grid
+                container
+                direction="column"
+                justifyContent="flex-start"
+                alignItems="flex-start"
                 
-            </Grid>
+                mt={1}
+                >
+                    <Grid item>
+                        <Grid 
+                            container
+                            direction="row"
+                            justifyContent="space-between"
+                            alignItems="center"
+                            columnSpacing={1}
+                            rowSpacing={1}
+                        >
+                            <Grid item mr={2} xs={2}>
+                                <Typography variant='h4'>Communication</Typography>
+                            </Grid>
+                            <Grid item xs={10}>
+                                <ButtonGroup>
+                                    <Button variant='contained' sx={{borderRadius:5}}  onClick={(e)=>{e.preventDefault();setTab("Adverts")}} >Adverts and alerts</Button>
+                                    <Button variant='contained' sx={{borderRadius:5}} onClick={(e)=>{e.preventDefault();setTab("SendEmail")}}  > Send Email</Button>                            
+                                    <Button variant='contained' sx={{borderRadius:5}} onClick={(e)=>{e.preventDefault();setTab("SendMassiveEmail")}} >Send massive email</Button>
+                                </ButtonGroup>
+                            </Grid>
+                        
+                            <Grid item mr={2} xs={2}>
+                                <Typography variant='h4'>Events</Typography>
+                            </Grid>
+                           <Grid item xs={10}>
+                                <ButtonGroup>
+                                    <Button variant='contained' sx={{borderRadius:5}}  onClick={(e)=>{e.preventDefault();setTab("CreateEvent")}}  >Create</Button>
+                                    <Button variant='contained' sx={{borderRadius:5}}  onClick={(e)=>{e.preventDefault();setTab("EditEvent")}}  >Edit</Button>
+                                    <Button variant='contained' sx={{borderRadius:5}}  onClick={(e)=>{e.preventDefault();setTab("SeeEvents")}}  >See programmed event</Button>
+                                </ButtonGroup>
+                            </Grid>
+
+                            <Grid item mr={2} xs={2}>
+                                <Typography variant='h4'>Statistics</Typography>
+                            </Grid>
+                            <Grid item xs={10}>
+                            <Button variant='contained' sx={{borderRadius:5}}  onClick={(e)=>{e.preventDefault();setTab("Statistics")}}  >See</Button>
+                            </Grid>
+                        
+                        </Grid>
+                    </Grid>
+                    
+                </Grid>
+            </Box>
             <Divider />
             {tab==="Adverts"?<><AdminAdvertsControl user={user} /> </>:<></>}
 

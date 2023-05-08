@@ -14,6 +14,7 @@ import { UserCard } from 'src/ui-component/cards/user/userCard';
 import { LocalBrowserHistory } from 'src/utils/searchHistory';
 import i18next from 'i18next';
 import { searchInResources } from 'src/api/edusourceApi';
+import { searchInCollections } from 'src/api/collectionApi';
 
 
 const theme = createTheme(themeOptions);
@@ -25,7 +26,7 @@ export const OpenSearch = () =>{
     console.log (terms, type);
     
     const [searchValue, setSearchValue] = useState(terms);
-    const [serp, setSerp] = useState(); //CHANGE fakeLastResources
+    const [serp, setSerp] = useState(); 
     const [newWidth, setNewWidth] = useState(newMaxWidth);
     const [languageFilter, setLanguageFilter] = useState('ANY')
     const [typeOfFilter, setTypeOfFilter] = useState(type);
@@ -125,9 +126,20 @@ export const OpenSearch = () =>{
         setSearching(false);
     }
 
-    const searchCollections = () =>{
+    const searchCollections = async() =>{
         //BUSCAR COLECCIONES
-        //TOD
+         // BUSCAR USUARIOS
+         setSearching(true);
+         await searchInCollections(searchValue, page).then((result)=>{
+             console.log("RESULT EN SEARCH COLLECTION",result.data.result.data);
+             setSerp(result.data.result.data)
+             setTotal(result.data.result.total)
+         }).catch((error)=>{
+             console.log(error);
+         })
+ 
+         // GUARDAR LA BUSQUEDA RECIENTE
+         setSearching(false);
     }
 
     const searchusers = async () =>{
@@ -255,6 +267,16 @@ export const OpenSearch = () =>{
                     {typeOfFilter==="resources"?
                     serp.length>0?<>
                     <ResourcesNetflixGrid edusourceList={serp} title={i18next.t("Search results")}  mt={2} total={total} setPage={onPageChange}/>
+                    </>:<>
+                         <Box sx={{ml:2, mt:2}} >
+                            <Typography variant='body1'><b>{i18next.t("No results")}</b> {i18next.t("Try another search or other filters")}</Typography>
+                            <Typography variant='body1'>{i18next.t("You can")} <b>{i18next.t("reset filters")}</b> {i18next.t("or try to search in")} <b>"{i18next.t("Any")}"</b> {i18next.t("Language")}</Typography>
+                        </Box>
+                    </>
+                    :<></>}
+                    {typeOfFilter==="collections"?
+                    serp.length>0?<>
+                    <ResourcesNetflixGrid edusourceList={serp} title={i18next.t("Search results")}  mt={2} total={total} setPage={onPageChange} isCollection={true}/>
                     </>:<>
                          <Box sx={{ml:2, mt:2}} >
                             <Typography variant='body1'><b>{i18next.t("No results")}</b> {i18next.t("Try another search or other filters")}</Typography>

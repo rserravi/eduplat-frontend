@@ -13,7 +13,11 @@ export const getShareUrl = ()=>{
     //console.log("ESTE ES PROTOCOL ",window.location.protocol)
     const protocol = window.location.protocol;
     const domain = window.location.hostname;
-    var retorno = protocol +"//"+  domain + "/resources/"
+    var port = window.location.port;
+    if (port){
+        port = ":"+port
+    }
+    var retorno = protocol +"//"+  domain + port + "/resources/"
     return(
         retorno
     )

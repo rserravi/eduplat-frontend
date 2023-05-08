@@ -111,6 +111,12 @@ export const categoriesList = [
     },
     {
         key:8,
+        label: "Tools",
+        desc: "Tools",
+        tags: ["No subcategory"]
+    },
+    {
+        key:8,
         label: "Various Categories",
         desc: "Various Categories",
         tags:["No Subcategory"]

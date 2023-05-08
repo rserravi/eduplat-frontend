@@ -210,7 +210,7 @@ export const ValorateDialog = (props)=>{
   const [comment, setComment]= useState(valoration.comment);
   
   const commentChange = (event)=>{
-    if (comment.length < 300){
+    if (comment.length < CHARACTER_LIMIT){
         setComment(event.target.value)
     }
   }

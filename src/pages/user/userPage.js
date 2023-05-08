@@ -401,7 +401,7 @@ export const UserPage = () =>{
             dispatch(MENU_OPEN("/user/"+id));
             try {
                  fetchUserByUsername(id).then((response)=>{
-                   //console.log(response);
+                    //console.log(response);
                     setLoadedUser(response.user)
                     setShareUrl(getShareProfileUrl()+ response.user.username);
                     

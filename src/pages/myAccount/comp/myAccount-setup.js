@@ -80,7 +80,13 @@ export const MyAccountSetup = (props) =>{
     const handleSave = async (event)=>{
         console.log(loadedUser);
         event.preventDefault()
-        await userUpdate(loadedUser).then((result)=>{
+        const frmData ={
+            _id: loadedUser._id,
+            
+            publicData: loadedUser.publicData,
+            language: loadedUser.language
+        }
+        await userUpdate(frmData).then((result)=>{
             console.log("RESULTADO OBTENIDO", result)
             if (result.status==="success"){
                 setSeverity("success")

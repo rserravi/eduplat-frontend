@@ -11,6 +11,7 @@ import { MyAccountSetup } from './comp/myAccount-setup';
 import { MyAccountValorations } from './comp/myAccoun-valorations';
 import { MyAccountResources } from './comp/myAccount-resources';
 import { MyAccountAdministration } from './comp/myAccount-administration';
+import { MyAccountCollections } from './comp/myAccount-collections';
 
 
 const theme = createTheme(themeOptions);
@@ -113,6 +114,7 @@ export const MyAccount = () =>{
                     {selected==="valorations"?<><MyAccountValorations user={user} /></>:<></>}
                     {selected==="resources"?<><MyAccountResources user={user} /> </>:<></>}
                     {selected==="administration"?<><MyAccountAdministration user={user} /> </>:<></>}
+                    {selected==="collections"?<><MyAccountCollections user={user} /> </>:<></>}
                {/*  </Box> */}
             </ThemeProvider>
         </React.Fragment>

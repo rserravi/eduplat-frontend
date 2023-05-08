@@ -23,6 +23,7 @@ import { KarmaPage } from 'src/pages/miscelanea/karmaPage';
 import { LanguagePage } from 'src/pages/languagePage';
 import { TypePage } from 'src/pages/typePage';
 import { CollectionShow } from 'src/collections/collectionPage';
+import TechnicalSupport from 'src/pages/miscelanea/techincal-support';
 
 
 
@@ -123,6 +124,10 @@ const MainRoutes = {
         {
             path: '/karma',
             element: <KarmaPage />
+        },
+        {
+            path: '/technicalsupport',
+            element: <TechnicalSupport />
         }
 
     ]

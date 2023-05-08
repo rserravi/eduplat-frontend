@@ -199,7 +199,7 @@ const resetFilters = (event) =>{
   return (
     <ThemeProvider theme={theme}>
             
-            <Button size='small' variant='contained' sx={{ borderRadius:"20px", width:150, mr:1, mb:1}} color='secondary' endIcon={<ArrowDropDownIcon />} onClick={handleOpenNavResourcesMenu}>
+            <Button disabled={typeOfFilter==="collections"} size='small' variant='contained' sx={{ borderRadius:"20px", width:150, mr:1, mb:1}} color='secondary' endIcon={<ArrowDropDownIcon />} onClick={handleOpenNavResourcesMenu}>
                 {i18next.t(findLangFromCode(languageFilter))}
             </Button>
 
@@ -207,15 +207,15 @@ const resetFilters = (event) =>{
                 {i18next.t(typeOfFilter)}
             </Button>
 
-            <Button disabled={typeOfFilter==="users"} size='small' variant='contained' sx={{ borderRadius:"20px", width:119, mr:1, mb:1}} color={categoriesFilter===""?'primary':'secondary'} endIcon={<ArrowDropDownIcon />} onClick={handleOpenNavCategoriesMenu}>
+            <Button disabled={typeOfFilter==="users" || typeOfFilter==="collections"} size='small' variant='contained' sx={{ borderRadius:"20px", width:119, mr:1, mb:1}} color={categoriesFilter===""?'primary':'secondary'} endIcon={<ArrowDropDownIcon />} onClick={handleOpenNavCategoriesMenu}>
                 {i18next.t("Categories")}
             </Button>
 
-            <Button disabled={typeOfFilter==="users"} size='small' variant='contained' sx={{ borderRadius:"20px", width:119, mr:1, mb:1}} color={levelFilter===""?'primary':'secondary'} endIcon={<ArrowDropDownIcon />} onClick={handleOpenNavLevelMenu}>
+            <Button disabled={typeOfFilter==="users" || typeOfFilter==="collections"} size='small' variant='contained' sx={{ borderRadius:"20px", width:119, mr:1, mb:1}} color={levelFilter===""?'primary':'secondary'} endIcon={<ArrowDropDownIcon />} onClick={handleOpenNavLevelMenu}>
                 {i18next.t("Levels")}
             </Button>
 
-            <Button disabled={typeOfFilter==="users"} size='small' variant='contained' sx={{ borderRadius:"20px", width:119, mr:1, mb:1}} color={themesFilter===""?'primary':'secondary'} endIcon={<ArrowDropDownIcon />} onClick={handleOpenNavThemesMenu}>
+            <Button disabled={typeOfFilter==="users"|| typeOfFilter==="collections"} size='small' variant='contained' sx={{ borderRadius:"20px", width:119, mr:1, mb:1}} color={themesFilter===""?'primary':'secondary'} endIcon={<ArrowDropDownIcon />} onClick={handleOpenNavThemesMenu}>
                 {i18next.t("Themes")}
             </Button>
               

@@ -6,6 +6,30 @@ const rootUrl = getRootUrl();
 const collectionUrl = rootUrl + '/collection';
 const markUrl = collectionUrl + "/mark";
 const valorationUrl = collectionUrl + "/valoration"
+const byPromoter = collectionUrl+"/bypromoter"
+
+export const postCollection = (collection) => {
+    return new Promise( async(resolve, reject)=>{
+        try {
+            const res = await axios.post(collectionUrl, collection);
+            if(res){
+               
+                if (res.data.status==="error"){
+                    reject(res.data.message)
+                }
+               
+               resolve(res)
+            }
+            else {
+                console.log("NO EXISTE LA URL")
+            }
+            
+        } catch (error) {
+            console.log(error);
+            reject(error.message);
+        }
+    })
+}
 
 export const getCollectionById = (id, page)=>{
     return new Promise( async(resolve, reject)=>{
@@ -30,6 +54,7 @@ export const getCollectionById = (id, page)=>{
     })
 }
 
+
 export const getCollectionByUrl = (url, page)=>{
     return new Promise( async(resolve, reject)=>{
         try {
@@ -40,6 +65,86 @@ export const getCollectionByUrl = (url, page)=>{
                     reject(res.data.message)
                 }
                
+               resolve(res)
+            }
+            else {
+                console.log("NO EXISTE LA URL")
+            }
+            
+        } catch (error) {
+            console.log(error);
+            reject(error.message);
+        }
+    })
+}
+
+export const fetchLastCollections = (page) =>{
+    return new Promise( async(resolve, reject)=>{
+        try {
+            const url = collectionUrl+"?page="+page
+            console.log(url)
+            const res = await axios.get(url);
+            console.log("RES EN FETCH LAST RESOURCES",res)
+            if(res){
+               
+                if (res.data.status==="error"){
+                    reject(res.data.message)
+                }
+               
+               resolve(res)
+            }
+            else {
+                console.log("NO EXISTE LA URL")
+            }
+            
+        } catch (error) {
+            console.log(error);
+            reject(error.message);
+        }
+    })
+    
+}
+
+export const fetchCollectionsByPromoter = (id, page) =>{
+    return new Promise( async(resolve, reject)=>{
+        try {
+            var axiosUrl = byPromoter + "?promoterId="+id;
+            if (page){
+                axiosUrl= axiosUrl+"&page="+page;
+            }
+            console.log(axiosUrl);
+            const res = await axios.get(axiosUrl);
+            if(res){
+               console.log("DATA EN FETCHBYPROMOTERID",res.data);
+                if (res.data.status==="error"){
+                    reject(res.data.message)
+                }
+                resolve(res.data);
+            }
+            else {
+                console.log("NO EXISTE LA URL")
+            }
+            
+            
+        } catch (error) {
+            console.log("HA HABIDO UN ERROR en fetchEdusourceByPromoter",error);
+            reject(error.message);
+        }
+    })
+}
+
+export const searchInCollections = (terms, page) =>{
+    
+    return new Promise( async(resolve, reject)=>{
+        const newUrl = collectionUrl+"?page="+page+"&terms="+terms;
+        try {
+            const res = await axios.get(newUrl);
+            if(res){
+                //console.log("RES DATA IN GET RESOURCES OF SEARCH IN RESORCE",res.data);
+                if (res.data.status==="error"){
+                    reject(res.data.message)
+                }
+               // resolve(res.data);
                resolve(res)
             }
             else {

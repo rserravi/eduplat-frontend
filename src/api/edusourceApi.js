@@ -62,16 +62,19 @@ export const fetchEdusourceById = (id)=>{
     })
 }
 
-export const fetchEdusourceByPromoter = (id) =>{
+export const fetchEdusourceByPromoter = (id, page) =>{
     //  http://localhost:3001/v1/edusource/bypromoter?promoterId=63fdb9e80daaa0ce85983c3a
     return new Promise( async(resolve, reject)=>{
        // console.log("ID EN FETCHEDUSOURCE",id)
         try {
-            const axiosUrl = byPromoter + "?promoterId="+id;
-            //console.log(axiosUrl);
+            var axiosUrl = byPromoter + "?promoterId="+id;
+            if (page){
+                axiosUrl= axiosUrl+"&page="+page;
+            }
+            console.log(axiosUrl);
             const res = await axios.get(axiosUrl);
             if(res){
-               // console.log(res.data);
+               console.log("DATA EN FETCH",res.data);
                 if (res.data.status==="error"){
                     reject(res.data.message)
                 }
@@ -247,6 +250,30 @@ export const searchInResources = (terms, languageFilter, categoriesFilter, level
     newUrl = newUrl + "&page="+page;
 
 
+    return new Promise( async(resolve, reject)=>{
+        try {
+            const res = await axios.get(newUrl);
+            if(res){
+                //console.log("RES DATA IN GET RESOURCES OF SEARCH IN RESORCE",res.data);
+                if (res.data.status==="error"){
+                    reject(res.data.message)
+                }
+               // resolve(res.data);
+               resolve(res)
+            }
+            else {
+                console.log("NO EXISTE LA URL")
+            }
+            
+        } catch (error) {
+            console.log(error);
+            reject(error.message);
+        }
+    })
+}
+
+export const searchResourcesMinimal = (terms) =>{
+    const newUrl = edusourceUrl+ "minsearch?terms="+terms;
     return new Promise( async(resolve, reject)=>{
         try {
             const res = await axios.get(newUrl);

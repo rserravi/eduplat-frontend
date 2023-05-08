@@ -23,7 +23,7 @@ const useSliding = (elementWidth, countElements) => {
   }
 
   const handleNext = () => {
-    console.log("viewed", viewed, "totalInViewport", totalInViewport, "distance", distance, "containerWidth", containerWidth)
+    //console.log("viewed", viewed, "totalInViewport", totalInViewport, "distance", distance, "containerWidth", containerWidth)
     setViewed(viewed + totalInViewport);
     setDistance(distance - containerWidth)
   }

@@ -59,7 +59,7 @@ function MainHeader() {
             if(!user ||user._id===""){
                 const loadedUser =  loadUser()
                
-                console.log(loadedUser)
+                //console.log(loadedUser)
             }
         }
         fetchData()
