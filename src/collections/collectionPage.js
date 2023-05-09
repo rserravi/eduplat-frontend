@@ -1,11 +1,13 @@
+//REACT
 import * as React from 'react'
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { themeOptions } from 'src/theme/theme';
 import { useSelector } from 'react-redux';
 import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
-import { createCollectionValoration, getCollectionByUrl, markasReaded, updateCollectionValoration } from 'src/api/collectionApi';
-import Loader from 'src/ui-component/Loader';
-import i18next from 'i18next';
+
+//MUI
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Link  from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -20,27 +22,31 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import Image from 'mui-image';
 
+//MUI ICONS
 import CheckIcon from '@mui/icons-material/Check';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+
+//OTHERS
+import _ from 'lodash';
+import i18next from 'i18next';
+
+//PROJECT
+import { createCollectionValoration, getCollectionByUrl, markasReaded, updateCollectionValoration } from 'src/api/collectionApi';
+import { themeOptions } from 'src/theme/theme';
 import { fetchEdusourceById } from 'src/api/edusourceApi';
 import { EdusourceHeaderForCollection } from 'src/components/resources/edusourceHeader';
-import { Button,  Grid, Link } from '@mui/material';
 import { EdusourceBody } from 'src/components/resources/edusourceBody';
-import _ from 'lodash';
-import Image from 'mui-image';
 import { getRightPicture } from 'src/utils/picUtils';
 import { ValorateCollection } from 'src/components/favorites';
-
-
+import Loader from 'src/ui-component/Loader';
 
 const theme = createTheme(themeOptions);
-//const drawerWidth = 240;
-
 
 export const CollectionShow= () =>{
 
-    const navigate = useNavigate();
+    const navigate = useNavigate(); 
     const {id} = useParams();
     const [collection, setCollection]= React.useState ();
     const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -50,8 +56,6 @@ export const CollectionShow= () =>{
     const user = useSelector(state => state.user) 
     const drawerWidth = custom.drawerWidth;
     
-
-   // const { window } = props;
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
@@ -107,7 +111,6 @@ export const CollectionShow= () =>{
             event.preventDefault();
             await fetchEdusourceById(edusourceId).then((result)=>{
                 
-                //console.log("RESOURCE",result)
                 setSelectedEdu(result.result);
             }).catch((err)=>{
                 console.log(err)
@@ -117,10 +120,7 @@ export const CollectionShow= () =>{
                 markasReaded(collection._id, id, user._id, id)
                 markAsReadLocally(id)
             }
-            
-            
-            //console.log("COLLECTION", collection._id, "CONTENTID", id, "USERID", user._id.toString())
-            
+                        
         }
 
         if (collection){
@@ -174,56 +174,126 @@ export const CollectionShow= () =>{
         return(
             <>
             <Grid container width={newWidth>500?newWidth-48-drawerWidth:newWidth-32}>
-            <Image src={getRightPicture(collection.picture)} showLoading />
-            <Typography paragraph mt={2}>
-                {collection.description}
-            </Typography>
-            <Grid
-                container
-                direction="column"
-                justifyContent="flex-start"
-                alignItems="flex-start"
-                >
-                <Typography variant='h4'>{i18next.t("Content")}</Typography>
-                    {collection.content.map((item)=>{
-                        return(
-                            <React.Fragment key={item._id}>
-                            
-                            {item.type==="header"?<>
-                            <Grid item>
-                            <Typography  sx={{py:2}}><b>{item.description}</b></Typography>
-                            </Grid>
-                            </>:<>
+                <Grid item>
+                    
+                <Box p={2} border={1} borderRadius={10} width={newWidth>500?newWidth-48-drawerWidth:newWidth-32}>
+                <Grid container>
+                        <Grid item>
+                            <Image src={getRightPicture(collection.picture)} width={newWidth>500?300:newWidth-32} showLoading />        
+                        </Grid>
+                        <Grid item>
+                            <Grid 
+                                container
+                                direction="column"
+                                justifyContent="center"
+                                alignItems="flex-start"
+                                sx={newWidth<500?{ml:2}:{ml:2}}
+                                >
                                 <Grid item>
-                                <Typography sx={{ml:2}}> {item.description} </Typography>
+                                    <Typography variant='h4'>{collection.title}</Typography>
+                                </Grid>
+                                <Grid item>
+                                    <Typography variant='p'><Link href={'/users/'+ collection.promoterId.username }>@ {collection.promoterId.username}</Link> </Typography>
+                                </Grid>
+
+
+                                <Grid item mt={2}>
+                                    <Typography variant='p'><strong>{i18next.t("Languages")}</strong> {collection.stats.languages.map((lang, index)=>{
+                                        return(
+                                            <React.Fragment key={index}>
+                                                - <Link href={'/language/'+ lang}> {lang} </Link>
+                                            </React.Fragment>
+                                        )
+                                    })} </Typography>
+                                </Grid>
+                                 <Grid item >
+                                    <Typography variant='p'><strong>{i18next.t("Disciplines")}</strong> {collection.stats.disciplines.map((disc, index)=>{
+                                        return(
+                                            <React.Fragment key={index}>
+                                                -<Link href={'/discipline/'+ disc}> {i18next.t(disc)} </Link> 
+                                            </React.Fragment>
+                                        )
+                                    })} </Typography>
+                                </Grid>
+
+                                <Grid item >
+                                    <Typography variant='p'><strong>{i18next.t("Themes")}</strong> {collection.stats.themes.map((theme, index)=>{
+                                        return(
+                                            <React.Fragment key={index}>
+
+                                                -<Link href={'/theme/'+ theme}> {i18next.t(theme)} </Link> 
+                                            </React.Fragment>
+                                        )
+                                    })} </Typography>
+                                </Grid>
+                                <Grid item >
+                                    <Typography variant='p'><strong>{i18next.t("Levels")}</strong> {collection.stats.levels.map((level, index)=>{
+                                        return(
+                                            <React.Fragment key={index}>
+                                                - {level}
+                                            </React.Fragment>
+                                        )
+                                    })} </Typography>
+                                </Grid>
+
+                                <Grid item >
+                                    <Typography variant='p'><strong>{i18next.t("Authors")}</strong> {collection.stats.autors.map((author, index)=>{
+                                        return(
+                                            <React.Fragment key={index}>
+                                                - {author}
+                                            </React.Fragment>
+                                        )
+                                    })} </Typography>
+                                </Grid>
+
+                                <Grid item mt={2}>
+                                    <Typography variant='p'><b>{i18next.t("Description")}: </b> {collection.description}</Typography>
+                                </Grid>
+
+                                
                             </Grid>
-                            </>}
-                        
-           
-                        </React.Fragment>
-                        )
-                        
-                    })}
-            </Grid>
+                        </Grid>
+                    </Grid>
+                </Box>
+                </Grid>
+                <Grid
+                    container
+                    direction="column"
+                    justifyContent="flex-start"
+                    alignItems="flex-start"
+                    mt={2}
+                    >
+                    <Typography variant='h4'>{i18next.t("Index")}</Typography>
+                        {collection.content.map((item)=>{
+                            return(
+                                <React.Fragment key={item._id}>
+                                
+                                {item.type==="header"?<>
+                                <Grid item>
+                                <Typography  sx={{py:2}}><b>{item.position}. {item.description}</b></Typography>
+                                </Grid>
+                                </>:<>
+                                    <Grid item>
+                                    <Typography sx={{ml:2}}> {item.position}. {item.description} </Typography>
+                                </Grid>
+                                </>}
+                            
+            
+                            </React.Fragment>
+                            )
+                            
+                        })}
+                </Grid>
             </Grid>
             </>
         )
     }
 
-   
-
-
-   // const container = window !== undefined ? () => window().document.body : undefined;
-
     React.useEffect(()=>{
-        /* if (!user ||user==null ||user._id==="" || user._id===null ||user._id===undefined){
-            navigate("/login");
-        } */
 
         const fetchData =async()=>{
             await getCollectionByUrl(id)
             .then((result)=>{
-               // console.log("RESULTADO EN FETCH",result.data.result)
                 setCollection(result.data.result)
             })
             .catch((err)=>{
@@ -238,9 +308,9 @@ export const CollectionShow= () =>{
         
        
     },[ navigate, setCollection, collection, id])
+
     return(
-        <React.Fragment>
-            
+        <React.Fragment>   
              <ThemeProvider theme={theme}>
                 {collection && collection!==null & collection!==undefined?
                 <>
@@ -280,13 +350,12 @@ export const CollectionShow= () =>{
                         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
                         aria-label="mailbox folders"
                     >
-                        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
                         <Drawer
                             variant="temporary"
                             open={mobileOpen}
                             onClose={handleDrawerToggle}
                             ModalProps={{
-                                keepMounted: true, // Better open performance on mobile.
+                                keepMounted: true, 
                             }}
                             sx={{
                                 display: { xs: 'block', sm: 'none' },

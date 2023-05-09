@@ -118,7 +118,7 @@ const acceptedValorations = (valorations)=>{
     }
     
   }
-  console.log("ACCEPTED VALORATIONS", result)
+  //console.log("ACCEPTED VALORATIONS", result)
   return result;
 }
 
