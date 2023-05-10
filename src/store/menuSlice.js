@@ -13,7 +13,7 @@ const menuSlice = createSlice({
     },
     reducers: {
         MENU_OPEN(state, action) {
-            console.log(action)
+            //console.log(action)
             state.isOpen = action.payload;
         },
         SET_MENU(state, action) {

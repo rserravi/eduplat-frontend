@@ -21,7 +21,11 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContentText from '@mui/material/DialogContentText';
-import { Grid } from '@mui/material';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { Grid, IconButton } from '@mui/material';
+import Favorite2Icon from '@mui/icons-material/Favorite';
+import { setInFavorites } from 'src/api/userApi';
+import { useDispatch } from 'react-redux';
 
 export const customIcons = {
     0: {
@@ -511,5 +515,73 @@ export const ValorateEdusource = (props) =>{
             </Typography>
             </>}
       </>
+  )
+}
+
+export const AddToFav= (props)=>{
+
+  const {edusource,user} = props;
+  const dispatch = useDispatch();
+
+  
+
+  const [selected, setSelected]=useState(false)
+
+  const onFavClick = async (event)=>{
+    event.preventDefault();
+    
+    await setInFavorites(user._id, edusource._id, !selected, dispatch); 
+    setSelected(!selected);
+  }
+
+  React.useEffect(()=>{
+
+    const checkIfInUser = () =>{
+      console.log("IS CHECKING IF FAVORITE IS IN USER")
+      if (!user.favorites || user.favorites===undefined ||user.favorites ===null){
+        console.log("IT IS NOT")
+        return false;
+      }
+      else{
+        console.log("FAV STATE",user.favorites.includes(edusource._id))
+        return (user.favorites.includes(edusource._id))
+      }
+    }
+
+    const favInUser = checkIfInUser()
+    console.log("EN USE EFFECT FAVSTATE", favInUser)
+    setSelected(favInUser)
+  },[selected, user])
+
+
+  return(
+    <>
+    <Grid
+          container
+          direction="row"
+          justifyContent="flex-start"
+          alignItems="flex-start"
+          padding={2}
+          
+        >
+        <Grid item mr={2}  >
+          <Grid container direction="column">
+            <Grid item>
+              <Typography><b>{selected?i18next.t("Already in Favorites"):i18next.t("Add to favorites")}:</b></Typography>
+            </Grid>
+            <Grid item mb={1}>
+              <IconButton onClick={onFavClick}>
+                {selected?<>
+                <Favorite2Icon style={{ color: 'red' }} />
+                </>:<>
+                <FavoriteBorderIcon />
+                </>}
+                
+              </IconButton>
+            </Grid>
+          </Grid>
+        </Grid>
+    </Grid>
+    </>
   )
 }

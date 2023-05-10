@@ -82,9 +82,9 @@ export const fetchLastCollections = (page) =>{
     return new Promise( async(resolve, reject)=>{
         try {
             const url = collectionUrl+"?page="+page
-            console.log(url)
+            //console.log(url)
             const res = await axios.get(url);
-            console.log("RES EN FETCH LAST RESOURCES",res)
+            //console.log("RES EN FETCH LAST RESOURCES",res)
             if(res){
                
                 if (res.data.status==="error"){
@@ -112,10 +112,10 @@ export const fetchCollectionsByPromoter = (id, page) =>{
             if (page){
                 axiosUrl= axiosUrl+"&page="+page;
             }
-            console.log(axiosUrl);
+            //console.log(axiosUrl);
             const res = await axios.get(axiosUrl);
             if(res){
-               console.log("DATA EN FETCHBYPROMOTERID",res.data);
+               //console.log("DATA EN FETCHBYPROMOTERID",res.data);
                 if (res.data.status==="error"){
                     reject(res.data.message)
                 }

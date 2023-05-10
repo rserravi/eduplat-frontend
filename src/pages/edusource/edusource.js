@@ -15,7 +15,7 @@ import { MENU_OPEN } from 'src/store/menuSlice';
 import { useOutletContext } from 'react-router-dom';
 import i18next from 'i18next';
 import { useNavigate } from 'react-router-dom';
-import { ValorateEdusource } from 'src/components/favorites';
+import { AddToFav, ValorateEdusource } from 'src/components/favorites';
 
 
 const theme = createTheme(themeOptions);
@@ -55,6 +55,7 @@ export const EdusourcePage = () =>{
                 await deleteResource(eduToDelete).then((data)=>{
                     console.log(data)
                     setDeleteDialog(false)
+                    navigate("/")
                   
                 }).catch((err)=>{
                     console.log(err);
@@ -89,6 +90,7 @@ export const EdusourcePage = () =>{
             })
         }
     }
+
 
     useEffect(() =>{
       
@@ -161,9 +163,13 @@ export const EdusourcePage = () =>{
                         </ButtonGroup>
                         </Grid>
                     </>:<></>}
-                    <Grid item >
-                    <ValorateEdusource edusource={edusource} user={user} updateValoration={updateValoration} />
+                    <Grid item>
+                        <AddToFav edusource={edusource} user={user}/>
                     </Grid>
+                    <Grid item >
+                        <ValorateEdusource edusource={edusource} user={user} updateValoration={updateValoration} />
+                    </Grid>
+                    
                     
                 </Grid>
                 

@@ -71,10 +71,10 @@ export const fetchEdusourceByPromoter = (id, page) =>{
             if (page){
                 axiosUrl= axiosUrl+"&page="+page;
             }
-            console.log(axiosUrl);
+            //console.log(axiosUrl);
             const res = await axios.get(axiosUrl);
             if(res){
-               console.log("DATA EN FETCH",res.data);
+               //console.log("DATA EN FETCH",res.data);
                 if (res.data.status==="error"){
                     reject(res.data.message)
                 }

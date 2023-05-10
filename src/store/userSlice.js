@@ -61,7 +61,8 @@ const userSlice = createSlice({
             message: 0,
             promo: 0,
             recomandation: 0,
-        }
+        },
+        favorites:[]
     },
     reducers: {
         SET_AUTH_USER(state, action) {
@@ -96,6 +97,7 @@ const userSlice = createSlice({
             state.alerts = action.payload.alerts;
             state.language = action.payload.language;
             state.isBoss = action.payload.isBoss;
+            state.favorites = action.payload.favorites;
         },
         SET_LOADING(state, action) {
             state.loading = action.payload;
@@ -108,9 +110,24 @@ const userSlice = createSlice({
         },
         SET_NULL(state){
             state = [];
+        },
+        SET_FAVORITES(state, action) {
+           // console.log("ESTAMOS ES SET_FAVORITES", state, action.payload)
+            if (state.favorites.includes(action.payload.edusourceid) && !action.payload.value){
+             //   console.log("INCLUYE EL FAV")
+                const index = state.favorites.indexOf(action.payload.edusourceid);
+                if (index > -1){
+                    state.favorites.splice(index,1);
+                }
+            }
+
+            if (!state.favorites.includes(action.payload.edusourceid) && action.payload.value){
+               // console.log("NO INCLUYE EL FAV Y ES TRUE")
+                state.favorites.push(action.payload.edusourceid)
+            }
         }
     }
 });
 
-export const { SET_AUTH_USER, SET_LOADING, ADD_SOCIAL, SET_NULL } = userSlice.actions;
+export const { SET_AUTH_USER, SET_LOADING, ADD_SOCIAL, SET_NULL, SET_FAVORITES } = userSlice.actions;
 export default userSlice.reducer;

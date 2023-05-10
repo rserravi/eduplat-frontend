@@ -58,7 +58,7 @@ import i18next from 'i18next';
 
 export const ShareBarBig = () =>{
     const shareUrl = 'https://eduplat.org';
-    const title = 'Eduplat';
+    const title = i18next.t("Do you know Eduplat? In Eduplat you can share educational resources for free, with the whole community");
     return (
         <>
         <div className="Demo__container">
@@ -80,7 +80,7 @@ export const ShareBarBig = () =>{
           </div>
         </div>
 
-        <div className="Demo__some-network">
+        {/* <div className="Demo__some-network">
           <FacebookMessengerShareButton
             url={shareUrl}
             appId="521270401588372"
@@ -89,7 +89,7 @@ export const ShareBarBig = () =>{
             <FacebookMessengerIcon size={32} round />
           </FacebookMessengerShareButton>
         </div>
-
+ */}
         <div className="Demo__some-network">
           <TwitterShareButton
             url={shareUrl}
@@ -102,7 +102,7 @@ export const ShareBarBig = () =>{
           <div className="Demo__some-network__share-count">&nbsp;</div>
         </div>
 
-        <div className="Demo__some-network">
+       {/*  <div className="Demo__some-network">
           <TelegramShareButton
             url={shareUrl}
             title={title}
@@ -112,20 +112,9 @@ export const ShareBarBig = () =>{
           </TelegramShareButton>
 
           <div className="Demo__some-network__share-count">&nbsp;</div>
-        </div>
+        </div> */}
 
-        <div className="Demo__some-network">
-          <WhatsappShareButton
-            url={shareUrl}
-            title={title}
-            separator=":: "
-            className="Demo__some-network__share-button"
-          >
-            <WhatsappIcon size={32} round />
-          </WhatsappShareButton>
-
-          <div className="Demo__some-network__share-count">&nbsp;</div>
-        </div>
+       
 
         <div className="Demo__some-network">
           <LinkedinShareButton url={shareUrl} className="Demo__some-network__share-button">
@@ -147,7 +136,7 @@ export const ShareBarBig = () =>{
           </div>
         </div>
 
-        <div className="Demo__some-network">
+{/*         <div className="Demo__some-network">
           <OKShareButton
             url={shareUrl}
             image={`${String(window.location)}/${exampleImage}`}
@@ -159,9 +148,9 @@ export const ShareBarBig = () =>{
           <div>
             <OKShareCount url={shareUrl} className="Demo__some-network__share-count" />
           </div>
-        </div>
+        </div> */}
 
-        <div className="Demo__some-network">
+        {/* <div className="Demo__some-network">
           <RedditShareButton
             url={shareUrl}
             title={title}
@@ -200,6 +189,29 @@ export const ShareBarBig = () =>{
           >
             <LivejournalIcon size={32} round />
           </LivejournalShareButton>
+        </div> */}
+
+        <div className="Demo__some-network">
+          <PocketShareButton
+            url={shareUrl}
+            title={title}
+            className="Demo__some-network__share-button"
+          >
+            <PocketIcon size={32} round />
+          </PocketShareButton>
+        </div>
+
+        <div className="Demo__some-network">
+          <WhatsappShareButton
+            url={shareUrl}
+            title={title}
+            separator=":: "
+            className="Demo__some-network__share-button"
+          >
+            <WhatsappIcon size={32} round />
+          </WhatsappShareButton>
+
+          <div className="Demo__some-network__share-count">&nbsp;</div>
         </div>
 
         <div className="Demo__some-network">
@@ -212,7 +224,7 @@ export const ShareBarBig = () =>{
             <EmailIcon size={32} round />
           </EmailShareButton>
         </div>
-        <div className="Demo__some-network">
+        {/* <div className="Demo__some-network">
           <ViberShareButton
             url={shareUrl}
             title={title}
@@ -240,19 +252,11 @@ export const ShareBarBig = () =>{
           >
             <LineIcon size={32} round />
           </LineShareButton>
-        </div>
+        </div> */}
 
-        <div className="Demo__some-network">
-          <PocketShareButton
-            url={shareUrl}
-            title={title}
-            className="Demo__some-network__share-button"
-          >
-            <PocketIcon size={32} round />
-          </PocketShareButton>
-        </div>
+        
 
-        <div className="Demo__some-network">
+      {/*   <div className="Demo__some-network">
           <InstapaperShareButton
             url={shareUrl}
             title={title}
@@ -260,7 +264,7 @@ export const ShareBarBig = () =>{
           >
             <InstapaperIcon size={32} round />
           </InstapaperShareButton>
-        </div>
+        </div> */}
 
       </div>
         </>

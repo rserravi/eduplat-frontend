@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { getRootUrl } from 'src/utils/rootTools';
 import { replaceSpacesWithUnderscores } from 'src/utils/stringOperations';
+import { SET_FAVORITES } from 'src/store/userSlice';
 
 const rootUrl = getRootUrl();
 //const rootUrl = 'http://localhost:3001/v1'
@@ -16,6 +17,9 @@ const valorationMod = userUrl + "/valorationMod"
 const userVerificationUrl = userUrl + "/verify"
 const userResend = userUrl + "/resendVerificationLink"
 const userLostPass = userUrl + "/reset-password"
+const userFavorites = userUrl + "/favorites"
+
+
 
 
 export const userGoogleRegistrationAPI = (frmData) => {
@@ -285,6 +289,7 @@ export const fetchUserByUsername = (username)=>{
     return new Promise( async(resolve, reject)=>{
         try {
             const res = await axios.get(userUrl+"/fetchuserbyusername?username="+username);
+            //console.log("FETCH USER BY USERNAME", res.data, "OF ", username)
             resolve(res.data);
             
         } catch (error) {
@@ -437,3 +442,38 @@ export const setNewPassword = (email, pin, password) =>{
     })
 }
 
+export const setInFavorites = (userid, edusourceid, value, dispatch) =>{
+    const frmData = {
+        "userid": userid,
+        "edusourceid": edusourceid,
+        "value": value
+    }
+    return new Promise( async(resolve, reject)=>{
+       // try {
+            const res = await axios.patch(userFavorites,frmData);
+            //console.log("DATA EN SET FAVORITES",res.data.status)
+            if (res.data.status==="success"){
+              //  console.log("FRMDATA EN SETFAVORITES", frmData)
+                dispatch(SET_FAVORITES(frmData))
+
+            }
+            
+       // } catch (error) {
+       //     reject(error)
+       // }
+    })
+}
+
+export const getFavourites = (userid, page)=>{
+    const aPage = page?page:1
+    const urlFavs = ""+ userFavorites+ "?userid="+userid+"&page="+ aPage
+    //console.log("GET FAVS IN USERAPI", urlFavs)
+    return new Promise( async(resolve, reject)=>{
+        await axios.get(urlFavs).then((result)=>{
+            //console.log(result);
+            resolve(result);
+        }).catch((err)=>{
+            reject(err)
+        })
+    })
+}

@@ -1,5 +1,4 @@
 
-import React, { useRef } from "react";
 
 export const getHeadShot = (user)=>{
     var pic = "";
@@ -65,34 +64,34 @@ export const getRightPicture = (pictureObj)=>{
     input.click();
  }; */
  
- export const handleLoadFromDisk = (setImage) => {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-    input.onchange = (event) => {
-      const file = event.target.files[0];
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        const image = new Image();
-        image.src = reader.result;
-        image.onload = () => {
-          const canvas = document.createElement('canvas');
-          const maxWidth = 600;
-          const scaleFactor = maxWidth / image.width;
-          const width = image.width * scaleFactor;
-          const height = image.height * scaleFactor;
-          canvas.width = width;
-          canvas.height = height;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(image, 0, 0, width, height);
-          const resizedImage = canvas.toDataURL('image/jpeg');
-          setImage(resizedImage);
-        };
+export const handleLoadFromDisk = (setImage) => {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/*';
+  input.onchange = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const image = new Image();
+      image.src = reader.result;
+      image.onload = () => {
+        const canvas = document.createElement('canvas');
+        const maxWidth = 600;
+        const scaleFactor = maxWidth / image.width;
+        const width = image.width * scaleFactor;
+        const height = image.height * scaleFactor;
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(image, 0, 0, width, height);
+        const resizedImage = canvas.toDataURL('image/jpeg');
+        setImage(resizedImage);
       };
     };
-    input.click();
   };
+  input.click();
+};
 
 
 export const handlePasteImage = async (setImage) => {

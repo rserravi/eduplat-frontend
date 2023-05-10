@@ -409,7 +409,7 @@ export const UserPage = () =>{
                     
                     var result= false
                     var valor = 0;
-                    console.log("EN userHasCommented", response.user.valorations)
+                    //console.log("EN userHasCommented", response.user.valorations)
                     if (response.user.valorations.length >0){
                         for (let val = 0; val < response.user.valorations.length; val++) {
                             if (response.user.valorations[val].senderId===user._id){

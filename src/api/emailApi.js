@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { getRootUrl } from 'src/utils/rootTools';
-//import { replaceSpacesWithUnderscores } from 'src/utils/stringOperations';
 
 const rootUrl = getRootUrl()
 //const rootUrl = 'http://localhost:3001/v1'

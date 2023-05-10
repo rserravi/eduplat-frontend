@@ -6,12 +6,15 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions } from 'src/theme/theme';
 import { ResourcesNetflixGrid } from 'src/components/resources/resources';
 import { ShareBarBig } from 'src/components/pageStruct/sharebar';
-import { fetchLastResources, getResourcesOfCategory } from 'src/api/edusourceApi';
+import { fetchLastResources } from 'src/api/edusourceApi';
 import { Box } from '@mui/system';
 import { useOutletContext } from 'react-router-dom';
 import i18next from 'i18next';
 import { SearchBarComponent } from 'src/components/search-bar-component';
 import { fetchLastCollections } from 'src/api/collectionApi';
+import { getFavourites } from 'src/api/userApi';
+import { useSelector } from 'react-redux';
+
 
 
 const theme = createTheme(themeOptions);
@@ -26,12 +29,11 @@ const getRandomImageUrl = () =>{
 export const LandingPage = () =>{
     
     const [newWidth] = useOutletContext();
+    const user = useSelector(state => state.user)
     const [lastResources, SetLastResources] = React.useState();
     const [lastTotal, setLastTotal]= React.useState();
-    const [catOne, setcatOne]= React.useState();
-    const [catOneTotal, setCatOneTotal] = React.useState();
-    const [catTwo, setcatTwo]= React.useState();
-    const [catTwoTotal, setCatTwoTotal] = React.useState();
+    const [favs, setFavs]= React.useState();
+    const [favsTotal, setFavsTotal] = React.useState();
     const [lastCollections, setLastCollections] = React.useState();
     const [lastCollectionTotla, setLastCollectionTotal]=React.useState();
 
@@ -52,29 +54,12 @@ export const LandingPage = () =>{
            }
     }
 
-    const onPageCat1Change = (page)=>{
+    const onPageFavChange = (page)=>{
         try {
-            getResourcesOfCategory("ICT",page).then((response)=>{
+            getFavourites(user._id, page).then((response)=>{
 
-                setcatOne(response.data.data)
-                setCatOneTotal(response.data.total)
-               
-           }).catch(error=>{
-               
-            console.log(error);
-           })
-           
-       } catch (error) {
-        console.log(error);
-       }
-    }
-
-    const onPageCat2Change = (page)=>{
-        try {
-            getResourcesOfCategory("Natural Sciences",page).then((response)=>{
-
-                setcatTwo(response.data.data)
-                setCatTwoTotal(response.data.total)
+                setFavs(response.data.data)
+                setFavsTotal(response.data.total)
                
            }).catch(error=>{
                
@@ -122,43 +107,31 @@ export const LandingPage = () =>{
             console.log(error);
            }
         }
-        if (!catOne ||catOne===undefined ||catOne ===null){
-            try {
-                getResourcesOfCategory("ICT",1).then((response)=>{
-                   // console.log("CHECK RESPONSE", response)
-                 setcatOne(response.data.data)
-                 setCatOneTotal(response.data.total)
-                   
-               }).catch(error=>{
-                   
+
+        if (user._id && user._id!==undefined && user._id!==null){
+            if (!favs ||favs===undefined ||favs ===null){
+                try {
+                    getFavourites(user._id, 1).then((response)=>{
+                      //  console.log("RESPONSE IN FAVS")
+        
+                        setFavs(response.data.data)
+                        setFavsTotal(response.data.total)
+                    
+                }).catch(error=>{
+                    
+                    console.log(error);
+                })
+                
+            } catch (error) {
                 console.log(error);
-               })
-               
-           } catch (error) {
-            console.log(error);
-           }
+            }
+            }
         }
-        if (!catTwo ||catTwo===undefined ||catTwo ===null){
-            try {
-                getResourcesOfCategory("Natural Sciences",1).then((response)=>{
-                 
-                 setcatTwo(response.data.data)
-                 setCatTwoTotal(response.data.total)
-                   
-               }).catch(error=>{
-                   
-                console.log(error);
-               })
-               
-           } catch (error) {
-            console.log(error);
-           }
-        }
+        
 
         if (!lastCollections || lastCollections===undefined || lastCollections===null){
             try {
                 fetchLastCollections(1).then((response)=>{
-                 console.log("RESPIESTE EN USEEFFECT",response.data.result.data)
                  setLastCollections(response.data.result.data)
                  setLastCollectionTotal(response.data.result.total)
                    
@@ -172,7 +145,7 @@ export const LandingPage = () =>{
            }
         }
         
-    },[catOne, catTwo, lastResources])
+    },[favs, lastResources, lastCollections, user])
 
 
     return (
@@ -263,8 +236,9 @@ export const LandingPage = () =>{
                     <ResourcesNetflixGrid edusourceList={lastResources} title="Last Resources" mt={4} newWidth={newWidth} total={lastTotal} setPage={onPageLastRChange}/> 
                   
                     <ResourcesNetflixGrid edusourceList={lastCollections} title="Last Colections" newcolor="secondary.light" newWidth={newWidth} total={lastCollectionTotla} isCollection={true} setPage={onLastCollectionChange}/>
-
-                    <ResourcesNetflixGrid edusourceList={catOne} title="ICT" mt={4} newWidth={newWidth} total={catOneTotal} setPage={onPageCat1Change}/> 
+                    {user._id && user._id!=="" && user._id!==undefined && user._id !==null?<>
+                    <ResourcesNetflixGrid edusourceList={favs} title="My Favourites" mt={4} newWidth={newWidth} total={favsTotal} setPage={onPageFavChange}/> 
+                    </>:<></>}
                 
                     {/* COPYRIGTH */}
                     <Grid item my={3} ml={4}>

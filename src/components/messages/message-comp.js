@@ -97,7 +97,7 @@ export const ConversationComp = (props)=>{
     useEffect(()=>{
        
         if (theOther==="" || theOther===null || theOther === undefined ||theOser==="" || theOser===null || theOser === undefined ){
-            console.log("USE EFFECT")
+           // console.log("USE EFFECT")
             converstationObj.members.forEach(member => {
               //  console.log(member.userId, userId)
                 if (member.userId !== userId){
@@ -106,7 +106,7 @@ export const ConversationComp = (props)=>{
                 }
                 else {
                     setTheUser(member);
-                   console.log("THE USER", member)
+                   //console.log("THE USER", member)
                 }
 
             });

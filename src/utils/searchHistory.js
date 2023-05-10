@@ -24,7 +24,7 @@ export class LocalBrowserHistory {
 
     containsObject(obj, list) {
         for (var i = 0; i < list.length; i++) {
-            console.log("list[i]", list[i],"obj", obj);
+            //console.log("list[i]", list[i],"obj", obj);
             if (list[i] === obj) {
                
                 return true;
@@ -35,7 +35,7 @@ export class LocalBrowserHistory {
     }
 
     add(item) {
-        console.log("AÑADIENDO");
+       // console.log("AÑADIENDO");
         this.contentFromStorage();
 
         if (!this.containsObject(item, this.contents)){

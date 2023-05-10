@@ -535,6 +535,9 @@
     "We can't send the email right now. Try again later":"We can't send the email right now. Try again later",
     "Message must be less than or equal to 240 characters":"Message must be less than or equal to 240 characters",
     "Message is required":"Message is required",
-    "Subject is required":"Subject is required"
+    "Subject is required":"Subject is required",
+    "Last Colections":"Last Collections",
+    "My favourites":"My favourites",
+    "Do you know Eduplat? In Eduplat you can share educational resources for free, with the whole community":"Do you know Eduplat? In Eduplat you can share educational resources for free, with the whole community."
     
 }

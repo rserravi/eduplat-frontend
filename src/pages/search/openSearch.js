@@ -23,7 +23,7 @@ var newMaxWidth  = window.innerWidth || document.documentElement.clientWidth || 
 export const OpenSearch = () =>{
 
     var {type, terms} = useParams();
-    console.log (terms, type);
+    //console.log (terms, type);
     
     const [searchValue, setSearchValue] = useState(terms);
     const [serp, setSerp] = useState(); 
@@ -36,6 +36,7 @@ export const OpenSearch = () =>{
     const [searching, setSearching] = useState(false);
     const [flag, setFlag]= useState(false);
     const [total, setTotal] =useState();
+    // eslint-disable-next-line
     const [page, setPage]= useState(1);
     const [firstRender, setFirstRender] = useState(terms!=="" && terms!==null && terms!==undefined);
       
@@ -47,11 +48,11 @@ export const OpenSearch = () =>{
         setLevelFilter(level);
         setThemesFilter(themes);
         setSerp(null);
-        console.log(lang, type, cat, level, themes);
+        //console.log(lang, type, cat, level, themes);
     }
 
     const selectedItem = (event)=>{
-        console.log("SELECTED ITEM", event.target.textContent);
+        //console.log("SELECTED ITEM", event.target.textContent);
         setSearchValue(event.target.textContent);
         setFlag(true);
     }
@@ -61,7 +62,7 @@ export const OpenSearch = () =>{
     const collectionsLS = new LocalBrowserHistory("eduplat.c-search",5);
 
     const OnSearchChange = (event) =>{
-        console.log("ON SEARCH CHANGE",event.target.value);
+        //console.log("ON SEARCH CHANGE",event.target.value);
         event.preventDefault();
          setSearchValue(event.target.value);
        }
@@ -76,7 +77,7 @@ export const OpenSearch = () =>{
     const OnSearchClick = (event) =>{
         
         event.preventDefault();
-        console.log("ON SEARCH CLICK")
+        //console.log("ON SEARCH CLICK")
         if (searchValue!==""){
           console.log (searchValue, typeOfFilter);
        
@@ -85,7 +86,7 @@ export const OpenSearch = () =>{
         switch (typeOfFilter) {
             case "users":
                 // GUARDAR BUSQUEDA!!!
-                console.log("ESTA VACIO?",searchValue)
+          //      console.log("ESTA VACIO?",searchValue)
                 if (searchValue!=="" || searchValue===undefined){
                     userLS.add(searchValue);
                 }
@@ -112,10 +113,10 @@ export const OpenSearch = () =>{
     
     const searchResources = async () =>{
         //BUSCAR RECURSOS
-        console.log("SEARCHING")
+        //console.log("SEARCHING")
         setSearching(true);
         await searchInResources(searchValue, languageFilter, categoriesFilter, levelFilter, themesFilter, page).then((result)=>{
-            console.log("Resultado en Search Resources",result)
+            //console.log("Resultado en Search Resources",result)
             setSerp(result.data.data);
             setTotal(result.data.total);
 
@@ -131,7 +132,7 @@ export const OpenSearch = () =>{
          // BUSCAR USUARIOS
          setSearching(true);
          await searchInCollections(searchValue, page).then((result)=>{
-             console.log("RESULT EN SEARCH COLLECTION",result.data.result.data);
+             //console.log("RESULT EN SEARCH COLLECTION",result.data.result.data);
              setSerp(result.data.result.data)
              setTotal(result.data.result.total)
          }).catch((error)=>{
@@ -146,7 +147,7 @@ export const OpenSearch = () =>{
         // BUSCAR USUARIOS
         setSearching(true);
         await searchInUser(searchValue, languageFilter).then((result)=>{
-            console.log(result);
+            //console.log(result);
             setSerp(result.result)
         }).catch((error)=>{
             console.log(error);
@@ -158,7 +159,7 @@ export const OpenSearch = () =>{
     }
 
     const onPageChange = async (thePage)=>{
-        console.log("SEARCHING")
+        //console.log("SEARCHING")
         setSearching(true);
         await searchInResources(searchValue, languageFilter, categoriesFilter, levelFilter, themesFilter, thePage).then((result)=>{
             console.log("Resultado en Search Resources",result)

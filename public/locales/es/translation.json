@@ -535,5 +535,8 @@
     "We can't send the email right now. Try again later":"Mo podemos enviar el email ahora.Por favor, prueba más tarde",
     "Message must be less than or equal to 240 characters":"El mensaje no puede pasar de 240 caracteres",
     "Message is required":"Es necesario introducir un mensaje",
-    "Subject is required":"Debes indicar un asunto"
+    "Subject is required":"Debes indicar un asunto",
+    "Last Colections":"Últimas colecciones",
+    "My favourites":"Mis favoritos",
+    "Do you know Eduplat? In Eduplat you can share educational resources for free, with the whole community":"¿Conoces Eduplat? En Eduplat puedes compartir recursos educativos gratis, con toda la comunidad."
 }
