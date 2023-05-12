@@ -67,7 +67,12 @@ export const LoginPage = ({ ...others }) =>{
         await userLogin(event).then (async result=>{
             console.log("RESULT EN HANDLE SUBMIT",result)
             if (result.status==='error'){
+                if(result.message === "Cannot read property 'email' of null"){
+                    setErrorMsg("This user does not exist. Register first")
+                }
+                else {
                 setErrorMsg(result.message);
+                }
             } else {
                 if (result.status==='Not Verified'){
                     navigate("/notverified/" + event.email);
@@ -96,14 +101,19 @@ export const LoginPage = ({ ...others }) =>{
         dispatch(SET_LOADING, true);
         await userGoogleLogin(response).then(async result=>{
             if (result.status==='error'){
+                if(result.message === "Cannot read property 'email' of null"){
+                    setErrorMsg("This user does not exist. Register first")
+                }
+                else {
                 setErrorMsg(result.message);
+                }
                 
             } else {
                 if (result.status==='Not Verified'){
                     navigate("/notverified");
                 }
                 else {
-                    console.log(result.result);
+                    console.log(result);
                     navigate("/");
                 }
             }

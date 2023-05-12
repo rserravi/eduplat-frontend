@@ -7,6 +7,7 @@ import { useOutletContext } from 'react-router-dom';
 
 import { ResourcesNetflixGrid } from 'src/components/resources/resources';
 import { AdminAdvertsControl } from './admin-advert';
+import { AdminStats } from './admin-stats';
 
 export const MyAccountAdministration= (props) =>{
     const {user} = props;
@@ -27,7 +28,7 @@ export const MyAccountAdministration= (props) =>{
             }}
         > 
             <Typography variant='h3'>Administration</Typography>
-            <Box border={1} borderRadius={10} p={2} my={2}>
+            {/* <Box border={1} borderRadius={10} p={2} my={2}> */}
 
                 <Grid
                 container
@@ -41,47 +42,48 @@ export const MyAccountAdministration= (props) =>{
                         <Grid 
                             container
                             direction="row"
-                            justifyContent="space-between"
+                            justifyContent="flex-start"
                             alignItems="center"
                             columnSpacing={1}
                             rowSpacing={1}
                         >
-                            <Grid item mr={2} xs={2}>
+                            <Grid item mr={2} xs={2} >
                                 <Typography variant='h4'>Communication</Typography>
                             </Grid>
-                            <Grid item xs={10}>
+                            <Grid item xs={9}>
                                 <ButtonGroup>
-                                    <Button variant='contained' sx={{borderRadius:5}}  onClick={(e)=>{e.preventDefault();setTab("Adverts")}} >Adverts and alerts</Button>
-                                    <Button variant='contained' sx={{borderRadius:5}} onClick={(e)=>{e.preventDefault();setTab("SendEmail")}}  > Send Email</Button>                            
-                                    <Button variant='contained' sx={{borderRadius:5}} onClick={(e)=>{e.preventDefault();setTab("SendMassiveEmail")}} >Send massive email</Button>
+                                    <Button variant='text' sx={{borderRadius:5}}  onClick={(e)=>{e.preventDefault();setTab("Adverts")}} >Adverts and alerts</Button>
+                                    <Button variant='text' sx={{borderRadius:5}} onClick={(e)=>{e.preventDefault();setTab("SendEmail")}}  > Send Email</Button>                            
+                                    <Button variant='text' sx={{borderRadius:5}} onClick={(e)=>{e.preventDefault();setTab("SendMassiveEmail")}} >Send massive email</Button>
                                 </ButtonGroup>
                             </Grid>
                         
                             <Grid item mr={2} xs={2}>
                                 <Typography variant='h4'>Events</Typography>
                             </Grid>
-                           <Grid item xs={10}>
+                           <Grid item xs={9}>
                                 <ButtonGroup>
-                                    <Button variant='contained' sx={{borderRadius:5}}  onClick={(e)=>{e.preventDefault();setTab("CreateEvent")}}  >Create</Button>
-                                    <Button variant='contained' sx={{borderRadius:5}}  onClick={(e)=>{e.preventDefault();setTab("EditEvent")}}  >Edit</Button>
-                                    <Button variant='contained' sx={{borderRadius:5}}  onClick={(e)=>{e.preventDefault();setTab("SeeEvents")}}  >See programmed event</Button>
+                                    <Button variant='text' sx={{borderRadius:5}}  onClick={(e)=>{e.preventDefault();setTab("CreateEvent")}}  >Create</Button>
+                                    <Button variant='text' sx={{borderRadius:5}}  onClick={(e)=>{e.preventDefault();setTab("EditEvent")}}  >Edit</Button>
+                                    <Button variant='text' sx={{borderRadius:5}}  onClick={(e)=>{e.preventDefault();setTab("SeeEvents")}}  >See programmed event</Button>
                                 </ButtonGroup>
                             </Grid>
 
                             <Grid item mr={2} xs={2}>
                                 <Typography variant='h4'>Statistics</Typography>
                             </Grid>
-                            <Grid item xs={10}>
-                            <Button variant='contained' sx={{borderRadius:5}}  onClick={(e)=>{e.preventDefault();setTab("Statistics")}}  >See</Button>
+                            <Grid item xs={9}>
+                            <Button variant='text' sx={{borderRadius:5}}  onClick={(e)=>{e.preventDefault();setTab("Statistics")}}  >See</Button>
                             </Grid>
                         
                         </Grid>
                     </Grid>
                     
                 </Grid>
-            </Box>
+          {/*   </Box> */}
             <Divider />
             {tab==="Adverts"?<><AdminAdvertsControl user={user} /> </>:<></>}
+            {tab==="Statistics"?<><AdminStats user={user} /> </>:<></>}
 
             </Box>
         </>

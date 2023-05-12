@@ -12,6 +12,7 @@ import { GET_CONVERSATIONS, SET_CONVERSATIONS } from 'src/store/convesationSlice
 import { useDispatch } from 'react-redux';
 import { getMessages } from 'src/api/messagesApi';
 import { ConversationComp } from 'src/components/messages/message-comp';
+import { ConnectedUsers } from 'src/components/connectedUsers';
 
 const theme = createTheme(themeOptions);
 
@@ -49,8 +50,8 @@ export const Messages= () =>{
     useEffect(()=>{
         
 
-       // console.log("Messages useEffect")
-        if (!conversations || conversations === undefined || conversations.length===0 || fire){
+         console.log("Messages useEffect", fire)
+        if ((!conversations || conversations === undefined || conversations.length===0) && fire){
             try {
                 //console.log("GETTTING.")
                 getMessages(user._id)
@@ -89,8 +90,11 @@ export const Messages= () =>{
                         ml: newWidth>500?((newWidth/2) -200)/8:0
                     }}
                     >
-                
-        {/* MESSAGES VAL */}
+                <Grid item>
+        <ConnectedUsers />
+        </Grid>
+        
+        {/* MESSAGES VAL */}        
                 
         <Grid item>
             <Typography variant='h3' sx={{my:2}}>{i18next.t("Conversations")}</Typography>
@@ -106,9 +110,7 @@ export const Messages= () =>{
                 )
             })}
         </>:<>
-        <Grid item>
-            <Typography variant='h3' sx={{my:2}}>{i18next.t("Conversations")}</Typography>
-        </Grid>
+
         <Grid item>
             <Typography variant ='body1'>
                 {i18next.t("You don't have any conversation yet. If you want to start a conversation, search for a user and click 'Send Message'")}

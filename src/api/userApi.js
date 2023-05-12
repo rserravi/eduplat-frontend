@@ -2,7 +2,6 @@ import axios from 'axios';
 import { getRootUrl } from 'src/utils/rootTools';
 import { replaceSpacesWithUnderscores } from 'src/utils/stringOperations';
 import { SET_FAVORITES } from 'src/store/userSlice';
-
 const rootUrl = getRootUrl();
 //const rootUrl = 'http://localhost:3001/v1'
 const newAccessJWTurl = rootUrl + "/tokens";
@@ -10,7 +9,7 @@ const userUrl = rootUrl + '/user';
 const googleRegisterUrl = userUrl + '/google-registration';
 const googleLoginUrl = userUrl + '/google-login';
 const loginUrl = userUrl + '/login/';
-const userListUrl = userUrl + "/list";
+const userListUrl = userUrl + "/all";
 const logOutUrl = userUrl + "/logout";
 const valorationUrl= userUrl + "/valoration";
 const valorationMod = userUrl + "/valorationMod"
@@ -18,6 +17,7 @@ const userVerificationUrl = userUrl + "/verify"
 const userResend = userUrl + "/resendVerificationLink"
 const userLostPass = userUrl + "/reset-password"
 const userFavorites = userUrl + "/favorites"
+const connectedUrl = userUrl + "/connected"
 
 
 
@@ -74,12 +74,13 @@ export const userLogin = (frmData) =>{
                
                 resolve(res.data);
             }
+            
             if (res.data.status ==="Not Verified"){
                 reject({"status":"Not Verified"})
             }
-            if (res.data.status === "Error"){
+            if (res.data.status === "error"){
                 console.log("FALLO DE AXIOS")
-                reject(res.data);
+                resolve(res.data);
             }
           
        /*  } catch (error) {
@@ -110,13 +111,16 @@ export const userGoogleLogin = (frmData) =>{
 
 
 export const fetchNewAccessJWT = () =>{
+    console.log("EN FETCHNEW")
     return new Promise( async(resolve, reject)=>{
         try {
-            
+            console.log("EN PROMISE FETCH")
             const {refreshJWT} = JSON.parse(localStorage.getItem("eduplat"));
+            console.log("REFRESH JWT:", refreshJWT)
             
             if (!refreshJWT){
-                reject("Token not found!");
+                console.log("REFREH not found")
+                reject("Refresh Token not found!");
             }
             const res = await axios.get(newAccessJWTurl, {
                 headers: {
@@ -130,10 +134,11 @@ export const fetchNewAccessJWT = () =>{
             
         } catch (error) {
             if (error.message === "Request failed with status code 403"){
-                localStorage.removeItem("eduplat");
+                //localStorage.removeItem("eduplat");
             }
+            console.log("NO TOKEN")
             reject(false);
-        }
+        } 
     })
 }
 
@@ -178,10 +183,31 @@ export const fetchUser = () =>{
     return new Promise( async(resolve, reject)=>{
         try {
 
-            const accessJWT = sessionStorage.getItem("accessJWT");
+            
+            var accessJWT = sessionStorage.getItem("accessJWT");
            //console.log("ACCESSJWT iN FETCHUSER",accessJWT);
             if (!accessJWT){
-                reject("Token not found!");
+                console.log("Access Token not found! Trying Refresh Token");
+                await fetchNewAccessJWT().then(async (data)=>{
+                    if (data){
+                    console.log("DATA EN FETNEWACCESSJWT");
+                    //fetchUser();
+                    accessJWT = sessionStorage.getItem("accessJWT");
+                    const res = await axios.get(userUrl, {
+                        headers: {
+                            Authorization :accessJWT,
+                        }
+                    });
+                    } else {
+                        reject({message: "no Refresh Token"})
+                    }
+
+
+                }).catch((err)=>{
+                    console.log("ERROR EN FETCH NEW JWT")
+                    reject(err.message);
+                })
+                
             }
             else{
                 const res = await axios.get(userUrl, {
@@ -217,6 +243,7 @@ export const userLogout = async() =>{
             }).then((result)=>{
                 console.log("RESULT IN LOGOUT",result.data)
                 sessionStorage.removeItem("accessJWT")
+                localStorage.removeItem("eduplat")
                 resolve(result.data)
                 
             }).catch((error)=>{
@@ -475,5 +502,36 @@ export const getFavourites = (userid, page)=>{
         }).catch((err)=>{
             reject(err)
         })
+    })
+}
+
+export const getConnected = ()=>{
+    return new Promise( async(resolve, reject)=>{
+        const accessJWT = sessionStorage.getItem("accessJWT");
+        if (!accessJWT){
+            reject("Token not found!");
+        }
+        
+        await axios.get(connectedUrl, {
+            headers: {
+                Authorization :accessJWT,
+            }
+        }).then((res)=>{
+            if (res.data.status==="success"){
+                console.log("DATOS EN AXIOS.GET",res)
+                 resolve(res.data.users)
+                 
+             }
+             else {
+                console.log("ERROR EN AXIOS GET", res)
+                 reject(res.data.message)
+             }
+        }).catch((err)=>{
+            reject(err)
+        })
+
+        //console.log("RES EN GET CONNECTED",res)
+
+        
     })
 }
